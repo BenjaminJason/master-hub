@@ -926,6 +926,7 @@ function switchTab(id){
   document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id==="s-"+id));
   if(id==="fund")renderFundTabs();
   window.scrollTo(0,0);
+  setHash();
 }
 
 /* ═══════════ 院校库（双栏） ═══════════ */
@@ -970,7 +971,7 @@ function renderRail(){
       <div class="ctag">${c.tag}</div>
     </div>`).join("");
 }
-function pickCountry(id){selCountry=id;renderRail();renderSchoolList();}
+function pickCountry(id){selCountry=id;renderRail();renderSchoolList();setHash();}
 function renderSchoolList(){
   const kw=dbSearch.trim().toLowerCase();
   const list=SCHOOLS.filter(s=>{
@@ -1149,7 +1150,7 @@ function initCountry(){
 }
 function renderOverview(){
   document.getElementById("ov-tabs").innerHTML=COUNTRIES.map(c=>`
-    <div class="ctab${selOverview===c.id?" on":""}" onclick="selOverview='${c.id}';renderOverview()"><span style="font-size:16px">${c.flag}</span> ${c.name}</div>`).join("");
+    <div class="ctab${selOverview===c.id?" on":""}" onclick="selOverview='${c.id}';renderOverview();setHash()"><span style="font-size:16px">${c.flag}</span> ${c.name}</div>`).join("");
   const c=COUNTRIES.find(x=>x.id===selOverview);
   const cost=OV_COST[c.id]||"";
   const popular=OV_POPULAR[c.id]||[];
@@ -1275,7 +1276,7 @@ function daysTo(month,day){
 }
 function renderTL(){
   document.getElementById("tl-tabs").innerHTML=COUNTRIES.map(c=>`
-    <div class="ctab${selTLCountry===c.id?" on":""}" onclick="selTLCountry='${c.id}';renderTL()"><span style="font-size:16px">${c.flag}</span> ${c.name}</div>`).join("");
+    <div class="ctab${selTLCountry===c.id?" on":""}" onclick="selTLCountry='${c.id}';renderTL();setHash()"><span style="font-size:16px">${c.flag}</span> ${c.name}</div>`).join("");
   const tl=TIMELINES[selTLCountry];
   const dl=KEY_DEADLINES[selTLCountry];
   const now=new Date();
@@ -2504,7 +2505,7 @@ function initVisa(){
   renderVisa();
 }
 function renderVisa(){
-  document.getElementById("visa-tabs").innerHTML=COUNTRIES.map(c=>`<div class="ctab${selVisaCountry===c.id?" on":""}" onclick="selVisaCountry='${c.id}';renderVisa()"><span style="font-size:16px">${c.flag}</span> ${c.name}</div>`).join("");
+  document.getElementById("visa-tabs").innerHTML=COUNTRIES.map(c=>`<div class="ctab${selVisaCountry===c.id?" on":""}" onclick="selVisaCountry='${c.id}';renderVisa();setHash()"><span style="font-size:16px">${c.flag}</span> ${c.name}</div>`).join("");
   const v=VISAS2[selVisaCountry];
   const ex=VISA_EXTRA[selVisaCountry]||{};
   if(!v){document.getElementById("visa-body").innerHTML=`<div class="vg-card" style="color:var(--muted)">暂无该国签证信息</div>`;return;}
@@ -2712,7 +2713,7 @@ function initCareer(){
 function renderCareer(){
   const ctry=selCareer;
   document.getElementById("career-tabs").innerHTML=COUNTRIES.map(ct=>`
-    <div class="ctab${ctry===ct.id?" on":""}" onclick="selCareer='${ct.id}';renderCareer()">
+    <div class="ctab${ctry===ct.id?" on":""}" onclick="selCareer='${ct.id}';renderCareer();setHash()">
       <span style="font-size:16px">${ct.flag}</span> ${ct.name}
     </div>`).join("");
 
@@ -2955,6 +2956,37 @@ function globalSearch(kw){
 }
 document.addEventListener("click",e=>{if(!e.target.closest("#gsearch-wrap"))document.getElementById("gsearch-drop")?.classList.remove("open");});
 
+/* ═══════════ Hash 路由 ═══════════ */
+function getHashParams(){
+  const p={};
+  location.hash.slice(1).split("&").forEach(s=>{const[k,v]=s.split("=");if(k)p[k]=decodeURIComponent(v||"");});
+  return p;
+}
+function setHash(){
+  const p={tab:curTab};
+  if(curTab==="db"&&selCountry!=="all")p.c=selCountry;
+  else if(curTab==="tl")p.c=selTLCountry;
+  else if(curTab==="ov")p.c=selOverview;
+  else if(curTab==="visa")p.c=selVisaCountry;
+  else if(curTab==="career")p.c=selCareer;
+  else if(curTab==="match"&&selCountry!=="all")p.c=selCountry;
+  history.replaceState(null,"","#"+Object.entries(p).map(([k,v])=>k+"="+encodeURIComponent(v)).join("&"));
+}
+function applyHash(){
+  const p=getHashParams();
+  if(!p.tab)return;
+  const id=p.tab;
+  if(p.c){
+    if(id==="db"||id==="match")selCountry=p.c;
+    else if(id==="tl")selTLCountry=p.c;
+    else if(id==="ov")selOverview=p.c;
+    else if(id==="visa")selVisaCountry=p.c;
+    else if(id==="career")selCareer=p.c;
+  }
+  curTab=id;
+}
+window.addEventListener("popstate",()=>{applyHash();switchTab(curTab);});
+
 /* ═══════════ INIT ═══════════ */
 /* ── 主题持久化恢复 ── */
 if(localStorage.getItem("mh_theme")==="dark")document.body.classList.add("dark");
@@ -2973,7 +3005,8 @@ initGuide();
 // ── 数据版本（每年新榜出来后只改这一行）──
 const DATA_VERSION="2026.06（QS 2027 完整版）";
 ["ver-a","ver-b"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=DATA_VERSION;});
-switchTab("db");
+applyHash();
+switchTab(curTab);
 
 /* ── 分享梯队（Feature 10）── */
 /* ── GPA 换算器（Feature 1）── */
