@@ -1,0 +1,24 @@
+{
+  "name": "全球TOP100硕士申请导航",
+  "short_name": "硕士导航",
+  "description": "18国112所院校库，选校匹配、时间轴、奖学金、生活就业一站式申请工具",
+  "start_url": "./master-hub.html",
+  "display": "standalone",
+  "background_color": "#f7f7fb",
+  "theme_color": "#4f46e5",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%234f46e5'/><text x='96' y='130' font-size='110' text-anchor='middle'>🎓</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%234f46e5'/><text x='256' y='360' font-size='300' text-anchor='middle'>🎓</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "screenshots": []
+}
