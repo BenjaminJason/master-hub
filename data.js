@@ -1758,6 +1758,349 @@ const PROG_DETAILS={
     {prog:"MEng Software Systems",gpa:"80+",ielts:"7.0",note:"授课型工程，就业导向，加拿大PGWP工签友好",dl:"1月15日",sop:true,rec:2},
     {prog:"MSc Statistics",gpa:"80+",ielts:"7.0",note:"数据科学方向，统计/数学本科优先",dl:"12月15日",sop:true,rec:2},
   ],
+  "布里斯托大学":[
+    {prog:"MSc Computer Science",gpa:"80+",ielts:"6.5",note:"罗素集团CS，Bristol Tech Cluster就业圈好，双非80+可申",dl:"滚动（4月前）",sop:false,rec:2},
+    {prog:"MSc Engineering Mathematics",gpa:"78+",ielts:"6.5",note:"数学+工程交叉，偏理论，数学背景强势",dl:"滚动",sop:false,rec:2},
+    {prog:"MSc Finance & Investment",gpa:"78+",ielts:"7.0",note:"商学院，双非78+可申，Bristol金融圈小而精",dl:"4月",sop:true,rec:2},
+  ],
+  "格拉斯哥大学":[
+    {prog:"MSc Computing Science",gpa:"75+",ielts:"6.5",note:"苏格兰名校，招生相对宽松，双非75+可申",dl:"6月（滚动）",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"72+",ielts:"6.5",note:"跨背景友好，统计基础即可，偏应用",dl:"6月（滚动）",sop:false,rec:2},
+    {prog:"MSc Finance",gpa:"74+",ielts:"6.5",note:"AACSB商学院，双非可申",dl:"4月",sop:true,rec:2},
+  ],
+  "杜伦大学":[
+    {prog:"MSc Business Analytics",gpa:"78+",ielts:"6.5",note:"杜伦商学院精英感强，双非78+可申",dl:"3月",sop:true,rec:2},
+    {prog:"MSc Finance",gpa:"78+",ielts:"7.0",note:"Durham Business School，认可度高",dl:"3月",sop:true,rec:2},
+    {prog:"MSc Mathematical Sciences",gpa:"80+",ielts:"6.5",note:"纯数学方向，学术浓厚",dl:"4月",sop:false,rec:2},
+  ],
+  "伯明翰大学":[
+    {prog:"MSc Computer Science",gpa:"78+",ielts:"6.5",note:"红砖名校，双非78+可申，伯明翰就业圈尚可",dl:"6月（滚动）",sop:false,rec:2},
+    {prog:"MSc Business Analytics",gpa:"77+",ielts:"6.5",note:"AACSB商学院，就业导向，双非可申",dl:"4月",sop:true,rec:2},
+    {prog:"MSc Finance",gpa:"76+",ielts:"6.5",note:"双非友好，Birmingham Business School",dl:"4月",sop:true,rec:2},
+  ],
+  "利兹大学":[
+    {prog:"MSc Data Science & Analytics",gpa:"75+",ielts:"6.5",note:"跨背景可申，偏应用，Leeds就业资源尚可",dl:"4月（滚动）",sop:false,rec:2},
+    {prog:"MSc Business Analytics",gpa:"74+",ielts:"6.5",note:"就业导向，双非74+可申",dl:"4月",sop:true,rec:2},
+    {prog:"MSc Finance & Investment",gpa:"74+",ielts:"6.5",note:"AACSB商学院，双非友好",dl:"4月",sop:true,rec:2},
+  ],
+  "南安普顿大学":[
+    {prog:"MSc Artificial Intelligence",gpa:"78+",ielts:"6.5",note:"ECS学院电子/CS传统强，AI项目成熟",dl:"5月（滚动）",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"76+",ielts:"6.5",note:"含ML/统计方向，双非76+可申",dl:"5月（滚动）",sop:false,rec:2},
+    {prog:"MSc Finance",gpa:"75+",ielts:"6.5",note:"双非75+可申，性价比高",dl:"4月",sop:true,rec:2},
+  ],
+  "谢菲尔德大学":[
+    {prog:"MSc Advanced Computer Science",gpa:"75+",ielts:"6.5",note:"红砖性价比，工程背景有优势",dl:"6月（滚动）",sop:false,rec:2},
+    {prog:"MSc Data Analytics",gpa:"73+",ielts:"6.5",note:"跨背景友好，偏实践",dl:"6月（滚动）",sop:false,rec:2},
+    {prog:"MSc Finance",gpa:"74+",ielts:"6.5",note:"AACSB，双非友好",dl:"4月",sop:true,rec:2},
+  ],
+  "诺丁汉大学":[
+    {prog:"MSc Computer Science",gpa:"75+",ielts:"6.5",note:"双非友好，含AI方向，有宁波分校经历加分",dl:"滚动",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"73+",ielts:"6.5",note:"跨背景可申，双非75+可冲",dl:"滚动",sop:false,rec:2},
+    {prog:"MSc Finance & Investment",gpa:"74+",ielts:"6.5",note:"Nottingham商学院，双非74+可申",dl:"4月",sop:true,rec:2},
+  ],
+  "伦敦玛丽女王大学":[
+    {prog:"MSc Computer Science",gpa:"74+",ielts:"6.5",note:"东伦敦，招生相对宽松，双非74+可申",dl:"6月（滚动）",sop:false,rec:2},
+    {prog:"MSc Data Analytics & Management",gpa:"72+",ielts:"6.5",note:"跨背景友好，偏实践，就业在伦敦圈",dl:"6月（滚动）",sop:false,rec:2},
+  ],
+  "圣安德鲁斯大学":[
+    {prog:"MSc Data Science",gpa:"80+",ielts:"7.0",note:"苏格兰精英小校，学术氛围浓厚，海边小城宁静",dl:"4月",sop:true,rec:2},
+    {prog:"MSc Finance",gpa:"80+",ielts:"7.0",note:"苏格兰历史名校商科，双非80+可申",dl:"4月",sop:true,rec:2},
+  ],
+  "斯坦福大学":[
+    {prog:"MS Computer Science",gpa:"88+",ielts:"托福100+",note:"硅谷顶级，录取率<5%，需顶尖科研/竞赛/实习背景",dl:"12月5日",sop:true,rec:3},
+    {prog:"MS Statistics",gpa:"88+",ielts:"托福100+",note:"统计/数据顶尖，偏理论研究，录取极难",dl:"12月5日",sop:true,rec:3},
+  ],
+  "哈佛大学":[
+    {prog:"SM in Data Science (SEAS)",gpa:"87+",ielts:"托福100+",note:"跨学科数据科学，录取率极低，需顶尖背景",dl:"12月1日",sop:true,rec:3},
+    {prog:"SM in Computational Science & Engineering",gpa:"87+",ielts:"托福100+",note:"科学计算方向，研究型，师资顶尖",dl:"12月1日",sop:true,rec:3},
+  ],
+  "加州理工学院":[
+    {prog:"MS Aeronautics / Engineering",gpa:"89+",ielts:"托福100+",note:"研究型为主，名额极少，几乎无对外授课型硕士，需内诺导师",dl:"12月15日",sop:true,rec:3},
+  ],
+  "加州大学伯克利":[
+    {prog:"MEng (Master of Engineering)",gpa:"83+",ielts:"托福90+",note:"授课型，含CS/EECS/数据/AI方向，招生量较大",dl:"1月10日",sop:true,rec:3},
+    {prog:"MS EECS（研究型，竞争极高）",gpa:"86+",ielts:"托福90+",note:"研究型，需联系导师，录取名额极少，双非几乎无录",dl:"12月10日",sop:true,rec:3},
+  ],
+  "康奈尔大学":[
+    {prog:"MEng Computer Science",gpa:"82+",ielts:"托福100+",note:"Cornell Tech纽约校区就业极佳，含AI/HCI/Systems方向",dl:"1月15日",sop:true,rec:2},
+    {prog:"MS Operations Research (ORIE)",gpa:"83+",ielts:"托福100+",note:"量化/运营方向，金融工程出口好",dl:"1月15日",sop:true,rec:3},
+    {prog:"MEng Electrical & Computer Engineering",gpa:"82+",ielts:"托福100+",note:"伊萨卡主校区，工程授课型",dl:"1月15日",sop:true,rec:2},
+  ],
+  "密歇根大学安娜堡":[
+    {prog:"MS Computer Science (EECS)",gpa:"82+",ielts:"托福100+",note:"公立巨头CS，竞争激烈，双非需82+强背景",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS Data Science (MADS)",gpa:"81+",ielts:"托福100+",note:"跨学科项目，偏应用，背景包容度稍好",dl:"12月15日",sop:true,rec:2},
+    {prog:"MS Financial Engineering",gpa:"83+",ielts:"托福100+",note:"量化金融，数学+编程要求高",dl:"1月15日",sop:true,rec:3},
+  ],
+  "普林斯顿大学":[
+    {prog:"MSE Computer Science",gpa:"87+",ielts:"托福100+",note:"藤校工程硕士，名额极少，研究型导向，需强科研背景",dl:"12月15日",sop:true,rec:3},
+    {prog:"MSE Electrical & Computer Engineering",gpa:"87+",ielts:"托福100+",note:"工程方向，录取竞争极高",dl:"12月15日",sop:true,rec:3},
+  ],
+  "耶鲁大学":[
+    {prog:"MS Statistics & Data Science",gpa:"86+",ielts:"托福100+",note:"录取率极低，学术研究导向，需科研经历",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS Computer Science",gpa:"86+",ielts:"托福100+",note:"藤校CS，名额少，双非几乎无录",dl:"12月15日",sop:true,rec:3},
+  ],
+  "芝加哥大学":[
+    {prog:"MS Computer Science (MPCS)",gpa:"84+",ielts:"托福102+",note:"Chicago学派严谨，CS转型项目成熟，就业好",dl:"1月15日",sop:true,rec:3},
+    {prog:"MS Analytics (MScA)",gpa:"83+",ielts:"托福102+",note:"数据分析实践，跨背景可申，业界导向",dl:"1月15日",sop:true,rec:2},
+  ],
+  "宾夕法尼亚大学":[
+    {prog:"MSE (SEAS Engineering)",gpa:"83+",ielts:"托福100+",note:"藤校，含CS/数据/AI/生物工程方向",dl:"1月1日",sop:true,rec:3},
+    {prog:"MSc Finance (Wharton)",gpa:"85+",ielts:"托福100+",note:"顶级金融，GMAT/GRE必备，华尔街直通",dl:"1月15日",sop:true,rec:3},
+  ],
+  "约翰霍普金斯大学":[
+    {prog:"MS Computer Science",gpa:"82+",ielts:"托福100+",note:"生物信息/CS/AI强，双非需82+",dl:"1月15日",sop:true,rec:3},
+    {prog:"MS Applied Mathematics & Statistics",gpa:"83+",ielts:"托福100+",note:"数学+统计交叉，生物医学方向有特色",dl:"1月15日",sop:true,rec:2},
+  ],
+  "加州大学洛杉矶":[
+    {prog:"MS Computer Science",gpa:"83+",ielts:"托福90+",note:"公立顶尖，洛杉矶就业资源极佳，竞争激烈",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS Data Science Engineering",gpa:"82+",ielts:"托福90+",note:"跨院系合作项目，数据工程方向",dl:"12月15日",sop:true,rec:2},
+  ],
+  "杜克大学":[
+    {prog:"MS Computer Science",gpa:"82+",ielts:"托福100+",note:"南方私立名校，CS申请相对友好",dl:"12月15日",sop:true,rec:2},
+    {prog:"Master of Quantitative Management (MQM)",gpa:"82+",ielts:"托福100+",note:"商业分析/量化管理，就业导向，Fuqua认可",dl:"1月15日",sop:true,rec:2},
+    {prog:"MS Electrical & Computer Engineering",gpa:"80+",ielts:"托福100+",note:"工程传统强，双非80+可冲",dl:"12月15日",sop:true,rec:2},
+  ],
+  "伊利诺伊大学香槟":[
+    {prog:"MCS (Master of Computer Science)",gpa:"82+",ielts:"托福96+",note:"公立CS老牌强校，双非80+可申，Tech公司认可度高",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS Statistics",gpa:"82+",ielts:"托福96+",note:"数据科学方向，分析师就业强",dl:"12月15日",sop:false,rec:2},
+  ],
+  "德州大学奥斯汀":[
+    {prog:"MS Computer Science",gpa:"80+",ielts:"托福79+",note:"公立旗舰，奥斯汀科技产业（Dell/Apple）活跃",dl:"12月1日",sop:true,rec:3},
+    {prog:"MS Statistics & Data Science",gpa:"79+",ielts:"托福79+",note:"跨学科，统计+CS复合，性价比高",dl:"12月15日",sop:true,rec:2},
+  ],
+  "加州大学圣地亚哥":[
+    {prog:"MS Computer Science (CSE)",gpa:"81+",ielts:"托福88+",note:"生物信息/CS/AI方向强，圣地亚哥气候绝佳",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS Data Science (Halıcıoğlu)",gpa:"80+",ielts:"托福88+",note:"跨学科数据科学项目，偏应用",dl:"1月10日",sop:true,rec:2},
+  ],
+  "华盛顿大学":[
+    {prog:"MS Computer Science & Engineering",gpa:"81+",ielts:"托福92+",note:"西雅图微软/亚马逊旁，实习资源顶级，竞争激烈",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS Data Science (MSDS)",gpa:"80+",ielts:"托福92+",note:"跨学科项目，商科+CS转型好",dl:"1月5日",sop:true,rec:2},
+  ],
+  "西北大学":[
+    {prog:"MS Artificial Intelligence",gpa:"84+",ielts:"托福100+",note:"私立名校，AI新兴项目，芝加哥科技圈资源",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS Computer Science",gpa:"84+",ielts:"托福100+",note:"Evanston校区，CS强，就业好",dl:"12月15日",sop:true,rec:3},
+  ],
+  "布朗大学":[
+    {prog:"ScM Computer Science",gpa:"83+",ielts:"托福100+",note:"藤校小而精，录取规模小，需科研背景",dl:"12月15日",sop:true,rec:3},
+    {prog:"ScM Data Science",gpa:"82+",ielts:"托福100+",note:"跨学科数据项目，偏应用与研究结合",dl:"12月15日",sop:true,rec:2},
+  ],
+  "波士顿大学":[
+    {prog:"MS Computer Science",gpa:"78+",ielts:"6.5",note:"招生量大，对背景包容，波士顿名校集群资源丰富",dl:"2月1日",sop:true,rec:2},
+    {prog:"MS Data Science",gpa:"76+",ielts:"6.5",note:"跨背景友好，偏应用，双非76+可申",dl:"2月1日",sop:false,rec:2},
+    {prog:"MS Mathematical Finance",gpa:"78+",ielts:"6.5",note:"量化金融，双非76+可申",dl:"2月",sop:true,rec:2},
+  ],
+  "普渡大学":[
+    {prog:"MS Computer Science",gpa:"78+",ielts:"托福88+",note:"公立理工强，CS竞争相对低，性价比高",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS ECE (Electrical & Computer Engineering)",gpa:"76+",ielts:"托福88+",note:"工程老牌，嵌入式/芯片/信号方向",dl:"12月15日",sop:true,rec:2},
+  ],
+  "威斯康星大学麦迪逊":[
+    {prog:"MS Computer Sciences",gpa:"78+",ielts:"托福92+",note:"公立研究型，偏学术导向，双非需强科研",dl:"12月15日",sop:true,rec:3},
+    {prog:"MS Statistics",gpa:"78+",ielts:"托福92+",note:"统计系传统强，生物统计方向有特色",dl:"12月15日",sop:false,rec:2},
+  ],
+  "加州大学戴维斯":[
+    {prog:"MS Computer Science",gpa:"78+",ielts:"托福80+",note:"农业/生命科学+CS结合，性价比好，双非78+可申",dl:"1月15日",sop:true,rec:3},
+    {prog:"MS Statistics",gpa:"76+",ielts:"托福80+",note:"生物统计方向强，跨背景可申",dl:"12月15日",sop:false,rec:2},
+  ],
+  "莱斯大学":[
+    {prog:"MS Computer Science",gpa:"82+",ielts:"托福90+",note:"小而精私立，休斯顿航天/能源圈资源，班级小",dl:"1月15日",sop:true,rec:3},
+    {prog:"MS Statistics",gpa:"81+",ielts:"托福90+",note:"小班制，师生比高，偏学术",dl:"1月15日",sop:false,rec:2},
+  ],
+  "莫纳什大学":[
+    {prog:"Master of Information Technology",gpa:"72+",ielts:"6.5",note:"多校区选择灵活，双非72+可申，IT就业导向强",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Business Analytics",gpa:"71+",ielts:"6.5",note:"跨背景友好，偏实践，墨尔本就业圈",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Finance",gpa:"71+",ielts:"6.5",note:"AACSB商学院，双非71+可申",dl:"滚动",sop:false,rec:2},
+  ],
+  "昆士兰大学":[
+    {prog:"Master of Information Technology",gpa:"72+",ielts:"6.5",note:"布里斯班气候宜人，生活成本低于悉尼/墨尔本",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Data Science",gpa:"72+",ielts:"6.5",note:"跨背景友好，与行业合作紧密",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Business Analytics",gpa:"71+",ielts:"6.5",note:"双非71+可申，偏实践",dl:"滚动",sop:false,rec:2},
+  ],
+  "澳大利亚国立大学":[
+    {prog:"Master of Computing",gpa:"76+",ielts:"6.5",note:"研究氛围浓，堪培拉政府/研究院资源好",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Applied Data Analytics",gpa:"74+",ielts:"6.5",note:"政策数据分析方向有特色，偏应用",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Finance",gpa:"75+",ielts:"6.5",note:"ANU商学院，双非75+可申",dl:"滚动",sop:false,rec:2},
+  ],
+  "西澳大学":[
+    {prog:"Master of Computer Science",gpa:"70+",ielts:"6.5",note:"珀斯，矿业/能源产业资源，生活成本低，移民加分",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Data Science",gpa:"70+",ielts:"6.5",note:"双非70+可申，适合预算有限、考虑移民学生",dl:"滚动",sop:false,rec:2},
+  ],
+  "阿德莱德大学":[
+    {prog:"Master of Computing & Innovation",gpa:"70+",ielts:"6.5",note:"偏远地区移民加分，葡萄酒/农业特色，生活成本低",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Data Science",gpa:"70+",ielts:"6.5",note:"双非70+可申，性价比高",dl:"滚动",sop:false,rec:2},
+  ],
+  "悉尼科技大学":[
+    {prog:"Master of Information Technology",gpa:"70+",ielts:"6.5",note:"悉尼市中心，应用型强校，就业导向明显",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Data Science & Innovation",gpa:"70+",ielts:"6.5",note:"跨学科创新项目，偏实践",dl:"滚动",sop:false,rec:2},
+  ],
+  "皇家墨尔本理工":[
+    {prog:"Master of Information Technology",gpa:"70+",ielts:"6.5",note:"应用型，双非70+可申，墨尔本市中心地段好",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Data Science",gpa:"70+",ielts:"6.5",note:"实用导向，行业对接，跨背景友好",dl:"滚动",sop:false,rec:2},
+  ],
+  "麦吉尔大学":[
+    {prog:"MSc Computer Science",gpa:"82+",ielts:"7.0",note:"蒙特利尔，双语环境，CS竞争激烈，科研为主",dl:"1月15日",sop:true,rec:3},
+    {prog:"MEng (授课型工程)",gpa:"80+",ielts:"6.5",note:"含AI/CS/ECE方向，就业导向，PGWP工签",dl:"2月1日",sop:true,rec:2},
+    {prog:"MSc Finance / MFin",gpa:"80+",ielts:"7.0",note:"Desautels商学院，蒙特利尔金融圈认可",dl:"2月1日",sop:true,rec:2},
+  ],
+  "阿尔伯塔大学":[
+    {prog:"MSc Computing Science",gpa:"80+",ielts:"6.5",note:"AI/强化学习重镇（Hinton母校），双非80+可申",dl:"12月1日",sop:true,rec:2},
+    {prog:"MEng (授课型工程)",gpa:"78+",ielts:"6.5",note:"工程授课型，能源/油气产业资源丰富，PGWP",dl:"1月1日",sop:true,rec:2},
+  ],
+  "滑铁卢大学":[
+    {prog:"MASc Computer Engineering / ECE",gpa:"82+",ielts:"7.0",note:"Co-op带薪实习全球闻名，研究型需教授内诺",dl:"1月15日",sop:true,rec:3},
+    {prog:"MEng (授课型工程)",gpa:"80+",ielts:"7.0",note:"就业导向，也有Co-op选项，加拿大理工顶尖",dl:"2月1日",sop:true,rec:2},
+    {prog:"MMath Data Science",gpa:"82+",ielts:"7.0",note:"数学系旗舰项目，数据+CS复合",dl:"1月15日",sop:true,rec:2},
+  ],
+  "香港城市大学":[
+    {prog:"MSc Computer Science",gpa:"75+",ielts:"6.5",note:"应用导向，双非75+可申，IANG工签留港就业",dl:"3月31日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"74+",ielts:"6.5",note:"跨背景友好，数据科学方向成熟",dl:"3月31日",sop:false,rec:2},
+    {prog:"MSc Financial Engineering",gpa:"75+",ielts:"6.5",note:"量化金融，香港金融圈认可",dl:"3月",sop:true,rec:2},
+  ],
+  "香港理工大学":[
+    {prog:"MSc Information Technology",gpa:"75+",ielts:"6.5",note:"应用型，IT就业导向，IANG工签",dl:"4月",sop:false,rec:2},
+    {prog:"MSc Financial Technology",gpa:"74+",ielts:"6.5",note:"FinTech方向，香港金融科技圈",dl:"4月",sop:false,rec:2},
+    {prog:"MSc Design（设计学院）",gpa:"73+",ielts:"6.5",note:"设计全球顶尖，作品集必须提交",dl:"3月",sop:true,rec:2},
+  ],
+  "洛桑联邦理工":[
+    {prog:"MSc Computer Science",gpa:"85+",ielts:"7.0",note:"欧陆CS顶尖，与ETH齐名，需强算法/系统背景",dl:"12月15日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"85+",ielts:"7.0",note:"数据科学欧陆顶尖，竞争极激烈",dl:"12月15日",sop:false,rec:2},
+    {prog:"MSc Computational Science & Engineering",gpa:"85+",ielts:"7.0",note:"科学计算交叉，物理/数学背景佳",dl:"12月15日",sop:false,rec:2},
+  ],
+  "苏黎世大学":[
+    {prog:"MSc Computational Linguistics",gpa:"80+",ielts:"7.0",note:"NLP方向欧陆顶尖，部分课程与ETH联合授课",dl:"4月30日",sop:false,rec:2},
+    {prog:"MSc Banking and Finance",gpa:"80+",ielts:"7.0",note:"瑞士金融业圣地，进UBS/瑞信路径清晰",dl:"3月31日",sop:false,rec:2},
+    {prog:"MSc Computational Science (与ETH联合)",gpa:"82+",ielts:"7.0",note:"学费极低，强理论，ETH/UZH联合授课",dl:"2月28日",sop:false,rec:2},
+  ],
+  "阿姆斯特丹大学":[
+    {prog:"MSc Artificial Intelligence",gpa:"78+",ielts:"6.5",note:"欧洲顶尖AI项目，无学历歧视，双非可申",dl:"4月1日",sop:true,rec:2},
+    {prog:"MSc Information Studies (Data Science)",gpa:"76+",ielts:"6.5",note:"社科+数据交叉，阿姆城市优势",dl:"4月1日",sop:true,rec:2},
+    {prog:"MSc Business Administration",gpa:"76+",ielts:"6.5",note:"商学院，双非友好，欧盟就业",dl:"5月1日",sop:true,rec:2},
+  ],
+  "乌得勒支大学":[
+    {prog:"MSc Data Science",gpa:"77+",ielts:"6.5",note:"荷兰综合名校，欧盟学费，双非友好",dl:"4月1日",sop:true,rec:2},
+    {prog:"MSc Computing Science",gpa:"77+",ielts:"6.5",note:"偏理论，适合喜欢学术氛围的学生",dl:"4月1日",sop:false,rec:2},
+  ],
+  "莱顿大学":[
+    {prog:"MSc Computer Science (LIACS)",gpa:"77+",ielts:"7.0",note:"法律/人文历史强，CS较小，学术氛围好",dl:"4月1日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"76+",ielts:"7.0",note:"与阿姆斯特丹大学联合，数据科学方向",dl:"4月1日",sop:false,rec:2},
+  ],
+  "东京大学":[
+    {prog:"GSII (全球文理+信息英文硕士)",gpa:"82+",ielts:"托福90+",note:"AI/数据/社科交叉英文项目，名额少，需推荐信强",dl:"11月",sop:true,rec:2},
+    {prog:"MERIT Program (工学英文项目)",gpa:"82+",ielts:"托福90+",note:"全英文授课，工程/CS方向，需提前联系教授",dl:"11月",sop:true,rec:2},
+  ],
+  "京都大学":[
+    {prog:"MSc Informatics (英文项目)",gpa:"80+",ielts:"托福90+",note:"日本理论计算机/AI传统强，英文项目有限，需提前联系教授",dl:"10月",sop:true,rec:2},
+    {prog:"MSc Engineering",gpa:"80+",ielts:"托福90+",note:"研究型为主，导师制，需内诺",dl:"10月",sop:true,rec:2},
+  ],
+  "东京工业大学":[
+    {prog:"MSc Computing (ACE/ACLS英文项目)",gpa:"78+",ielts:"6.5",note:"英文授课项目，东京就业好，工学顶尖",dl:"12月",sop:true,rec:2},
+    {prog:"MSc CS / AI (GEMs项目)",gpa:"78+",ielts:"6.5",note:"全英文授课，IT/AI方向，学费低",dl:"12月",sop:true,rec:2},
+  ],
+  "大阪大学":[
+    {prog:"MSc Engineering Science (E-cube英文项目)",gpa:"76+",ielts:"托福79+",note:"英文授课工程交叉项目，关西就业圈",dl:"11月",sop:true,rec:2},
+    {prog:"MSc Computer Science (英文方向)",gpa:"76+",ielts:"托福79+",note:"日本国公立顶尖，需提前联系导师",dl:"10月",sop:true,rec:2},
+  ],
+  "东北大学":[
+    {prog:"MSc Engineering (AIM材料英文项目)",gpa:"76+",ielts:"托福79+",note:"材料科学全球顶尖，英文授课项目，仙台生活成本极低",dl:"11月",sop:true,rec:2},
+    {prog:"MSc Information Sciences (英文方向)",gpa:"75+",ielts:"托福79+",note:"研究型为主，需联系教授，信息/CS方向",dl:"10月",sop:true,rec:2},
+  ],
+  "首尔国立大学":[
+    {prog:"MS Computer Science & Engineering (英文项目)",gpa:"82+",ielts:"托福88+",note:"韩国第一，英文CS项目，名额有限，需强背景",dl:"5月",sop:true,rec:2},
+    {prog:"MS Business Administration (GSB)",gpa:"80+",ielts:"托福88+",note:"商学院旗舰，韩国金融/大企业认可",dl:"5月",sop:true,rec:2},
+  ],
+  "延世大学":[
+    {prog:"MS Computer Science (Yonsei UIC)",gpa:"80+",ielts:"托福88+",note:"SKY私立，英文CS项目，国际化程度较高",dl:"4月",sop:true,rec:2},
+    {prog:"MS Financial Engineering",gpa:"79+",ielts:"托福85+",note:"量化金融，韩国金融市场直通",dl:"4月",sop:true,rec:2},
+  ],
+  "高丽大学":[
+    {prog:"MS Computer Science (英文方向)",gpa:"79+",ielts:"托福85+",note:"SKY之一，英文CS项目，校友网络广",dl:"5月",sop:true,rec:2},
+    {prog:"MS Business Administration",gpa:"78+",ielts:"托福85+",note:"商科SKY，国际化程度高，商学院认可",dl:"4月",sop:true,rec:2},
+  ],
+  "浦项科技大学":[
+    {prog:"MS Computer Science & Engineering",gpa:"82+",ielts:"托福88+",note:"小而精，研究导向极强，POSCO产业资源",dl:"4月",sop:true,rec:3},
+    {prog:"MS Artificial Intelligence",gpa:"82+",ielts:"托福88+",note:"AI方向，与三星/POSCO产业合作",dl:"4月",sop:true,rec:3},
+  ],
+  "慕尼黑工业大学":[
+    {prog:"MSc Informatics (英文)",gpa:"80+",ielts:"7.0",note:"德国CS顶尖，公立免学费，APS审核必须提前，申请竞争激烈",dl:"5月31日",sop:false,rec:2},
+    {prog:"MSc Data Engineering & Analytics",gpa:"80+",ielts:"7.0",note:"数据工程实践，就业导向，与宝马/西门子合作",dl:"5月31日",sop:false,rec:2},
+    {prog:"MSc Finance & Information Management",gpa:"79+",ielts:"7.0",note:"金融+信息管理交叉，TUM School of Management",dl:"5月",sop:false,rec:2},
+  ],
+  "慕尼黑大学":[
+    {prog:"MSc Computer Science (英文)",gpa:"79+",ielts:"7.0",note:"LMU综合名校，公立免学费，慕尼黑就业圈好",dl:"5月31日",sop:false,rec:2},
+    {prog:"MSc Data Science (与TUM联合)",gpa:"79+",ielts:"7.0",note:"欧陆顶尖数据项目，联合两所顶校资源",dl:"5月31日",sop:false,rec:2},
+  ],
+  "海德堡大学":[
+    {prog:"MSc Data & Computer Science",gpa:"78+",ielts:"7.0",note:"德国最古老大学，公立免学费，偏学术",dl:"5月15日",sop:false,rec:2},
+    {prog:"MSc Mathematics in Data & Computational Sciences",gpa:"79+",ielts:"7.0",note:"纯数学+计算，数学背景强势者适合",dl:"5月15日",sop:false,rec:2},
+  ],
+  "卡尔斯鲁厄理工":[
+    {prog:"MSc Computer Science (英文)",gpa:"80+",ielts:"7.0",note:"KIT德国理工顶尖，公立免学费，招生名额有限",dl:"5月15日",sop:false,rec:2},
+    {prog:"MSc Electrical Engineering & Information Technology",gpa:"79+",ielts:"6.5",note:"工程顶尖，芯片/嵌入式/通信方向，与西门子/博世合作",dl:"5月15日",sop:false,rec:2},
+  ],
+  "亚琛工业大学":[
+    {prog:"MSc Media Informatics / Data Science",gpa:"79+",ielts:"6.5",note:"RWTH机械/电气著名，CS较新，公立免学费",dl:"5月31日",sop:false,rec:2},
+    {prog:"MSc Electrical Engineering",gpa:"79+",ielts:"6.5",note:"与西门子/宝马产业联系极紧密，工程强",dl:"5月31日",sop:false,rec:2},
+  ],
+  "柏林自由大学":[
+    {prog:"MSc Computer Science",gpa:"77+",ielts:"6.5",note:"柏林名校，公立免学费，人文社科氛围也浓",dl:"5月15日",sop:false,rec:2},
+    {prog:"MSc Mathematics",gpa:"78+",ielts:"6.5",note:"纯数学方向，学术氛围好，柏林生活成本低",dl:"5月15日",sop:false,rec:2},
+  ],
+  "奥克兰大学":[
+    {prog:"Master of Information Technology",gpa:"72+",ielts:"6.5",note:"新西兰第一，PSW毕业工签友好，移民加分路径",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Data Science",gpa:"71+",ielts:"6.5",note:"跨背景可申，奥克兰生活成本低于悉尼",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Finance",gpa:"71+",ielts:"6.5",note:"双非70+可申，移民加分，新西兰就业小而精",dl:"滚动",sop:false,rec:2},
+  ],
+  "马来亚大学":[
+    {prog:"MSc Computer Science",gpa:"72+",ielts:"6.0",note:"马来西亚第一，年学费约1.5万人民币，性价比极高",dl:"4月30日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"71+",ielts:"6.0",note:"吉隆坡华人友好，费用极低，生活便利",dl:"4月30日",sop:false,rec:2},
+  ],
+  "马来西亚国民大学":[
+    {prog:"MSc Computer Science",gpa:"69+",ielts:"6.0",note:"申请友好，费用极低，双非68+可申",dl:"5月31日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"68+",ielts:"6.0",note:"性价比最高选项之一，入门门槛低",dl:"5月31日",sop:false,rec:2},
+  ],
+  "巴黎文理研究大学":[
+    {prog:"MSc AI & Visual Computing (CentraleSupélec/PSL)",gpa:"83+",ielts:"7.0",note:"顶级学术联合体，需强研究背景，法国精英教育体系",dl:"3月31日",sop:true,rec:2},
+    {prog:"MSc Mathematics in Machine Learning (ENS)",gpa:"85+",ielts:"7.0",note:"法国数学精英，极高门槛，偏理论研究",dl:"3月",sop:true,rec:2},
+  ],
+  "索邦大学":[
+    {prog:"MSc Computer Science (STL方向)",gpa:"79+",ielts:"6.5",note:"法语为主，少量英文课，巴黎地段好，学费极低",dl:"4月30日",sop:true,rec:2},
+    {prog:"MSc Mathematics",gpa:"80+",ielts:"6.5",note:"纯数学传统深厚，法语项目为主，须有法语基础",dl:"4月30日",sop:false,rec:2},
+  ],
+  "巴黎综合理工学院":[
+    {prog:"MSc Mathematics & AI (IP Paris)",gpa:"83+",ielts:"7.0",note:"法国工程精英联盟，偏理论，大类录取竞争激烈",dl:"3月15日",sop:true,rec:2},
+    {prog:"MSc Cybersecurity",gpa:"82+",ielts:"7.0",note:"网络安全，法国国防/科技行业资源",dl:"3月15日",sop:true,rec:2},
+  ],
+  "巴黎-萨克雷大学":[
+    {prog:"MSc Mathematics (M2方向)",gpa:"83+",ielts:"7.0",note:"法国理学顶尖，纯数/应数方向，学术浓厚",dl:"3月31日",sop:true,rec:2},
+    {prog:"MSc Computer Science / AI",gpa:"82+",ielts:"7.0",note:"研究导向，含Orsay/CentraleSupélec资源",dl:"3月31日",sop:true,rec:2},
+  ],
+  "皇家理工学院":[
+    {prog:"MSc Machine Learning",gpa:"79+",ielts:"6.5",note:"瑞典理工顶尖，AI/ML欧陆强项，与Spotify/Ericsson合作",dl:"1月15日",sop:false,rec:2},
+    {prog:"MSc Computer Science",gpa:"78+",ielts:"6.5",note:"北欧创新氛围，斯德哥尔摩科技圈资源好",dl:"1月15日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"78+",ielts:"6.5",note:"跨学科，北欧科技圈入口，非EU需学费约13万/年",dl:"1月15日",sop:false,rec:2},
+  ],
+  "隆德大学":[
+    {prog:"MSc Computer Science",gpa:"77+",ielts:"6.5",note:"瑞典综合名校，英文项目多，生活成本低于斯德哥尔摩",dl:"1月15日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"76+",ielts:"6.5",note:"跨背景可申，北欧生活质量高",dl:"1月15日",sop:false,rec:2},
+    {prog:"MSc Finance (LUSEM)",gpa:"77+",ielts:"7.0",note:"北欧金融，LUSEM商学院认可",dl:"1月15日",sop:true,rec:2},
+  ],
+  "鲁汶大学":[
+    {prog:"MSc Artificial Intelligence",gpa:"80+",ielts:"7.0",note:"比利时顶尖，欧洲AI项目强，欧盟机构实习机会多",dl:"3月1日",sop:true,rec:2},
+    {prog:"MSc Computer Science",gpa:"79+",ielts:"7.0",note:"工程+CS，欧盟地理中心，英法双语环境",dl:"3月1日",sop:false,rec:2},
+    {prog:"MSc Statistics & Data Science",gpa:"79+",ielts:"7.0",note:"统计/数据，偏学术，学费低",dl:"3月1日",sop:false,rec:2},
+  ],
+  "哥本哈根大学":[
+    {prog:"MSc Computer Science",gpa:"78+",ielts:"6.5",note:"北欧顶尖，幸福感高，英文项目多，生活成本较高",dl:"3月15日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"77+",ielts:"6.5",note:"跨背景可申，北欧生活质量高",dl:"3月15日",sop:false,rec:2},
+    {prog:"MSc Finance",gpa:"77+",ielts:"7.0",note:"北欧金融，哥本哈根金融圈",dl:"3月15日",sop:true,rec:2},
+  ],
+  "丹麦技术大学":[
+    {prog:"MSc Computer Science & Engineering",gpa:"78+",ielts:"6.5",note:"北欧顶尖理工，可再生能源/工程强，企业合作项目丰富",dl:"3月15日",sop:false,rec:2},
+    {prog:"MSc Data Science & Technology",gpa:"77+",ielts:"6.5",note:"产业联系紧密，技术应用导向",dl:"3月15日",sop:false,rec:2},
+  ],
+  "乌普萨拉大学":[
+    {prog:"MSc Computer Science",gpa:"77+",ielts:"6.5",note:"北欧最古老大学，英文项目多，学术氛围浓厚",dl:"1月15日",sop:false,rec:2},
+    {prog:"MSc Data Science",gpa:"76+",ielts:"6.5",note:"跨背景可申，北欧生活，乌普萨拉小城宁静",dl:"1月15日",sop:false,rec:2},
+  ],
 };
 
 const SCHOOL_VOICES={
