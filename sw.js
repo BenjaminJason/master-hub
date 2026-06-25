@@ -1,4 +1,4 @@
-const CACHE = 'mh-v2';
+const CACHE = 'mh-v3';
 const CORE = ['./index.html', './', './data.js', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
