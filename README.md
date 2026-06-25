@@ -1,12 +1,12 @@
 # 🎓 全球 TOP100 硕士申请导航
 
 [![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4f46e5?style=flat-square&logo=github)](https://benjaminjason.github.io/master-hub/)
-[![File Size](https://img.shields.io/badge/单文件-~600KB-10b981?style=flat-square)](#)
+[![File Size](https://img.shields.io/badge/体积-~600KB-10b981?style=flat-square)](#)
 [![Schools](https://img.shields.io/badge/院校-112所-f59e0b?style=flat-square)](#)
 [![Countries](https://img.shields.io/badge/覆盖-18国-6366f1?style=flat-square)](#)
 [![License](https://img.shields.io/badge/License-MIT-gray?style=flat-square)](LICENSE)
 
-一个**单文件 HTML 离线工具**，覆盖全球 TOP100 硕士申请全流程。无需安装、无需注册、双击即用，所有数据存储在本地浏览器。
+一个**纯前端离线工具**，覆盖全球 TOP100 硕士申请全流程。无需安装、无需注册，所有数据存储在本地浏览器。推荐通过 GitHub Pages 在线使用，也可安装为 PWA 离线 App。
 
 **[➜ 在线体验](https://benjaminjason.github.io/master-hub/)**
 
@@ -42,15 +42,18 @@
 ### 方式一：在线使用（推荐）
 直接打开 → **[https://benjaminjason.github.io/master-hub/](https://benjaminjason.github.io/master-hub/)**
 
-### 方式二：本地离线使用
+### 方式二：本地运行（需同时下载两个文件）
 ```bash
-# 下载单文件即可
+# v1.2 起数据独立为 data.js，需两个文件放在同一目录
 curl -O https://raw.githubusercontent.com/BenjaminJason/master-hub/main/index.html
-# 双击用浏览器打开
-open index.html
+curl -O https://raw.githubusercontent.com/BenjaminJason/master-hub/main/data.js
+# 用任意本地服务器打开（直接双击因浏览器安全限制无法加载 data.js）
+npx serve .        # 或
+python3 -m http.server 8080
 ```
+> 💡 **最省事的方式是直接用 GitHub Pages 链接或安装 PWA**，无需本地文件。
 
-### 方式三：安装为 App（PWA）
+### 方式三：安装为 App（PWA，推荐离线使用）
 在 Chrome/Edge 打开在线链接 → 地址栏右侧点击「安装」图标 → 像 App 一样使用，支持离线访问。
 
 ---
