@@ -2,7 +2,7 @@
   "name": "全球TOP100硕士申请导航",
   "short_name": "硕士导航",
   "description": "18国112所院校库，选校匹配、时间轴、奖学金、生活就业一站式申请工具",
-  "start_url": "./master-hub.html",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f7f7fb",
   "theme_color": "#4f46e5",

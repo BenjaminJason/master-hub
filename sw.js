@@ -1,5 +1,5 @@
 const CACHE = 'mh-v1';
-const CORE = ['./master-hub.html'];
+const CORE = ['./index.html', './'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -20,7 +20,7 @@ self.addEventListener('fetch', e => {
   e.respondWith(
     caches.match(e.request).then(cached => {
       const network = fetch(e.request).then(res => {
-        if (res && res.status === 200 && e.request.url.includes('master-hub.html')) {
+        if (res && res.status === 200 && (e.request.url.includes('index.html') || e.request.url.endsWith('master-hub/'))) {
           const clone = res.clone();
           caches.open(CACHE).then(c => c.put(e.request, clone));
         }
