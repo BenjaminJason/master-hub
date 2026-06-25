@@ -718,6 +718,7 @@ section.on{display:block}
       <div class="gsearch-drop" id="gsearch-drop"></div>
     </div>
     <button class="thm" onclick="showGPAConverter()" title="GPA 换算">📊</button>
+    <button class="thm" id="share-btn" onclick="copyShareLink(this)" title="复制当前页面链接">🔗</button>
     <a class="star-btn" href="https://github.com/BenjaminJason/master-hub/issues/new?template=feedback.md&labels=feedback&title=%5B反馈%5D+" target="_blank" rel="noopener" title="报告问题 / 提建议">💬</a>
     <button class="thm" onclick="document.body.classList.toggle('dark');localStorage.setItem('mh_theme',document.body.classList.contains('dark')?'dark':'light')">🌓</button>
   </div>
@@ -1300,8 +1301,33 @@ function renderTL(){
       </div>
     </div>`;
   }
+  /* ── 热门院校精准截止日 ── */
+  const sdEntries=Object.entries(SCHOOL_DEADLINES).filter(([name])=>{
+    const s=SCHOOLS.find(x=>x.name===name);return s&&s.c===selTLCountry;
+  }).map(([name,dls])=>dls.map(d=>({name,prog:d.prog,days:daysTo(d.month,d.day),note:d.note||""}))).flat()
+    .filter(e=>e.days<=180).sort((a,b)=>a.days-b.days);
+  let sdHtml="";
+  if(sdEntries.length){
+    const rows=sdEntries.map(e=>{
+      const col=e.days<=14?"#ef4444":e.days<=60?"#f97316":"var(--accent)";
+      return`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)">
+        <span style="font-weight:800;color:${col};font-size:15px;min-width:36px;text-align:right">${e.days}</span>
+        <span style="font-size:11px;color:var(--muted)">天</span>
+        <div style="flex:1;min-width:0">
+          <span style="font-weight:600;font-size:13px">${e.name}</span>
+          <span style="color:var(--muted);font-size:11.5px;margin-left:6px">${e.prog}</span>
+          ${e.note?`<span style="color:var(--muted);font-size:11px;margin-left:4px">· ${e.note}</span>`:""}
+        </div>
+      </div>`;
+    }).join("");
+    sdHtml=`<div class="card" style="margin-bottom:14px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--accent)">🎯 热门院校精准截止日（180天内）</div>
+      ${rows}
+      <div style="font-size:11px;color:var(--muted);margin-top:8px">滚动录取院校为「建议截止」，以官网为准。</div>
+    </div>`;
+  }
   if(!tl){
-    document.getElementById("tl-body").innerHTML=cdHtml+`<div class="card" style="color:var(--muted)">${CNAME[selTLCountry]} 的详细申请时间轴整理中——可先参考英 / 美 / 澳 的详版，多数授课型硕士节奏相近（提前 9–18 个月准备、英澳滚动、美欧多有固定截止）。</div>`;
+    document.getElementById("tl-body").innerHTML=cdHtml+sdHtml+`<div class="card" style="color:var(--muted)">${CNAME[selTLCountry]} 的详细申请时间轴整理中——可先参考英 / 美 / 澳 的详版，多数授课型硕士节奏相近（提前 9–18 个月准备、英澳滚动、美欧多有固定截止）。</div>`;
     return;
   }
   /* ── 判断当前处于哪个阶段（按月份关键词匹配）── */
@@ -1339,7 +1365,7 @@ function renderTL(){
       ${dl?`<div style="font-size:12px;font-weight:700;color:${urgColor};margin-top:7px">⏰ 距「${dl.label}」还有 ${urgentDays} 天</div>`:""}
     </div>`;
   }
-  document.getElementById("tl-body").innerHTML=cdHtml+todayHtml+tl.map((ph,i)=>{
+  document.getElementById("tl-body").innerHTML=cdHtml+sdHtml+todayHtml+tl.map((ph,i)=>{
     const isNow=i===nowIdx;
     const tipsHtml=ph.tips&&ph.tips.length?`<ul class="tl-tips">${ph.tips.map(t=>`<li>${t}</li>`).join("")}</ul>`:"";
     const resHtml=ph.res?`<div class="tl-res-btn" onclick="copyKw('${ph.res.kw.replace(/'/g,"\\'")}',this)"><span class="tl-res-ic tl-res-${ph.res.type}">${ph.res.type==="xhs"?"🍠":"B"}</span><span style="flex:1">${ph.res.kw}</span><span class="res-copy">点击复制</span></div>`:"";
@@ -1464,6 +1490,7 @@ function runMatch(){
           <div class="mprog-meta">
             <span class="mprog-field ${fm.badge}">${fm.label}</span>
             <span style="font-size:11px;color:var(--muted);background:var(--tag-bg);padding:2px 8px;border-radius:20px">🗣️ 最低雅思 ${r.p.il}</span>
+            ${(()=>{const d=SCHOOL_DIFF[r.p.s];if(!d)return"";const col={极难:"#ef4444",难:"#f97316",中:"#f59e0b",易:"#10b981"}[d.diff]||"#9ca3af";return`<span style="font-size:11px;font-weight:700;color:${col};background:var(--tag-bg);padding:2px 8px;border-radius:20px">难度·${d.diff}</span>`;})()}
             <span class="mprog-gap ${gapCls}">${gapTxt}</span>
           </div>
           <div class="mprog-note">${r.p.note}</div>
@@ -2955,6 +2982,15 @@ function globalSearch(kw){
   drop.classList.add("open");
 }
 document.addEventListener("click",e=>{if(!e.target.closest("#gsearch-wrap"))document.getElementById("gsearch-drop")?.classList.remove("open");});
+
+/* ── 复制分享链接 ── */
+function copyShareLink(el){
+  const orig=el.textContent;
+  const done=()=>{el.textContent="✓";setTimeout(()=>{el.textContent=orig;},1500);};
+  if(navigator.clipboard){navigator.clipboard.writeText(location.href).then(done).catch(()=>{fallback();});}
+  else{fallback();}
+  function fallback(){const i=document.createElement("input");i.value=location.href;document.body.appendChild(i);i.select();document.execCommand("copy");document.body.removeChild(i);done();}
+}
 
 /* ═══════════ Hash 路由 ═══════════ */
 function getHashParams(){

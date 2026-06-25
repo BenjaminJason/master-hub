@@ -42,16 +42,19 @@
 ### 方式一：在线使用（推荐）
 直接打开 → **[https://benjaminjason.github.io/master-hub/](https://benjaminjason.github.io/master-hub/)**
 
-### 方式二：本地运行（需同时下载两个文件）
+### 方式二：本地运行（需同时下载两个核心文件）
 ```bash
-# v1.2 起数据独立为 data.js，需两个文件放在同一目录
+# v1.2 起数据独立为 data.js，index.html 和 data.js 必须在同一目录
 curl -O https://raw.githubusercontent.com/BenjaminJason/master-hub/main/index.html
 curl -O https://raw.githubusercontent.com/BenjaminJason/master-hub/main/data.js
-# 用任意本地服务器打开（直接双击因浏览器安全限制无法加载 data.js）
-npx serve .        # 或
-python3 -m http.server 8080
+# 必须通过本地服务器打开（直接双击因浏览器安全策略无法加载 data.js）
+npx serve .          # 方法一
+python3 -m http.server 8080  # 方法二（访问 http://localhost:8080）
 ```
 > 💡 **最省事的方式是直接用 GitHub Pages 链接或安装 PWA**，无需本地文件。
+
+### 分享特定页面
+切换到任意 tab / 国家后，点击右上角 **🔗** 按钮复制当前页面链接，发给朋友可直接跳转到同一视图。
 
 ### 方式三：安装为 App（PWA，推荐离线使用）
 在 Chrome/Edge 打开在线链接 → 地址栏右侧点击「安装」图标 → 像 App 一样使用，支持离线访问。
@@ -97,7 +100,7 @@ python3 -m http.server 8080
 ## 更新计划
 
 - [x] GPA 换算器（85分 → UK First / GPA 3.5）
-- [ ] 申请截止日期精准数据库（滚动 vs 固定 deadline）
+- [x] 申请截止日期精准数据库（热门院校精准截止日，180天内倒计时）
 - [ ] 日本 / 荷兰 / 瑞士扩展院校
 - [ ] 录取数据众包（买家提交真实录取结果）
 - [ ] QS 2028 数据更新（预计 2027 年 6 月）

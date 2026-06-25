@@ -1703,6 +1703,61 @@ const PROG_DETAILS={
     {prog:"Master of Data Science",gpa:"75+",ielts:"6.5",note:"跨背景可申，统计/商科转CS首选",dl:"滚动",sop:false,rec:2},
     {prog:"Master of Finance",gpa:"75+",ielts:"6.5",note:"CFA考点整合好，就业联系紧密",dl:"滚动",sop:false,rec:2},
   ],
+  "爱丁堡大学":[
+    {prog:"MSc Artificial Intelligence",gpa:"82+",ielts:"6.5",note:"AI老牌强项，Informatics学院全球顶尖，早申更稳",dl:"3月31日",sop:true,rec:2},
+    {prog:"MSc Data Science",gpa:"80+",ielts:"6.5",note:"商科/理工转CS热门路径，Python+统计背景佳",dl:"3月",sop:true,rec:2},
+    {prog:"MSc Finance & Investment",gpa:"78+",ielts:"7.0",note:"商学院认list，均分要求清晰，爱丁堡金融圈认可度高",dl:"4月",sop:true,rec:2},
+  ],
+  "曼彻斯特大学":[
+    {prog:"MSc Advanced Computer Science",gpa:"80+",ielts:"6.5",note:"中国学生最多的CS项目，rolling录取早申优势显著",dl:"滚动（2月前）",sop:true,rec:2},
+    {prog:"MSc Data Science",gpa:"78+",ielts:"6.5",note:"商科+CS复合，三档list对双非友好",dl:"滚动（2月前）",sop:false,rec:2},
+    {prog:"MSc Finance (AMBS)",gpa:"79+",ielts:"6.5",note:"AMBS商学院声誉好，双非85+可申第二档",dl:"滚动（3月前）",sop:true,rec:2},
+  ],
+  "华威大学":[
+    {prog:"MSc Finance (WBS)",gpa:"82+",ielts:"7.0",note:"WBS商学院精英感强，毕业生进四大/投行比例高",dl:"3月15日",sop:true,rec:2},
+    {prog:"MSc Business Analytics",gpa:"80+",ielts:"6.5",note:"数学系背景强，分析偏理论，GPA要求高于商科同类",dl:"3月",sop:true,rec:2},
+    {prog:"MSc Computer Science",gpa:"78+",ielts:"6.5",note:"性价比好，数学系CS背景强，双非78+可冲",dl:"3月31日",sop:false,rec:2},
+  ],
+  "伦敦国王学院":[
+    {prog:"MSc Computer Science",gpa:"80+",ielts:"7.0",note:"伦敦地段好，CS招生量大于帝国/UCL，双非80+有机会",dl:"3月31日",sop:true,rec:2},
+    {prog:"MSc Financial Mathematics",gpa:"80+",ielts:"7.0",note:"数学系旗舰，量化方向就业有竞争力",dl:"3月",sop:true,rec:2},
+    {prog:"MSc Data Science",gpa:"78+",ielts:"7.0",note:"医学院+CS跨学科，生物/健康数据方向有特色",dl:"4月",sop:false,rec:2},
+  ],
+  "纽约大学":[
+    {prog:"MS Computer Science (Courant/Tandon)",gpa:"82+",ielts:"7.0",note:"纽约科技圈直达，Courant数学系强，招生量大",dl:"2月1日",sop:true,rec:3},
+    {prog:"MS Financial Engineering (Tandon)",gpa:"83+",ielts:"7.0",note:"顶级MFE之一，华尔街认可度极高，GRE 325+",dl:"1月15日",sop:true,rec:3},
+    {prog:"MS Data Science",gpa:"80+",ielts:"7.0",note:"跨背景友好，数理统计+Python基础即可申",dl:"2月15日",sop:true,rec:2},
+  ],
+  "佐治亚理工学院":[
+    {prog:"MS Computer Science (MSCS)",gpa:"82+",ielts:"7.0",note:"公立CS顶尖，性价比全美最高之一，OMS CS网课也顶级",dl:"1月15日",sop:true,rec:3},
+    {prog:"MS Analytics",gpa:"80+",ielts:"7.0",note:"跨学科数据分析，商科转型首选，就业导向明显",dl:"1月15日",sop:true,rec:2},
+    {prog:"MS ECE (Electrical & Computer Eng)",gpa:"80+",ielts:"7.0",note:"工程老牌强项，含嵌入式/芯片/信号处理方向",dl:"1月15日",sop:true,rec:3},
+  ],
+  "悉尼大学":[
+    {prog:"Master of Computer Science",gpa:"75+",ielts:"6.5",note:"澳洲历史最悠久，CS含金量稳定，滚动录取早申",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Data Science",gpa:"74+",ielts:"6.5",note:"跨背景可申，偏应用，Python+统计背景即可",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Commerce (Finance)",gpa:"74+",ielts:"6.5",note:"商科list分档，双非80+可申，悉尼金融圈认可",dl:"滚动",sop:false,rec:2},
+  ],
+  "新南威尔士大学":[
+    {prog:"Master of Information Technology",gpa:"72+",ielts:"6.5",note:"三学期制节奏快，悉尼科技就业直通，双非75+可申",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Data Science & Decisions",gpa:"72+",ielts:"6.5",note:"统计+决策科学交叉，跨背景友好",dl:"滚动",sop:false,rec:2},
+    {prog:"Master of Financial Mathematics",gpa:"74+",ielts:"6.5",note:"量化金融澳洲最强之一，数学/精算背景佳",dl:"滚动",sop:false,rec:2},
+  ],
+  "南洋理工大学":[
+    {prog:"MSc Artificial Intelligence",gpa:"78+",ielts:"6.5",note:"坡县AI就业直通，年轻项目快速崛起",dl:"3月",sop:true,rec:2},
+    {prog:"MSc Financial Engineering",gpa:"78+",ielts:"6.5",note:"NTU商学院量化金融，东南亚金融圈认可",dl:"2月",sop:true,rec:2},
+    {prog:"MSc Computer Control & Automation",gpa:"78+",ielts:"6.5",note:"工程+CS复合，含机器人/控制/嵌入式方向",dl:"3月",sop:false,rec:2},
+  ],
+  "香港中文大学":[
+    {prog:"MSc in Computer Science",gpa:"75+",ielts:"6.5",note:"书院制，港校CS含金量高，IANG工签留港就业",dl:"2月28日",sop:false,rec:2},
+    {prog:"MSc in Finance",gpa:"78+",ielts:"6.5",note:"商科名校，香港金融圈认可，CFA备考资源好",dl:"3月",sop:true,rec:2},
+    {prog:"MSc in Business Analytics",gpa:"75+",ielts:"6.5",note:"跨背景友好，数据+商科复合就业广",dl:"3月",sop:false,rec:2},
+  ],
+  "英属哥伦比亚大学":[
+    {prog:"MSc Computer Science",gpa:"82+",ielts:"7.0",note:"温哥华科技生态直通，竞争激烈，双非需强背景",dl:"12月1日",sop:true,rec:3},
+    {prog:"MEng Software Systems",gpa:"80+",ielts:"7.0",note:"授课型工程，就业导向，加拿大PGWP工签友好",dl:"1月15日",sop:true,rec:2},
+    {prog:"MSc Statistics",gpa:"80+",ielts:"7.0",note:"数据科学方向，统计/数学本科优先",dl:"12月15日",sop:true,rec:2},
+  ],
 };
 
 const SCHOOL_VOICES={
@@ -2264,6 +2319,48 @@ const KEY_DEADLINES={
   nz:{label:"新西兰8月学期申请截止",month:6,day:1,note:"新西兰院校2月/7月开学，6月可申下轮或查滚动录取"},
   my:{label:"马来西亚申请截止",month:4,day:30,note:"各院校不同，EMGS体检须提前2–3个月预约"},
   cn:{label:"来华留学申请截止（CSC）",month:3,day:31,note:"CSC政府奖学金3月31日截止；各院校自费申请时间不同"},
+};
+
+/* ── 热门院校精准截止日（月/日，daysTo 自动算下次） ── */
+const SCHOOL_DEADLINES={
+  // ── 英国 ──
+  "牛津大学":      [{prog:"Financial Economics MSc",month:1,day:16,note:"Saïd主轮"},{prog:"Computer Science MSc",month:1,day:20}],
+  "剑桥大学":      [{prog:"MPhil Engineering/Data",month:12,day:5,note:"第一轮"}],
+  "帝国理工学院":  [{prog:"Computing MSc（建议截止）",month:12,day:31,note:"滚动，12月前最稳"}],
+  "伦敦大学学院":  [{prog:"CS/Data Science（建议截止）",month:3,day:31,note:"滚动，3月前递"},{prog:"Architecture MArch",month:3,day:15}],
+  "伦敦政治经济学院":[{prog:"多数项目",month:11,day:30,note:"第一轮"},{prog:"部分项目延期",month:1,day:31}],
+  "爱丁堡大学":    [{prog:"AI/CS/Data",month:3,day:31}],
+  "曼彻斯特大学":  [{prog:"CS/Data（建议截止）",month:2,day:28,note:"rolling，早申优势大"}],
+  "华威大学":      [{prog:"WBS Finance/Business",month:3,day:15},{prog:"CS",month:3,day:31}],
+  "伦敦国王学院":  [{prog:"多数项目",month:3,day:31}],
+  "布里斯托大学":  [{prog:"CS/工程（建议截止）",month:4,day:30,note:"滚动"}],
+  // ── 美国 ──
+  "麻省理工学院":  [{prog:"多数硕士项目",month:12,day:15}],
+  "斯坦福大学":    [{prog:"多数项目",month:12,day:5}],
+  "哈佛大学":      [{prog:"多数硕士项目",month:1,day:2}],
+  "卡内基梅隆大学":[{prog:"MSML",month:12,day:1},{prog:"MCDS/MSCS",month:12,day:15},{prog:"MSCF",month:11,day:1}],
+  "哥伦比亚大学":  [{prog:"Financial Engineering",month:2,day:1},{prog:"CS/Applied Math",month:2,day:15}],
+  "纽约大学":      [{prog:"Financial Engineering",month:1,day:15},{prog:"CS/Data Science",month:2,day:1}],
+  "佐治亚理工学院":[{prog:"CS/Analytics/ECE",month:1,day:15}],
+  "伊利诺伊大学香槟":[{prog:"CS/ECE",month:12,day:15}],
+  "加州大学伯克利":[{prog:"MEng 多数方向",month:1,day:10}],
+  "康奈尔大学":    [{prog:"多数工程项目",month:1,day:15}],
+  // ── 澳大利亚 ──
+  "墨尔本大学":    [{prog:"CS/Finance（建议截止）",month:11,day:30,note:"滚动，2月入学提前"}],
+  "悉尼大学":      [{prog:"CS/Data Science（建议截止）",month:12,day:31,note:"滚动"}],
+  "新南威尔士大学":[{prog:"IT/Data（建议截止）",month:1,day:31,note:"滚动，2月入学"}],
+  // ── 加拿大 ──
+  "多伦多大学":    [{prog:"MScAC/MEng",month:1,day:31}],
+  "英属哥伦比亚大学":[{prog:"CS",month:12,day:1},{prog:"MEng/统计",month:1,day:15}],
+  "麦吉尔大学":    [{prog:"CS/软件工程",month:1,day:15}],
+  // ── 新加坡 ──
+  "新加坡国立大学":[{prog:"CS/金融（第一轮）",month:2,day:1}],
+  "南洋理工大学":  [{prog:"CS/AI/工程",month:3,day:1}],
+  // ── 香港 ──
+  "香港大学":      [{prog:"多数项目",month:3,day:31}],
+  "香港中文大学":  [{prog:"CS/Finance",month:2,day:28}],
+  "香港科技大学":  [{prog:"多数项目",month:3,day:15}],
+  "香港城市大学":  [{prog:"多数项目",month:3,day:31}],
 };
 
 /* ── 中国学生录取难度 & 双非友好度（Feature 5 对比升级） ── */
