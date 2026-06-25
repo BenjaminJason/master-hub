@@ -1,0 +1,26 @@
+<svg width="800" height="800" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+<rect x="0" y="0" width="680" height="680" fill="#F6F6FB"/>
+<rect x="0" y="0" width="10" height="680" fill="#4F46E5"/>
+<rect x="232" y="50" width="216" height="38" rx="19" fill="#4F46E5"/>
+<text x="340" y="75" text-anchor="middle" fill="#FFFFFF" style="font-size:18px;font-weight:500;letter-spacing:1px">美国 STEM 博士申请</text>
+<text x="340" y="222" text-anchor="middle" style="font-size:64px;font-weight:800">
+<tspan fill="#3730A3">找导师</tspan><tspan fill="#6366F1" dx="8"> &gt; </tspan><tspan fill="#B4B2C8" dx="8">找学校</tspan>
+</text>
+<text x="340" y="278" text-anchor="middle" fill="#6B7280" style="font-size:23px;font-weight:500">一站式申请导航 · 自学申请党专用</text>
+<rect x="56" y="320" width="178" height="48" rx="24" fill="#EEF0FF"/>
+<text x="145" y="350" text-anchor="middle" fill="#3730A3" style="font-size:19px;font-weight:500">96 位导师库</text>
+<rect x="251" y="320" width="178" height="48" rx="24" fill="#EEF0FF"/>
+<text x="340" y="350" text-anchor="middle" fill="#3730A3" style="font-size:19px;font-weight:500">套磁进度追踪</text>
+<rect x="446" y="320" width="178" height="48" rx="24" fill="#EEF0FF"/>
+<text x="535" y="350" text-anchor="middle" fill="#3730A3" style="font-size:19px;font-weight:500">选校匹配</text>
+<rect x="56" y="382" width="178" height="48" rx="24" fill="#EEF0FF"/>
+<text x="145" y="412" text-anchor="middle" fill="#3730A3" style="font-size:19px;font-weight:500">签证 &amp; 政策</text>
+<rect x="251" y="382" width="178" height="48" rx="24" fill="#EEF0FF"/>
+<text x="340" y="412" text-anchor="middle" fill="#3730A3" style="font-size:19px;font-weight:500">25 校口碑</text>
+<rect x="446" y="382" width="178" height="48" rx="24" fill="#EEF0FF"/>
+<text x="535" y="412" text-anchor="middle" fill="#3730A3" style="font-size:19px;font-weight:500">城市生活攻略</text>
+<text x="340" y="478" text-anchor="middle" fill="#9295A3" style="font-size:16px">时间轴 · 邮件模板 · 申请清单 · 奖学金 · 费用预算 —— 全在一个网页里</text>
+<rect x="0" y="540" width="680" height="140" fill="#4F46E5"/>
+<text x="340" y="598" text-anchor="middle" fill="#FFFFFF" style="font-size:27px;font-weight:500">开源免费 · 打开即用 · 进度自动保存</text>
+<text x="340" y="638" text-anchor="middle" fill="#C7D2FE" style="font-size:15px">闲鱼搜「美国博士申请」 · github.com/BenjaminJason/phd-hub</text>
+</svg>

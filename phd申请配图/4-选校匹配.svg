@@ -1,0 +1,28 @@
+<svg width="816" height="816" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+<rect x="0" y="0" width="680" height="680" fill="#F6F6FB"/>
+<rect x="0" y="0" width="10" height="680" fill="#4F46E5"/>
+<rect x="40" y="42" width="96" height="30" rx="15" fill="#E0E7FF"/>
+<text x="88" y="62" text-anchor="middle" fill="#4338CA" style="font-size:13px;font-weight:500">功能 3 / 4</text>
+<text x="40" y="116" style="font-size:36px;font-weight:800" fill="#1F2937">填背景 · 算匹配度</text>
+<text x="40" y="152" style="font-size:17px" fill="#6B7280">输入 GPA · 论文 · 科研年限，自动评估每位导师录取匹配</text>
+<text x="40" y="178" style="font-size:17px" fill="#6B7280">结果分 冲刺 / 匹配 / 保底，选校不再凭感觉</text>
+<rect x="40" y="206" width="600" height="410" rx="16" fill="#FFFFFF" stroke="#E6E6EE"/>
+<text x="64" y="248" style="font-size:15px;font-weight:500" fill="#1F2937">你的背景</text>
+<rect x="64" y="260" width="120" height="40" rx="8" fill="#F3F4FF" stroke="#E0E0EE"/><text x="124" y="285" text-anchor="middle" fill="#1F2937" style="font-size:15px">GPA 3.7</text>
+<rect x="196" y="260" width="110" height="40" rx="8" fill="#EEF0FF"/><text x="251" y="285" text-anchor="middle" fill="#3730A3" style="font-size:14px">论文 1 篇</text>
+<rect x="318" y="260" width="110" height="40" rx="8" fill="#EEF0FF"/><text x="373" y="285" text-anchor="middle" fill="#3730A3" style="font-size:14px">科研 2 年</text>
+<rect x="440" y="260" width="110" height="40" rx="8" fill="#EEF0FF"/><text x="495" y="285" text-anchor="middle" fill="#3730A3" style="font-size:14px">方向 NLP</text>
+<line x1="64" y1="324" x2="616" y2="324" stroke="#EFEFF5"/>
+<circle cx="100" cy="374" r="27" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/><text x="100" y="382" text-anchor="middle" fill="#047857" style="font-size:22px;font-weight:800">85</text>
+<text x="146" y="367" style="font-size:17px;font-weight:500" fill="#1F2937">Chelsea Finn · Stanford</text>
+<text x="146" y="390" style="font-size:14px" fill="#6B7280">匹配度高 · 可作冲刺校</text>
+<line x1="64" y1="418" x2="616" y2="418" stroke="#EFEFF5"/>
+<circle cx="100" cy="464" r="27" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/><text x="100" y="472" text-anchor="middle" fill="#92400E" style="font-size:22px;font-weight:800">62</text>
+<text x="146" y="457" style="font-size:17px;font-weight:500" fill="#1F2937">Percy Liang · Stanford</text>
+<text x="146" y="480" style="font-size:14px" fill="#6B7280">中等匹配 · 建议再补 1 篇论文</text>
+<line x1="64" y1="508" x2="616" y2="508" stroke="#EFEFF5"/>
+<circle cx="100" cy="554" r="27" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/><text x="100" y="562" text-anchor="middle" fill="#991B1B" style="font-size:22px;font-weight:800">41</text>
+<text x="146" y="547" style="font-size:17px;font-weight:500" fill="#1F2937">Michael Jordan · Berkeley</text>
+<text x="146" y="570" style="font-size:14px" fill="#6B7280">偏冲刺 · GPA 与论文需提升</text>
+<text x="340" y="652" text-anchor="middle" fill="#9295A3" style="font-size:13px">美国博士申请导航 · 闲鱼搜「美国博士申请」</text>
+</svg>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学学习舱 · Math Studio</title>
+<style>
+  :root{
+    --bg:#0f1117;--panel:#171a23;--panel2:#1e222e;--line:#2a2f3d;--text:#e7e9ee;
+    --muted:#9aa3b2;--accent:#6ea8fe;--accent2:#7ee0c0;--warn:#f0b86e;--chip:#262b39;
+    --shadow:0 4px 18px rgba(0,0,0,.35);--grid:#2a3142;
+  }
+  body.light{--bg:#f5f6f8;--panel:#fff;--panel2:#f0f2f6;--line:#e2e5eb;--text:#1a1d24;
+    --muted:#5d6675;--accent:#2f6fed;--accent2:#1d9b73;--warn:#c8861f;--chip:#eef1f6;
+    --shadow:0 4px 18px rgba(0,0,0,.08);--grid:#dfe3ea;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;
+       background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
+  .app{display:grid;grid-template-columns:210px 1fr 340px;height:100vh}
+  /* 一级：领域书签 */
+  .sidebar{background:var(--panel);border-right:1px solid var(--line);padding:16px 10px;overflow-y:auto}
+  .brand{font-weight:700;font-size:16px;padding:4px 8px 12px;display:flex;align-items:center;gap:7px}
+  .brand small{font-weight:400;color:var(--muted);font-size:11px}
+  .navitem{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;cursor:pointer;
+           color:var(--muted);font-size:13.5px;margin-bottom:2px;transition:.12s}
+  .navitem:hover{background:var(--panel2);color:var(--text)}
+  .navitem.active{background:var(--accent);color:#fff;font-weight:600}
+  .navitem .cnt{margin-left:auto;font-size:11px;opacity:.7}
+  .navsep{font-size:10px;color:var(--muted);letter-spacing:1px;padding:12px 10px 5px}
+  .badge{font-size:9px;background:var(--accent2);color:#06281f;border-radius:5px;padding:1px 5px;margin-left:6px;font-weight:700}
+  /* 中间：二级模块 + 内容 */
+  .main{overflow-y:auto;padding:20px 26px}
+  .topbar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .crumb{color:var(--muted);font-size:13px}
+  .crumb b{color:var(--text)}
+  .toggle{margin-left:auto;background:var(--panel);border:1px solid var(--line);color:var(--muted);
+          padding:7px 11px;border-radius:9px;cursor:pointer;font-size:12.5px}
+  /* 模块标签条（嵌套二级导航） */
+  .modtabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:14px}
+  .modtab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:8px 13px;
+          border-radius:9px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:7px;transition:.12s}
+  .modtab:hover{color:var(--text)}
+  .modtab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .modtab .dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+  .modtab.on .dot{background:#fff}
+  .modtab.mdone .dot{background:var(--accent2)}
+  h1{font-size:23px;margin:2px 0 6px}
+  .lead{color:var(--muted);font-size:14px;line-height:1.65;margin:0 0 20px}
+  /* 视频 */
+  .videowrap{position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;
+             margin-bottom:8px;box-shadow:var(--shadow);background:#000}
+  .videowrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vmeta{font-size:12px;color:var(--muted);margin-bottom:22px;display:flex;gap:12px;flex-wrap:wrap}
+  .vmeta a{color:var(--accent);text-decoration:none}
+  /* 逐块讲解 */
+  .blocks{display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+  .block{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);
+         border-radius:10px;padding:14px 16px}
+  .block h4{margin:0 0 7px;font-size:15px;display:flex;align-items:center;gap:8px}
+  .block .en{font-size:11.5px;color:var(--muted);font-weight:400;font-style:italic}
+  .block p{margin:0;font-size:13.5px;line-height:1.75;color:var(--text)}
+  .block .hl{color:var(--accent2);font-weight:600}
+  .block .formula{display:inline-block;background:var(--chip);padding:2px 8px;border-radius:6px;
+                  font-family:"SF Mono",Consolas,monospace;font-size:13px;margin:2px 0}
+  /* 形象化 */
+  .vizcard{background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--line);
+           border-radius:12px;padding:16px;margin-bottom:24px;text-align:center}
+  .vizcard .vtitle{font-size:12px;color:var(--warn);margin-bottom:10px;text-align:left}
+  .vizcard svg{max-width:100%;height:auto}
+  .vizcap{font-size:12px;color:var(--muted);margin-top:10px}
+  /* 资料精读：原文→翻译→讲解 */
+  .reading{margin-bottom:26px}
+  .reading h3{font-size:14px;color:var(--accent2);margin:0 0 4px}
+  .reading .rsrc{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+  .reading .rsrc a{color:var(--accent);text-decoration:none}
+  .rb{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:0;margin-bottom:12px;overflow:hidden}
+  .rb .org{padding:11px 14px;font-family:Georgia,"Times New Roman",serif;font-size:13px;line-height:1.7;
+           color:var(--muted);font-style:italic;border-left:3px solid var(--muted);background:var(--panel2)}
+  .rb .org::before{content:"原文 EN";display:block;font-family:inherit;font-style:normal;font-size:10px;
+                   letter-spacing:1px;color:var(--muted);opacity:.7;margin-bottom:4px}
+  .rb .zh{padding:11px 14px;font-size:13.5px;line-height:1.7;border-left:3px solid var(--accent)}
+  .rb .zh::before{content:"翻译 中";display:block;font-size:10px;letter-spacing:1px;color:var(--accent);margin-bottom:4px}
+  .rb .nt{padding:11px 14px;font-size:13px;line-height:1.7;border-left:3px solid var(--warn);background:var(--panel2)}
+  .rb .nt::before{content:"讲解 ✦";display:block;font-size:10px;letter-spacing:1px;color:var(--warn);margin-bottom:4px}
+  /* 配套资料 */
+  .extra{margin-bottom:30px}
+  .extra h3{font-size:13px;color:var(--accent2);margin:0 0 10px}
+  .reslist{display:flex;flex-direction:column;gap:8px}
+  .res{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);
+       border-radius:9px;padding:10px 12px;font-size:13px}
+  .res a{color:var(--text);text-decoration:none;flex:1}
+  .res a:hover{color:var(--accent)}
+  .res .ty{font-size:11px;padding:2px 7px;border-radius:5px;background:var(--chip);color:var(--muted)}
+  .donebar{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+  .donebtn{background:var(--accent2);color:#06281f;border:0;padding:9px 16px;border-radius:9px;
+           font-weight:600;cursor:pointer;font-size:13px}
+  .donebtn.undo{background:var(--panel);color:var(--muted);border:1px solid var(--line)}
+  /* 简单卡片视图（未深做的领域） */
+  .cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+  .lcard{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 14px}
+  .lcard a{color:var(--text);text-decoration:none;font-weight:600;font-size:14px}
+  .lcard a:hover{color:var(--accent)}
+  .lcard p{color:var(--muted);font-size:12.5px;line-height:1.55;margin:7px 0 0}
+  .soon{background:var(--chip);border:1px dashed var(--line);border-radius:11px;padding:18px;
+        color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:16px}
+  /* 精选 + 更多 */
+  .morebar{margin:8px 0 36px;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+  .morebar summary{list-style:none;cursor:pointer;padding:13px 16px;font-size:13.5px;font-weight:600;
+                   display:flex;align-items:center;gap:8px;background:var(--panel);user-select:none}
+  .morebar summary::-webkit-details-marker{display:none}
+  .morebar summary .ar{margin-left:auto;color:var(--muted);transition:.2s}
+  .morebar[open] summary .ar{transform:rotate(90deg)}
+  .coursebar summary{background:linear-gradient(90deg,rgba(124,156,255,.14),transparent)}
+  .coursebar .cwhy{margin:14px 16px 6px;font-size:13px;line-height:1.7;color:var(--fg)}
+  .coursebar .videowrap,.coursebar .vmeta{margin-left:16px;margin-right:16px}
+  .coursebar .ctip{margin:10px 16px 16px;font-size:12px;line-height:1.7;color:var(--muted);
+    background:var(--card2,rgba(127,127,127,.08));border-radius:9px;padding:10px 12px}
+  .morebar summary small{color:var(--muted);font-weight:400}
+  .morebody{padding:6px 16px 16px}
+  .morebody .res a{flex:1}
+  .morerepo{display:block;margin-top:10px;font-size:12.5px;color:var(--accent);text-decoration:none}
+  /* 右侧：双层笔记 */
+  .right{background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;height:100vh}
+  .rsection{padding:14px 14px}
+  .rhead{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;margin-bottom:8px}
+  .rhead .tip{margin-left:auto;font-size:11px;color:var(--muted);font-weight:400}
+  /* AI 区 */
+  .ai{flex:0 0 46%;border-bottom:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+  .chatlog{flex:1;overflow-y:auto;padding:4px 2px;display:flex;flex-direction:column;gap:8px}
+  .msg{font-size:12.5px;line-height:1.6;padding:8px 11px;border-radius:10px;max-width:90%;white-space:pre-wrap}
+  .msg.u{background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+  .msg.a{background:var(--panel2);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
+  .msg.sys{background:transparent;color:var(--muted);font-size:11.5px;align-self:center;text-align:center}
+  .chatin{display:flex;gap:6px;margin-top:8px}
+  .chatin input{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--text);
+                border-radius:9px;padding:8px 11px;font-size:12.5px;outline:none}
+  .chatin button{background:var(--accent);color:#fff;border:0;border-radius:9px;padding:0 13px;cursor:pointer;font-size:13px}
+  .keyrow{font-size:11px;margin-top:6px}
+  .keyrow a{color:var(--accent);cursor:pointer}
+  .askwrap{flex:1;display:flex;flex-direction:column;min-height:0}
+  .askbox{flex:1;min-height:54px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;
+          color:var(--text);padding:10px;font-size:13px;line-height:1.6;resize:none;outline:none;font-family:inherit;margin-bottom:8px}
+  .copybtn{background:var(--accent);color:#fff;border:0;border-radius:9px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;transition:.12s}
+  .copybtn:hover{filter:brightness(1.08)}
+  .copybtn.done{background:var(--accent2);color:#06281f}
+  .copyhint{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.55}
+  /* 笔记区 */
+  .mynote{flex:1;display:flex;flex-direction:column;min-height:0}
+  .mynote .tools{display:flex;gap:5px;margin-bottom:7px}
+  .mynote .tools button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);
+                        border-radius:7px;padding:5px 9px;font-size:11.5px;cursor:pointer}
+  .mynote textarea{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:10px;
+                   color:var(--text);padding:11px;font-size:13px;line-height:1.65;resize:none;outline:none;
+                   font-family:inherit;min-height:0}
+  .savehint{font-size:11px;color:var(--muted);height:14px;text-align:right;margin-top:5px}
+  ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+  @media(max-width:1100px){.app{grid-template-columns:1fr}.sidebar,.right{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">📐 学习舱<small>Math Studio</small></div>
+    <div id="nav"></div>
+    <div class="navsep">来源</div>
+    <div class="navitem" onclick="window.open('https://github.com/rossant/awesome-math','_blank')">⭐ Awesome Math</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="crumb" id="crumb"></div>
+      <span class="toggle" onclick="toggleTheme()">🌙 主题</span>
+    </div>
+    <div class="modtabs" id="modtabs"></div>
+    <div id="content"></div>
+  </main>
+
+  <aside class="right">
+    <!-- 上：AI 问答 -->
+    <div class="ai rsection">
+      <div class="rhead">🤖 问 AI <span class="tip">零配置 · 免费</span></div>
+      <div class="askwrap">
+        <textarea id="chatinput" class="askbox" placeholder="打你的问题，例如：这块没懂，举个例子…"></textarea>
+        <button class="copybtn" onclick="copyQuestion()">📋 复制问题（已附本模块内容）</button>
+        <div class="copyhint">复制后，粘到你常用的 <b>Claude / ChatGPT</b> 网页里回车即可。问题会自动带上你正在学的模块要点，不用再解释背景。</div>
+      </div>
+    </div>
+    <!-- 下：我的笔记 -->
+    <div class="mynote rsection">
+      <div class="rhead">✍️ 我的笔记 <span class="tip">自动存本地</span></div>
+      <div class="tools">
+        <button onclick="insertNote('🔗 链接：')">＋链接</button>
+        <button onclick="insertNote('\n— '+new Date().toLocaleString()+'\n')">＋时间</button>
+        <button onclick="document.getElementById('imgpick').click()">＋图片</button>
+        <input type="file" id="imgpick" accept="image/*" style="display:none" onchange="pasteImg(event)">
+      </div>
+      <textarea id="note" placeholder="随手记：自己的理解、公式、贴链接、贴图…&#10;（图片/链接也会一起存本地）"></textarea>
+      <div class="savehint" id="savehint"></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+/* =================== 数据 =================== */
+/* 线性代数 = 已做透的样板：每个模块含 视频 + 逐块中文讲解 + 形象化SVG + 配套资料 */
+const VEC_SVG=`<svg viewBox="0 0 320 200"><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6ea8fe"/></marker></defs>
+<g stroke="var(--grid)" stroke-width="1">${[...Array(9)].map((_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="200"/><line x1="0" y1="${i*25}" x2="320" y2="${i*25}"/>`).join('')}</g>
+<line x1="0" y1="100" x2="320" y2="100" stroke="var(--muted)" stroke-width="1.5"/><line x1="160" y1="0" x2="160" y2="200" stroke="var(--muted)" stroke-width="1.5"/>
+<line x1="160" y1="100" x2="280" y2="40" stroke="#6ea8fe" stroke-width="3" marker-end="url(#ar)"/>
+<text x="225" y="55" fill="#6ea8fe" font-size="13">v = [3, 2]</text>
+<line x1="160" y1="100" x2="280" y2="100" stroke="var(--accent2)" stroke-width="2" stroke-dasharray="3"/>
+<line x1="280" y1="100" x2="280" y2="40" stroke="var(--accent2)" stroke-width="2" stroke-dasharray="3"/></svg>`;
+const SPAN_SVG=`<svg viewBox="0 0 320 200"><g stroke="var(--grid)">${[...Array(9)].map((_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="200"/><line x1="0" y1="${i*25}" x2="320" y2="${i*25}"/>`).join('')}</g>
+<line x1="0" y1="100" x2="320" y2="100" stroke="var(--muted)"/><line x1="160" y1="0" x2="160" y2="200" stroke="var(--muted)"/>
+<line x1="160" y1="100" x2="200" y2="100" stroke="#6ea8fe" stroke-width="3"/><text x="202" y="96" fill="#6ea8fe" font-size="12">î</text>
+<line x1="160" y1="100" x2="160" y2="60" stroke="var(--accent2)" stroke-width="3"/><text x="146" y="58" fill="var(--accent2)" font-size="12">ĵ</text>
+<rect x="60" y="20" width="200" height="160" fill="#6ea8fe" opacity="0.08"/>
+<text x="70" y="40" fill="var(--muted)" font-size="12">两个向量张成整个平面</text></svg>`;
+const TRANS_SVG=`<svg viewBox="0 0 320 200"><g stroke="var(--grid)">${[...Array(9)].map((_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="200"/>`).join('')}</g>
+<g stroke="#6ea8fe" stroke-width="1" opacity="0.5">${[...Array(6)].map((_,i)=>`<line x1="${40+i*30}" y1="40" x2="${10+i*30}" y2="160"/>`).join('')}${[...Array(5)].map((_,i)=>`<line x1="40" y1="${40+i*30}" x2="170" y2="${40+i*30}"/>`).join('')}</g>
+<line x1="40" y1="160" x2="100" y2="160" stroke="#6ea8fe" stroke-width="3"/><line x1="40" y1="160" x2="70" y2="100" stroke="var(--accent2)" stroke-width="3"/>
+<text x="120" y="180" fill="var(--muted)" font-size="11">网格保持平行、等距 → 线性变换</text></svg>`;
+const DET_SVG=`<svg viewBox="0 0 320 200"><g stroke="var(--grid)">${[...Array(9)].map((_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="200"/><line x1="0" y1="${i*25}" x2="320" y2="${i*25}"/>`).join('')}</g>
+<rect x="80" y="80" width="40" height="40" fill="var(--accent2)" opacity="0.3" stroke="var(--accent2)"/><text x="82" y="135" fill="var(--accent2)" font-size="10">原 1×1</text>
+<rect x="180" y="40" width="80" height="80" fill="#6ea8fe" opacity="0.25" stroke="#6ea8fe"/><text x="185" y="135" fill="#6ea8fe" font-size="10">变换后 面积×4</text>
+<text x="100" y="30" fill="var(--warn)" font-size="13">det = 面积缩放倍数</text></svg>`;
+const EIG_SVG=`<svg viewBox="0 0 320 200"><g stroke="var(--grid)">${[...Array(9)].map((_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="200"/><line x1="0" y1="${i*25}" x2="320" y2="${i*25}"/>`).join('')}</g>
+<line x1="160" y1="100" x2="40" y2="180" stroke="var(--muted)" stroke-dasharray="4"/><line x1="160" y1="100" x2="280" y2="20" stroke="var(--muted)" stroke-dasharray="4"/>
+<defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--warn)"/></marker></defs>
+<line x1="160" y1="100" x2="220" y2="60" stroke="var(--warn)" stroke-width="3" marker-end="url(#ar2)"/>
+<line x1="160" y1="100" x2="250" y2="40" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="3"/>
+<text x="100" y="30" fill="var(--warn)" font-size="12">特征向量：变换后仍在自己那条线上</text></svg>`;
+const G=[...Array(9)].map((_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="200"/><line x1="0" y1="${i*25}" x2="320" y2="${i*25}"/>`).join('');
+const LIM_SVG=`<svg viewBox="0 0 320 200"><g stroke="var(--grid)">${G}</g>
+<line x1="0" y1="100" x2="320" y2="100" stroke="var(--muted)"/><line x1="160" y1="0" x2="160" y2="200" stroke="var(--muted)"/>
+<path d="M40,170 Q150,150 198,74" fill="none" stroke="#6ea8fe" stroke-width="3"/>
+<path d="M202,66 Q240,30 285,18" fill="none" stroke="#6ea8fe" stroke-width="3"/>
+<circle cx="200" cy="70" r="5" fill="var(--panel)" stroke="#6ea8fe" stroke-width="2"/>
+<line x1="160" y1="70" x2="200" y2="70" stroke="var(--accent2)" stroke-width="1.5" stroke-dasharray="3"/>
+<line x1="200" y1="70" x2="200" y2="100" stroke="var(--accent2)" stroke-width="1.5" stroke-dasharray="3"/>
+<text x="140" y="66" fill="var(--accent2)" font-size="12">L</text><text x="195" y="116" fill="var(--muted)" font-size="11">a</text>
+<text x="60" y="40" fill="var(--muted)" font-size="11">x→a 时函数值趋近 L（这点本身可缺）</text></svg>`;
+const DERIV2_SVG=`<svg viewBox="0 0 320 200"><g stroke="var(--grid)">${G}</g>
+<line x1="0" y1="120" x2="320" y2="120" stroke="var(--muted)"/>
+<path d="M30,175 Q170,175 290,30" fill="none" stroke="#6ea8fe" stroke-width="3"/>
+<line x1="120" y1="158" x2="268" y2="58" stroke="var(--warn)" stroke-width="2"/>
+<circle cx="194" cy="108" r="4" fill="var(--warn)"/>
+<path d="M194,108 L234,108 L234,81" fill="none" stroke="var(--accent2)" stroke-width="1.5" stroke-dasharray="3"/>
+<text x="236" y="100" fill="var(--accent2)" font-size="11">dy</text><text x="205" y="122" fill="var(--accent2)" font-size="11">dx</text>
+<text x="120" y="42" fill="var(--warn)" font-size="12">切线斜率 = 该点导数</text></svg>`;
+const INT_SVG=`<svg viewBox="0 0 320 200"><g stroke="var(--grid)">${G}</g>
+<line x1="0" y1="172" x2="320" y2="172" stroke="var(--muted)"/>
+${[...Array(7)].map((_,i)=>{const x=58+i*30,h=18+i*17;return `<rect x="${x}" y="${172-h}" width="28" height="${h}" fill="#6ea8fe" opacity="0.22" stroke="#6ea8fe"/>`;}).join('')}
+<path d="M58,154 Q200,40 268,22" fill="none" stroke="var(--accent2)" stroke-width="2.5"/>
+<text x="80" y="44" fill="var(--muted)" font-size="11">曲线下面积 = 定积分（矩形求和的极限）</text></svg>`;
+const SINE_PTS=[...Array(65)].map((_,i)=>{const x=i*5,t=(x-160)/35;return `${x},${(100-45*Math.sin(t)).toFixed(1)}`;}).join(' ');
+const APPROX_PTS=[...Array(65)].map((_,i)=>{const x=i*5,t=(x-160)/35;let p=t-t**3/6+t**5/120,y=100-45*p;y=Math.max(6,Math.min(194,y));return `${x},${y.toFixed(1)}`;}).join(' ');
+const TAY_SVG=`<svg viewBox="0 0 320 200"><g stroke="var(--grid)">${G}</g>
+<line x1="0" y1="100" x2="320" y2="100" stroke="var(--muted)"/><line x1="160" y1="0" x2="160" y2="200" stroke="var(--muted)"/>
+<polyline points="${SINE_PTS}" fill="none" stroke="#6ea8fe" stroke-width="3"/>
+<polyline points="${APPROX_PTS}" fill="none" stroke="var(--warn)" stroke-width="2" stroke-dasharray="5"/>
+<text x="20" y="150" fill="#6ea8fe" font-size="11">sin x（实线）</text>
+<text x="170" y="28" fill="var(--warn)" font-size="11">多项式逼近（虚线）</text></svg>`;
+const ARW=`<defs><marker id="aw" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--warn)"/></marker></defs>`;
+const GROUP_SVG=`<svg viewBox="0 0 320 200">${ARW}
+<polygon points="160,45 228,158 92,158" fill="#6ea8fe" opacity="0.12" stroke="#6ea8fe" stroke-width="3"/>
+<circle cx="160" cy="120" r="3" fill="var(--muted)"/>
+<path d="M120,75 A60,60 0 0 1 205,80" fill="none" stroke="var(--warn)" stroke-width="2" marker-end="url(#aw)"/>
+<text x="148" y="68" fill="var(--warn)" font-size="11">120°</text>
+<text x="55" y="188" fill="var(--muted)" font-size="11">旋转 120°、翻转后图形不变 —— 这些对称构成一个「群」</text></svg>`;
+const RING_SVG=`<svg viewBox="0 0 320 200"><circle cx="160" cy="95" r="68" fill="none" stroke="#6ea8fe" stroke-width="2"/>
+${[...Array(12)].map((_,i)=>{const a=(i/12)*2*Math.PI-Math.PI/2,tx=160+Math.cos(a)*53,ty=95+Math.sin(a)*53+4;return `<text x="${tx.toFixed(0)}" y="${ty.toFixed(0)}" fill="var(--text)" font-size="10" text-anchor="middle">${i}</text>`;}).join('')}
+<text x="70" y="190" fill="var(--muted)" font-size="11">模 12 运算：过了 11 回到 0 —— 一个有限「环」</text></svg>`;
+const TOPO_SVG=`<svg viewBox="0 0 320 200">
+<rect x="45" y="65" width="70" height="70" rx="3" fill="#6ea8fe" opacity="0.15" stroke="#6ea8fe" stroke-width="3"/>
+<text x="135" y="108" fill="var(--muted)" font-size="22">≅</text>
+<circle cx="235" cy="100" r="40" fill="var(--accent2)" opacity="0.15" stroke="var(--accent2)" stroke-width="3"/>
+<text x="40" y="180" fill="var(--muted)" font-size="11">能连续变形互相得到 ⇒ 拓扑上算「相同」（同胚）</text></svg>`;
+const CURV_SVG=`<svg viewBox="0 0 320 200">
+<circle cx="60" cy="75" r="30" fill="#6ea8fe" opacity="0.2" stroke="#6ea8fe" stroke-width="2"/>
+<path d="M35,68 Q60,82 85,68" fill="none" stroke="#6ea8fe" stroke-width="1.5"/>
+<text x="38" y="130" fill="#6ea8fe" font-size="11">正曲率·球面</text>
+<polygon points="130,55 205,55 188,100 113,100" fill="var(--accent2)" opacity="0.16" stroke="var(--accent2)" stroke-width="2"/>
+<text x="132" y="130" fill="var(--accent2)" font-size="11">零曲率·平面</text>
+<path d="M240,52 Q270,88 300,52" fill="none" stroke="var(--warn)" stroke-width="2"/>
+<path d="M240,100 Q270,64 300,100" fill="none" stroke="var(--warn)" stroke-width="2"/>
+<text x="245" y="130" fill="var(--warn)" font-size="11">负曲率·鞍面</text></svg>`;
+const PROB_SVG=`<svg viewBox="0 0 320 200">
+<circle cx="40" cy="100" r="4" fill="var(--muted)"/>
+<line x1="44" y1="100" x2="142" y2="55" stroke="#6ea8fe" stroke-width="2"/><line x1="44" y1="100" x2="142" y2="145" stroke="var(--accent2)" stroke-width="2"/>
+<text x="78" y="68" fill="#6ea8fe" font-size="10">P(A)</text><text x="74" y="140" fill="var(--accent2)" font-size="10">P(¬A)</text>
+<circle cx="146" cy="55" r="4" fill="#6ea8fe"/><circle cx="146" cy="145" r="4" fill="var(--accent2)"/>
+<line x1="150" y1="55" x2="245" y2="38" stroke="var(--muted)"/><line x1="150" y1="55" x2="245" y2="80" stroke="var(--muted)"/>
+<line x1="150" y1="145" x2="245" y2="122" stroke="var(--muted)"/><line x1="150" y1="145" x2="245" y2="165" stroke="var(--muted)"/>
+<text x="165" y="32" fill="var(--muted)" font-size="9">P(B|A)</text>
+<text x="70" y="192" fill="var(--muted)" font-size="11">概率树：沿分支相乘，累计路径概率</text></svg>`;
+const BELL_PTS=[...Array(65)].map((_,i)=>{const x=i*5,t=(x-160)/45;return `${x},${(168-120*Math.exp(-t*t/2)).toFixed(1)}`;}).join(' ');
+const DIST_SVG=`<svg viewBox="0 0 320 200"><line x1="0" y1="168" x2="320" y2="168" stroke="var(--muted)"/>
+<polyline points="${BELL_PTS}" fill="none" stroke="#6ea8fe" stroke-width="3"/>
+<line x1="160" y1="48" x2="160" y2="168" stroke="var(--accent2)" stroke-width="1.5" stroke-dasharray="3"/>
+<text x="153" y="186" fill="var(--accent2)" font-size="12">μ</text>
+<text x="55" y="40" fill="var(--muted)" font-size="11">正态分布：钟形，中间高、两边对称变低</text></svg>`;
+const EXP_SVG=`<svg viewBox="0 0 320 200"><line x1="0" y1="170" x2="320" y2="170" stroke="var(--muted)"/>
+${[12,28,48,72,92,80,55,32,16].map((h,i)=>{const x=42+i*28;return `<rect x="${x}" y="${170-h}" width="24" height="${h}" fill="#6ea8fe" opacity="0.25" stroke="#6ea8fe"/>`;}).join('')}
+<line x1="172" y1="40" x2="172" y2="170" stroke="var(--warn)" stroke-width="2" stroke-dasharray="4"/>
+<text x="120" y="34" fill="var(--warn)" font-size="11">期望 = 分布的「平衡点」</text></svg>`;
+const CLT_SVG=`<svg viewBox="0 0 320 200"><line x1="0" y1="170" x2="320" y2="170" stroke="var(--muted)"/>
+${[22,82,30,92,38,76,26].map((h,i)=>{const x=52+i*32;return `<rect x="${x}" y="${170-h}" width="26" height="${h}" fill="var(--accent2)" opacity="0.16" stroke="var(--accent2)"/>`;}).join('')}
+<polyline points="${BELL_PTS}" fill="none" stroke="#6ea8fe" stroke-width="3"/>
+<text x="35" y="38" fill="#6ea8fe" font-size="11">不管原分布多怪，求和/平均后 → 趋于正态</text></svg>`;
+const LOGIC_SVG=`<svg viewBox="0 0 320 200">
+<rect x="80" y="42" width="160" height="120" fill="none" stroke="var(--line)"/>
+<line x1="135" y1="42" x2="135" y2="162" stroke="var(--line)"/><line x1="185" y1="42" x2="185" y2="162" stroke="var(--line)"/><line x1="80" y1="70" x2="240" y2="70" stroke="var(--line)"/>
+<text x="100" y="61" fill="var(--text)" font-size="12">P</text><text x="152" y="61" fill="var(--text)" font-size="12">Q</text><text x="195" y="61" fill="var(--accent2)" font-size="12">P∧Q</text>
+${[['真','真','真'],['真','假','假'],['假','真','假'],['假','假','假']].map((r,i)=>{const y=92+i*22;return `<text x="102" y="${y}" fill="var(--muted)" font-size="11">${r[0]}</text><text x="154" y="${y}" fill="var(--muted)" font-size="11">${r[1]}</text><text x="202" y="${y}" fill="${r[2]==='真'?'var(--accent2)':'var(--muted)'}" font-size="11">${r[2]}</text>`;}).join('')}
+<text x="70" y="186" fill="var(--muted)" font-size="10">真值表：穷举逻辑联结词的所有情况</text></svg>`;
+const PROOF_SVG=`<svg viewBox="0 0 320 200">
+<rect x="18" y="80" width="74" height="42" rx="6" fill="#6ea8fe" opacity="0.15" stroke="#6ea8fe"/><text x="42" y="106" fill="#6ea8fe" font-size="13">前提</text>
+<text x="100" y="107" fill="var(--muted)" font-size="18">→</text>
+<rect x="123" y="80" width="74" height="42" rx="6" fill="var(--accent2)" opacity="0.15" stroke="var(--accent2)"/><text x="140" y="106" fill="var(--accent2)" font-size="13">推理</text>
+<text x="205" y="107" fill="var(--muted)" font-size="18">→</text>
+<rect x="228" y="80" width="74" height="42" rx="6" fill="var(--warn)" opacity="0.15" stroke="var(--warn)"/><text x="252" y="106" fill="var(--warn)" font-size="13">结论</text>
+<text x="55" y="160" fill="var(--muted)" font-size="11">证明 = 从前提出发，每一步都有依据，推到结论</text></svg>`;
+const SET_SVG=`<svg viewBox="0 0 320 200">
+<circle cx="135" cy="95" r="55" fill="#6ea8fe" opacity="0.16" stroke="#6ea8fe" stroke-width="2"/>
+<circle cx="185" cy="95" r="55" fill="var(--accent2)" opacity="0.16" stroke="var(--accent2)" stroke-width="2"/>
+<text x="92" y="100" fill="#6ea8fe" font-size="13">A</text><text x="220" y="100" fill="var(--accent2)" font-size="13">B</text>
+<text x="146" y="100" fill="var(--text)" font-size="11">A∩B</text>
+<text x="75" y="180" fill="var(--muted)" font-size="11">集合：交、并、补 —— 现代数学的通用语言</text></svg>`;
+
+const DATA={
+  linalg:{name:"线性代数",icon:"𝑥",done:true,
+    course:{name:"MIT 18.06 线性代数",by:"Gilbert Strang · MIT OpenCourseWare",vid:"ZK3O402wf1c",pl:"PLE7DDD91010BC51F8",n:"约 35 讲",
+      why:"线代教学的世界标杆。Strang 讲得极其直观，和上面的图解模块是绝配——先看图建直觉，再跟这门课把证明和计算补全。"},
+    moreUrl:"https://github.com/rossant/awesome-math#linear-algebra",
+    more:[
+      {t:"Hefferon《Linear Algebra》(免费书)",u:"https://hefferon.net/linearalgebra/",d:"免费开源线代教材，习题+解答齐全"},
+      {t:"Khan Academy 线性代数",u:"https://www.khanacademy.org/math/linear-algebra",d:"系统的免费基础课"},
+      {t:"Immersive Linear Algebra(交互书)",u:"http://immersivemath.com/ila/",d:"全交互式插图的线代书"},
+    ],
+    modules:[
+      {id:"vec",name:"向量",video:"fNk_zzaMoSs",
+       lead:"线性代数的最小积木。先把「向量到底是什么」搞清楚，后面全建立在它上面。",
+       blocks:[
+         {h:"向量是什么",en:"What is a vector?",p:"有三种视角：物理学家说它是<span class='hl'>空间中的箭头</span>（有长度和方向）；计算机视角说它是<span class='hl'>一列数字</span>；数学家说凡是能「相加」和「数乘」的对象都算向量。三者其实是一回事。"},
+         {h:"坐标表示",en:"Coordinates",p:"在平面里，向量 <span class='formula'>[3, 2]</span> 表示从原点出发：先向右走 3，再向上走 2，落点处的那个箭头。第一个数管左右，第二个数管上下。"},
+         {h:"向量加法",en:"Vector addition",p:"<span class='formula'>[a,b] + [c,d] = [a+c, b+d]</span>。几何上就是把第二个箭头的尾巴接到第一个箭头的头上，<span class='hl'>首尾相接</span>，从最初的起点到最终的终点就是和。"},
+         {h:"数乘（缩放）",en:"Scaling",p:"一个数字乘以向量叫「缩放」。<span class='formula'>2·v</span> 把箭头拉长一倍，<span class='formula'>0.5·v</span> 压短一半，<span class='formula'>-1·v</span> 反向。这个数字就叫<span class='hl'>标量（scalar）</span>。"},
+       ],viz:VEC_SVG,vizcap:"向量 [3,2]：向右 3、向上 2 的箭头",
+       reading:{src:"OpenStax《Calculus Vol.3》§2.1（免费开放教材，CC BY）",url:"https://openstax.org/books/calculus-volume-3/pages/2-1-vectors-in-the-plane",items:[
+         {en:"A vector is a quantity that has both magnitude and direction. Geometrically, we can represent a vector as a directed line segment, whose length is the magnitude of the vector and with an arrow indicating the direction.",
+          zh:"向量是同时具有「大小」和「方向」的量。在几何上，我们可以把向量画成一条「有向线段」——线段的长度代表向量的大小，箭头指出它的方向。",
+          note:"留意「有向线段」这个词：它说明向量不关心起点在哪，只关心「多长、朝哪」。把同一个箭头平移到任何位置，它还是同一个向量。"},
+         {en:"Two vectors are said to be equal vectors if they have the same magnitude and the same direction. The vectors need not have the same initial point to be equal.",
+          zh:"如果两个向量大小相同、方向也相同，就称它们为「相等向量」。它们不需要有相同的起点也能相等。",
+          note:"这正是上一段「平移不变」的正式说法。因为起点无所谓，我们习惯把所有向量的起点挪到原点来画，这样就能用坐标干净地表示它。"},
+         {en:"If a vector v in the plane has initial point at the origin, then v can be written in component form as v = ⟨v₁, v₂⟩, and its magnitude is ‖v‖ = √(v₁² + v₂²).",
+          zh:"如果平面上的向量 v 起点在原点，那么 v 可以写成「分量形式」v = ⟨v₁, v₂⟩，它的大小为 ‖v‖ = √(v₁² + v₂²)。",
+          note:"分量形式就是把「一个箭头」翻译成「两个数」。而大小公式其实就是勾股定理——把箭头当成直角三角形的斜边，v₁、v₂ 是两条直角边。"},
+       ]},
+       extra:[{t:"MIT 18.06 第1讲：向量与方程组",u:"https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/",ty:"🎥课程"}]},
+      {id:"span",name:"张成与基",video:"k7RM-ot2NWY",
+       lead:"理解了向量，下一步：少数几个向量怎么「拼」出所有向量。这是基、线性相关的核心。",
+       blocks:[
+         {h:"基向量",en:"Basis vectors",p:"平面里有两个特殊向量：<span class='formula'>î=[1,0]</span>（向右一格）和 <span class='formula'>ĵ=[0,1]</span>（向上一格）。任何向量 [3,2] 都能写成 <span class='hl'>3î + 2ĵ</span>。它俩就是这个平面的「基」。"},
+         {h:"线性组合",en:"Linear combination",p:"给两个向量各自缩放再相加，<span class='formula'>a·v + b·w</span>，得到的所有结果叫它们的线性组合。改变 a、b 就能扫过一大片点。"},
+         {h:"张成（span）",en:"Span",p:"一组向量所有线性组合能<span class='hl'>覆盖到的全部点</span>，就是它们的张成。两个不共线的向量，张成整个平面；两个共线的，只张成一条直线。"},
+         {h:"线性相关 / 无关",en:"Dependence",p:"如果其中一个向量能被其它向量组合出来（没带来新方向），就叫<span class='hl'>线性相关</span>；每个都带来新方向，就叫线性无关。一组线性无关、又能张成整个空间的向量，就叫一组<span class='hl'>基</span>。"},
+       ],viz:SPAN_SVG,vizcap:"î 和 ĵ 张成整个平面",
+       reading:{src:"标准线性代数定义（基于 Wikipedia「Linear span」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Linear_span",items:[
+         {en:"The linear span of a set S of vectors is the set of all linear combinations of the vectors in S. Equivalently, it is the smallest subspace that contains S.",
+          zh:"一组向量集合 S 的「线性张成」，是 S 中向量所有线性组合构成的集合。等价地说，它是包含 S 的最小子空间。",
+          note:"两种说法是一回事：「所有能拼出来的向量」=「能把这些向量包进去的最小空间」。平面里两个不共线向量的张成，就是整个平面。"},
+         {en:"A set of vectors is linearly independent if no vector in the set can be written as a linear combination of the others; otherwise the set is linearly dependent.",
+          zh:"如果一组向量里没有任何一个能被其余向量线性组合出来，就称它们「线性无关」；否则就是「线性相关」。",
+          note:"线性相关 = 队伍里有「多余」的向量，它没带来新方向。一个判据：只有当系数全取 0 时才能组合出零向量，这组向量就是无关的。"},
+         {en:"A basis of a vector space is a linearly independent set that spans the whole space. Every vector can then be written uniquely as a linear combination of the basis vectors.",
+          zh:"向量空间的一组「基」，是一组既线性无关、又能张成整个空间的向量。于是空间里每个向量，都能被唯一地写成基向量的线性组合。",
+          note:"关键词是「唯一」。基就像坐标系的坐标轴：选定一组基后，每个向量都对应唯一一组坐标，不多不少正好。"},
+       ]},
+       extra:[]},
+      {id:"trans",name:"矩阵与线性变换",video:"kYB8IZa5AuE",
+       lead:"全课最关键的一讲：矩阵不是一堆数字，而是「空间的变换」。理解这点，矩阵乘法就再也不用死记。",
+       blocks:[
+         {h:"什么是线性变换",en:"Linear transformation",p:"把整个平面「挤压、旋转、拉伸」，但要满足两条：<span class='hl'>直线还是直线，原点不动，网格保持平行且等距</span>。这种变换就叫线性变换。"},
+         {h:"只需盯住基向量",en:"Track the basis",p:"关键洞察：要知道变换把任何向量送到哪，<span class='hl'>只需知道它把 î 和 ĵ 送到哪</span>。因为 v = 3î+2ĵ 变换后还是 3·(新î)+2·(新ĵ)。"},
+         {h:"矩阵 = 记录基向量的落点",en:"Matrix",p:"把变换后的 î 写成第一列、新 ĵ 写成第二列，拼起来就是<span class='formula'>[[a,b],[c,d]]</span>——这就是矩阵的真正含义：<span class='hl'>它记录了基向量被送到了哪里</span>。"},
+         {h:"矩阵乘向量",en:"Matrix·vector",p:"<span class='formula'>[[a,b],[c,d]]·[x,y] = x[a,c]+y[b,d]</span>。即「用 x、y 去缩放新的基向量再相加」。这不是规则，是从含义直接推出来的。"},
+       ],viz:TRANS_SVG,vizcap:"网格保持平行等距 = 线性变换",
+       reading:{src:"标准线性代数定义（基于 Wikipedia「Linear map」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Linear_map",items:[
+         {en:"A linear transformation is a function T between two vector spaces that preserves vector addition and scalar multiplication: T(u+v)=T(u)+T(v) and T(cv)=cT(v).",
+          zh:"线性变换是两个向量空间之间的一个函数 T，它保持「向量加法」和「数乘」这两种运算：T(u+v)=T(u)+T(v)，且 T(cv)=cT(v)。",
+          note:"这两条就是几何上「网格保持平行等距、原点不动」的代数版本。只有同时满足这两条的变换，才配叫「线性」。"},
+         {en:"Every linear transformation from Rⁿ to Rᵐ can be represented by an m×n matrix A, with T(x)=Ax. The columns of A are the images of the standard basis vectors.",
+          zh:"每个从 Rⁿ 到 Rᵐ 的线性变换，都能用一个 m×n 矩阵 A 表示，使得 T(x)=Ax。矩阵 A 的各列，正是标准基向量经变换后的「落点」。",
+          note:"这正好呼应视频那句「矩阵 = 记录基向量落点」：把 î、ĵ 变换后的结果当成一列一列拼起来，就是这个变换的矩阵。"},
+         {en:"The composition of two linear maps corresponds to the product of their matrices: (S∘T)(x)=(AB)x. Matrix multiplication is defined precisely to represent composition.",
+          zh:"两个线性变换的「复合」，对应它们矩阵的乘积：(S∘T)(x)=(AB)x。矩阵乘法的定义，恰恰就是为了表示「一个变换接着另一个变换」。",
+          note:"这解释了矩阵乘法为什么那样算、为什么不能随便交换顺序——先做 T 再做 S，和先做 S 再做 T，几何上当然可能完全不同。"},
+       ]},
+       extra:[{t:"3B1B 第4讲：矩阵乘法=变换的复合",u:"https://www.youtube.com/watch?v=XkY2DOUCWMU",ty:"🎥视频"}]},
+      {id:"det",name:"行列式",video:"Ip3X9LOh2dk",
+       lead:"一个数字，却能告诉你这个变换把空间「放大」了多少倍。",
+       blocks:[
+         {h:"行列式的几何意义",en:"Determinant",p:"行列式衡量一个变换<span class='hl'>把面积放大或缩小了多少倍</span>。det=3 表示面积变 3 倍，det=0.5 表示缩小一半。三维里则是体积的缩放倍数。"},
+         {h:"负的行列式",en:"Negative det",p:"如果行列式是负的，说明空间被<span class='hl'>翻转了</span>（像把纸翻面）。绝对值仍是面积缩放倍数，符号表示有没有翻面。"},
+         {h:"行列式为 0",en:"Zero det",p:"<span class='formula'>det = 0</span> 意味着变换把整个平面<span class='hl'>压扁成一条线甚至一个点</span>——降维了。这等价于「矩阵的列线性相关」，也意味着矩阵不可逆。"},
+         {h:"二阶公式",en:"2×2 formula",p:"<span class='formula'>det[[a,b],[c,d]] = ad − bc</span>。记不住没关系，记住它量的是「面积缩放」，公式自然能推。"},
+       ],viz:DET_SVG,vizcap:"行列式 = 单位面积被放大的倍数",
+       reading:{src:"标准线性代数定义（基于 Wikipedia「Determinant」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Determinant",items:[
+         {en:"The determinant is a scalar value that is a function of the entries of a square matrix. It characterizes some properties of the matrix and of the linear map it represents.",
+          zh:"行列式是由方阵元素决定的一个标量值。它刻画了这个矩阵、以及它所代表的那个线性变换的某些性质。",
+          note:"先记住它是「一个数」，由整个方阵算出来，用来概括这个变换最关键的特征——尤其是对面积/体积的缩放。"},
+         {en:"Geometrically, the absolute value of the determinant is the factor by which the transformation scales areas (2D) or volumes (3D); a negative sign indicates orientation is reversed.",
+          zh:"几何上，行列式的绝对值就是该变换对面积（二维）或体积（三维）的缩放倍数；负号则表示「定向（朝向）被翻转了」。",
+          note:"这就是视频核心：det=2 → 面积变两倍；det=−2 → 面积两倍并且翻面。绝对值管「放大多少」，符号管「有没有翻面」。"},
+         {en:"A square matrix is invertible if and only if its determinant is nonzero. A zero determinant means the transformation collapses space into a lower dimension.",
+          zh:"一个方阵可逆，当且仅当它的行列式不为零。行列式为零，意味着这个变换把空间压扁到了更低的维度。",
+          note:"det=0 → 平面被压成一条线甚至一个点，信息丢了、回不去，所以矩阵不可逆。这把「行列式 / 可逆 / 降维」三件事串成了同一件事。"},
+       ]},
+       extra:[]},
+      {id:"eig",name:"特征值与特征向量",video:"PFDu9oVAE-g",
+       lead:"线代里最常被考、应用最广（PCA、谷歌PageRank、量子力学）的概念。看完这讲你会觉得它其实很自然。",
+       blocks:[
+         {h:"核心直觉",en:"Eigenvectors",p:"一个变换会把大多数向量「踢离」它原来的方向。但有些特殊向量，变换后<span class='hl'>仍停在自己那条直线上</span>，只是被拉长或压短——这些就是特征向量。"},
+         {h:"特征值",en:"Eigenvalues",p:"特征向量被拉伸的<span class='hl'>倍数</span>就是对应的特征值 λ。λ=2 表示这个方向被拉长一倍，λ=-1 表示反向但长度不变，λ=0 表示被压没了。"},
+         {h:"定义式",en:"Av = λv",p:"用式子写就是 <span class='formula'>A·v = λ·v</span>：矩阵作用在特征向量上，效果等同于<span class='hl'>只用一个数 λ 去缩放它</span>。这是整个概念的数学浓缩。"},
+         {h:"为什么有用",en:"Why useful",p:"找到特征向量等于找到变换的「天然坐标轴」，复杂变换在这套轴下变成简单的缩放——这是降维（PCA）、解微分方程、网页排名背后的同一个想法。"},
+       ],viz:EIG_SVG,vizcap:"特征向量：变换后不离开自己的直线",
+       reading:{src:"标准线性代数定义（基于 Wikipedia「Eigenvalues and eigenvectors」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors",items:[
+         {en:"An eigenvector of a linear transformation is a nonzero vector that changes at most by a scalar factor when that transformation is applied to it.",
+          zh:"一个线性变换的「特征向量」，是这样一个非零向量：当变换作用在它身上时，它至多只被一个标量倍数所改变（方向保持不变）。",
+          note:"关键是「方向不变、只被缩放」。大多数向量会被变换「扭」到别的方向去，特征向量是少数能「稳住自己方向」的那些。"},
+         {en:"The corresponding eigenvalue, often denoted λ, is the factor by which the eigenvector is scaled. The defining relation is Av = λv.",
+          zh:"对应的「特征值」（常记作 λ），就是该特征向量被缩放的倍数。它们的定义关系是 Av = λv。",
+          note:"Av = λv 一句话浓缩了全部：左边是「矩阵去作用」，右边是「只乘一个数 λ」。能让两边相等的那个 v，就是特征向量。"},
+         {en:"If the eigenvectors form a basis, the matrix can be diagonalized, greatly simplifying computations such as raising the matrix to a power.",
+          zh:"如果这些特征向量能构成一组基，矩阵就可以被「对角化」，从而极大简化诸如「矩阵求幂」之类的计算。",
+          note:"对角化 = 换到「特征向量这套坐标轴」去看，复杂变换就变成各方向各自独立缩放。这正是 PCA、解微分方程、PageRank 背后的同一招。"},
+       ]},
+       extra:[{t:"MIT 18.06 特征值章节",u:"https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/",ty:"🎥课程"}]},
+    ]},
+  /* 其它领域：先放精选卡片，等样板确认后照线代复制 */
+  analysis:{name:"分析 / 微积分",icon:"∫",done:true,
+    course:{name:"实分析 Real Analysis",by:"Francis Su · Harvey Mudd College",vid:"sqEyWLGvvdw",pl:"PL0E754696F72137EC",n:"约 26 讲",
+      why:"纯数学向的实分析（不是工科微积分）：从「构造实数」开始，一步步把极限、连续、收敛讲扎实，正对口你学纯数学的需求。Su 教授口碑极好。"},
+    moreUrl:"https://github.com/rossant/awesome-math#analysis",
+    more:[
+      {t:"MIT 18.01 单变量微积分",u:"https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/",d:"含视频、讲义、习题解答的公开课"},
+      {t:"MIT 18.100 实分析",u:"https://ocw.mit.edu/courses/18-100a-real-analysis-fall-2020/",d:"把微积分严格化，纯数核心课"},
+      {t:"Paul's Online Calculus Notes",u:"https://tutorial.math.lamar.edu/Classes/CalcI/CalcI.aspx",d:"清晰的微积分讲义+大量例题"},
+    ],
+    modules:[
+      {id:"lim",name:"极限",video:"kfF40MiS7zA",
+       lead:"微积分的地基。导数和积分都建立在「极限」之上——先把「趋近」这件事说清楚。",
+       blocks:[
+         {h:"极限的直观",en:"Limit",p:"当 x 越来越<span class='hl'>接近</span>某个值 a 时，如果函数值 f(x) 越来越接近一个确定的数 L，就说「x 趋于 a 时 f 的极限是 L」，记作 <span class='formula'>lim&#8202;f(x)=L</span>。"},
+         {h:"为什么需要极限",en:"Why",p:"很多关键问题直接代入会算出「0/0」这种没意义的式子（比如求瞬时速度）。极限让我们能<span class='hl'>无限逼近却不必真正到达</span>那个点，从而绕开这种麻烦。"},
+         {h:"左极限与右极限",en:"One-sided",p:"从 a 的<span class='hl'>左边</span>靠近、和从<span class='hl'>右边</span>靠近，可能趋向不同的值。只有左右极限相等，整体极限才存在。"},
+         {h:"连续",en:"Continuity",p:"如果某点的极限值正好<span class='hl'>等于</span>该点的函数值（<span class='formula'>lim&#8202;f(x)=f(a)</span>），就说函数在这点连续——图像在这里「没有断、没有洞、没有跳」。"},
+       ],viz:LIM_SVG,vizcap:"x 趋于 a 时函数值趋近 L（a 点本身可以缺失）",
+       reading:{src:"OpenStax《Calculus Vol.1》§2.2（免费开放教材，CC BY）",url:"https://openstax.org/books/calculus-volume-1/pages/2-2-the-limit-of-a-function",items:[
+         {en:"Let f(x) be a function defined at all values in an open interval containing a, with the possible exception of a itself. If f(x) gets arbitrarily close to L for all x sufficiently close to a, we say that the limit of f(x) as x approaches a is L.",
+          zh:"设函数 f(x) 在包含 a 的某个开区间内处处有定义（a 这一点本身可以例外）。如果当 x 充分接近 a 时，f(x) 能任意地接近 L，就说「x 趋于 a 时 f(x) 的极限为 L」。",
+          note:"注意两处措辞：「a 本身可以例外」——极限不关心 a 点处发生了什么，只关心周围；「任意接近」——你要多近它就能多近。这正是图里那个「空心圆」的含义。"},
+         {en:"A function f(x) is continuous at a point a if and only if the limit of f(x) as x approaches a exists and equals f(a).",
+          zh:"函数 f(x) 在点 a 处「连续」，当且仅当 x 趋于 a 时 f(x) 的极限存在、并且等于 f(a)。",
+          note:"连续 = 三件事同时成立：a 点有定义、极限存在、二者相等。少一条就「不连续」——对应图像上的洞、跳跃或断裂。"},
+       ]},
+       extra:[{t:"3B1B：极限",u:"https://www.youtube.com/watch?v=kfF40MiS7zA",ty:"🎥视频"}]},
+      {id:"deriv",name:"导数",video:"9vKqVkMQHKk",
+       lead:"导数 = 瞬时变化率。它回答「这一刻变化有多快」，是微积分最核心的工具。",
+       blocks:[
+         {h:"导数是瞬时变化率",en:"Rate of change",p:"平均速度 = 路程÷时间，但「某一瞬间的速度」呢？导数就是把时间间隔<span class='hl'>无限缩小</span>后得到的那个瞬时变化率。"},
+         {h:"几何意义：切线斜率",en:"Slope of tangent",p:"在图像上，导数就是该点<span class='hl'>切线的斜率</span>。斜率越陡，函数变化越快；斜率为 0，说明到了山顶或山谷。"},
+         {h:"极限定义",en:"Definition",p:"<span class='formula'>f'(x)=lim&#8202;[f(x+h)−f(x)]/h</span>（h→0）。这正是「割线斜率」在两点<span class='hl'>无限靠近</span>时变成「切线斜率」的过程——又用到了极限。"},
+         {h:"求导法则",en:"Rules",p:"实际计算靠几条法则：幂法则 <span class='formula'>(xⁿ)'=n·xⁿ⁻¹</span>、加法、乘积、以及处理复合函数的<span class='hl'>链式法则</span>。记住法则，绝大多数函数都能直接求导。"},
+       ],viz:DERIV2_SVG,vizcap:"导数 = 该点切线的斜率 = dy/dx",
+       reading:{src:"标准微积分定义（基于 Wikipedia「Derivative」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Derivative",items:[
+         {en:"The derivative of a function of a single variable at a chosen input value, when it exists, is the slope of the tangent line to the graph of the function at that point.",
+          zh:"单变量函数在某个选定输入值处的导数（当它存在时），就是函数图像在该点处「切线的斜率」。",
+          note:"一句话抓住几何本质：导数 = 切线斜率。「当它存在时」提醒你——有些点（如尖角、断点）没有唯一切线，导数就不存在。"},
+         {en:"The derivative is often written as the limit of the difference quotient: f'(x) = lim(h→0) [f(x+h) − f(x)] / h.",
+          zh:"导数常写成「差商」的极限：f'(x) = lim(h→0) [f(x+h) − f(x)] / h。",
+          note:"[f(x+h)−f(x)]/h 就是连接两点的割线斜率；让 h→0 两点合一，割线就变成切线。所以导数 = 用极限把割线「逼成」切线。"},
+       ]},
+       extra:[{t:"3B1B 第3讲：求导公式的几何来源",u:"https://www.youtube.com/watch?v=S0_qX4VJhMQ",ty:"🎥视频"}]},
+      {id:"int",name:"积分与基本定理",video:"rfG8ce4nNh0",
+       lead:"积分求「累积量」——曲线下的面积。而微积分基本定理揭示：积分和导数其实是一对逆运算。",
+       blocks:[
+         {h:"定积分 = 面积",en:"Definite integral",p:"把曲线下的区域切成很多<span class='hl'>细长矩形</span>求和，再让矩形宽度→0，得到的极限就是定积分，几何上就是「曲线下的面积」。"},
+         {h:"不定积分 = 反导数",en:"Antiderivative",p:"不定积分是求导的<span class='hl'>逆操作</span>：已知导数，反推原函数。比如 <span class='formula'>∫2x dx = x² + C</span>，因为 x² 求导正好得 2x。"},
+         {h:"微积分基本定理",en:"FTC",p:"这是整门课的高潮：<span class='hl'>积分和导数互为逆运算</span>。它让我们不必真去切矩形求和，而是用反导数直接算面积——<span class='formula'>∫ₐᵇ f = F(b)−F(a)</span>。"},
+         {h:"为什么重要",en:"Why",p:"它把「累积」（积分）和「变化率」（导数）这两个看似无关的概念<span class='hl'>统一</span>了起来，也是物理、工程里从加速度推位移、从密度推质量的同一套工具。"},
+       ],viz:INT_SVG,vizcap:"定积分 = 曲线下面积 = 矩形求和的极限",
+       reading:{src:"标准微积分定义（基于 Wikipedia「Fundamental theorem of calculus」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus",items:[
+         {en:"The fundamental theorem of calculus is a theorem that links the concept of differentiating a function with the concept of integrating a function. The two operations are inverses of each other.",
+          zh:"微积分基本定理是一条把「对函数求导」与「对函数积分」两个概念联系起来的定理：这两种运算互为逆运算。",
+          note:"这是整门微积分最关键的一句话。求导和积分本来像两件事，基本定理说它们其实是一枚硬币的两面——这才让积分可以「算」而不只是「逼近」。"},
+         {en:"If f is continuous on [a, b] and F is an antiderivative of f, then the integral of f from a to b equals F(b) − F(a).",
+          zh:"如果 f 在区间 [a, b] 上连续，且 F 是 f 的一个反导数，那么 f 从 a 到 b 的积分就等于 F(b) − F(a)。",
+          note:"这就是实际算面积的公式：不用切无数个矩形，只要找到反导数 F，代入上下限相减即可。把「无穷求和」变成了「两数相减」。"},
+       ]},
+       extra:[{t:"MIT 18.01 积分章节",u:"https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/",ty:"🎥课程"}]},
+      {id:"taylor",name:"泰勒级数",video:"3d6DsjIBzJ4",
+       lead:"用简单的多项式去逼近复杂函数（sin、eˣ…）。计算器算三角函数、物理做近似，背后都是它。",
+       blocks:[
+         {h:"核心想法",en:"Idea",p:"复杂函数不好算，但<span class='hl'>多项式</span>（只含加减乘和幂）很好算。泰勒级数就是用一串多项式项，把复杂函数在某点附近逼近得越来越准。"},
+         {h:"在一点展开",en:"Expansion point",p:"逼近是「<span class='hl'>局部</span>」的：在展开点附近最准，离得越远越不准。最常见的是在 0 处展开（麦克劳林级数）。"},
+         {h:"每项都含导数",en:"Coefficients",p:"各项系数由函数在该点的各阶导数决定：<span class='formula'>f(x)=f(0)+f'(0)x+f''(0)x²/2!+…</span>。导数提供了「这点附近怎么弯」的信息。"},
+         {h:"用在哪",en:"Uses",p:"计算器求 sin、eˣ、ln，物理里「小角度 sinθ≈θ」的近似，工程里把复杂模型线性化——<span class='hl'>都是截取泰勒级数的前几项</span>。"},
+       ],viz:TAY_SVG,vizcap:"多项式（虚线）在中心附近紧贴 sin x（实线），远处发散",
+       reading:{src:"标准定义（基于 Wikipedia「Taylor series」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Taylor_series",items:[
+         {en:"The Taylor series of a function is an infinite sum of terms that are expressed in terms of the function's derivatives at a single point.",
+          zh:"一个函数的泰勒级数，是一串无穷多项之和，而每一项都由该函数在「某一个点」处的各阶导数表示出来。",
+          note:"两个关键词：「某一个点」——逼近是围绕这一点展开的；「各阶导数」——一阶导管斜率、二阶导管弯曲……阶数越高，把函数的形状刻画得越细。"},
+         {en:"For most common functions, the function and the sum of its Taylor series are equal near this point. Taylor series are used to approximate a function by polynomials.",
+          zh:"对大多数常见函数，在展开点附近，函数本身与它的泰勒级数之和是相等的。泰勒级数被用来「用多项式逼近一个函数」。",
+          note:"呼应图里：虚线（多项式）在中心紧贴实线（sin x），离开中心就分道扬镳。所以实用时只取前几项、且只在展开点附近用。"},
+       ]},
+       extra:[{t:"3B1B：泰勒级数",u:"https://www.youtube.com/watch?v=3d6DsjIBzJ4",ty:"🎥视频"}]},
+    ]},
+  algebra2:{name:"抽象代数",icon:"⊚",done:true,
+    course:{name:"抽象代数 Abstract Algebra I",by:"Math With Richard（全程课）",vid:"ORaurlS56aU",pl:"PL1r259iKOz-lJ0TjURlrUVASXQimpWAS5",n:"17 讲全程",
+      why:"从整数与模运算起步、循序渐进的抽代全程课。比名校课堂录像更适合零基础自学一路跟完，群/环/域的逻辑链讲得清楚。"},
+    moreUrl:"https://github.com/rossant/awesome-math#abstract-algebra",
+    more:[
+      {t:"Harvard 抽象代数（B.Gross）",u:"https://www.youtube.com/playlist?list=PLA64A1F32A5067C2E",d:"群环域经典入门全套视频"},
+      {t:"Socratica 抽象代数系列",u:"https://www.youtube.com/playlist?list=PLi01XoE8jYoi3SgnnGorR_XOW3IcK-TP6",d:"短小精炼的概念讲解"},
+    ],
+    modules:[
+      {id:"group",name:"群是什么",video:"mH0oCDa74tE",
+       lead:"群是抽象代数的起点，专门刻画「对称」与「可逆操作」。理解它，后面的环、域都顺了。",
+       blocks:[
+         {h:"群的直觉",en:"Group",p:"群 = <span class='hl'>一组「动作」+ 一条组合规则</span>。最典型的例子是正三角形：把它旋转 120°、翻转……所有让它「看起来没变」的操作，合在一起就是一个群。"},
+         {h:"四条公理",en:"Axioms",p:"一个集合配上一种运算，满足四条就叫群：<span class='hl'>封闭</span>（两动作接力还是动作）、<span class='hl'>结合律</span>、有<span class='hl'>单位元</span>（什么都不做）、每个元素有<span class='hl'>逆元</span>（动作可撤销）。"},
+         {h:"熟悉的例子",en:"Examples",p:"整数在<span class='formula'>加法</span>下是群（0 是单位元，−n 是逆元）；非零有理数在<span class='formula'>乘法</span>下是群。你早就在用群，只是没叫它名字。"},
+         {h:"为什么要抽象",en:"Why abstract",p:"把「对称」「可逆」的共性提炼成四条规则后，<span class='hl'>一次证明，处处适用</span>——无论对象是数字、变换还是魔方，只要满足群公理，结论都成立。"},
+       ],viz:GROUP_SVG,vizcap:"正三角形的旋转与翻转构成一个群",
+       reading:{src:"标准定义（基于 Wikipedia「Group (mathematics)」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Group_(mathematics)",items:[
+         {en:"In mathematics, a group is a set equipped with an operation that combines any two elements to form a third element, in such a way that four conditions called the group axioms are satisfied: closure, associativity, identity and invertibility.",
+          zh:"在数学中，群是一个配备了某种「运算」的集合：该运算把任意两个元素组合成第三个元素，并满足被称为「群公理」的四个条件——封闭性、结合律、单位元、可逆性。",
+          note:"把「运算」想成「把两个动作接起来」，四条公理就很自然：接起来还是动作（封闭）、可以撤销（逆元）、有个「不动」的动作（单位元）。"},
+         {en:"One of the most familiar examples of a group is the set of integers together with the addition operation.",
+          zh:"群最常见的例子之一，就是「整数集合」配上「加法」这种运算。",
+          note:"验证一下四条：两整数相加还是整数（封闭）、加法满足结合律、0 是单位元、n 的逆元是 −n。所以 (整数, +) 是一个标准的群。"},
+       ]},
+       extra:[]},
+      {id:"homo",name:"子群与同态",video:"mvmuCPvRoWQ",
+       lead:"有了群，接下来看群与群之间、群内部的结构关系——这是抽象代数真正发力的地方。",
+       blocks:[
+         {h:"子群",en:"Subgroup",p:"群里面「自成一体」的一小块：本身也满足群公理。比如「偶数」是「整数加法群」的子群。"},
+         {h:"生成元",en:"Generators",p:"有时<span class='hl'>少数几个元素</span>反复组合，就能生成整个群。比如整数加法群由 1 一个元素生成（1+1+1…）。"},
+         {h:"同态",en:"Homomorphism",p:"群之间<span class='hl'>保持运算结构</span>的映射：<span class='formula'>f(a·b)=f(a)·f(b)</span>。它把一个群的结构「翻译」到另一个群。"},
+         {h:"同构",en:"Isomorphism",p:"如果同态还是一一对应的，就叫同构——意味着两个群<span class='hl'>本质上是同一个</span>，只是元素换了名字。"},
+       ],
+       reading:{src:"标准定义（基于 Wikipedia「Group homomorphism」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Group_homomorphism",items:[
+         {en:"A group homomorphism is a function between two groups that preserves the group operation: for all a and b, f(a · b) = f(a) · f(b).",
+          zh:"群同态是两个群之间的一个函数，它「保持群运算」：对所有 a、b，都有 f(a·b)=f(a)·f(b)。",
+          note:"关键在「保持运算」：在原群里先算再映射，和先映射再算，结果一样。这让同态能把一个群的结构忠实地搬到另一个群上。"},
+         {en:"An isomorphism is a bijective homomorphism. If an isomorphism exists between two groups, the groups are called isomorphic and are essentially the same for the purposes of group theory.",
+          zh:"同构是「一一对应（双射）的同态」。如果两个群之间存在同构，就称它们「同构」——在群论看来它们本质上是同一个群。",
+          note:"同构 = 既保持结构、又一一对应。两个群同构，就像同一个对象的两套名字，所有群论性质完全一致。"},
+       ]},
+       extra:[]},
+      {id:"ring",name:"环与域",video:"",
+       lead:"群只有一种运算；把「加法」和「乘法」一起请进来，就得到环与域——更接近我们熟悉的数系。",
+       blocks:[
+         {h:"环",en:"Ring",p:"环是<span class='hl'>同时带「加法」和「乘法」</span>两种运算的结构，性质模仿整数：加法构成群，乘法满足结合律和分配律。<span class='formula'>整数</span>就是典型的环。"},
+         {h:"域",en:"Field",p:"域是「加乘都能<span class='hl'>除</span>」的环——每个非零元素都有乘法逆元。<span class='formula'>有理数、实数、复数</span>都是域。"},
+         {h:"环 vs 域",en:"Compare",p:"整数是环但<span class='hl'>不是</span>域：2 在整数里没有倒数（1/2 不是整数）。有理数补上了倒数，就升级成了域。"},
+         {h:"用在哪",en:"Uses",p:"多项式、密码学（RSA）、纠错编码，底层都建立在环与域之上——它们是现代代数和计算机科学的共同语言。"},
+       ],viz:RING_SVG,vizcap:"模 12 算术是一个有限环（时钟运算）",
+       reading:{src:"标准定义（基于 Wikipedia「Ring」「Field」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Ring_(mathematics)",items:[
+         {en:"In mathematics, a ring is a set equipped with two binary operations — addition and multiplication — satisfying properties analogous to those of the integers.",
+          zh:"在数学中，环是一个配备了「加法」和「乘法」两种二元运算的集合，且这些运算满足与整数类似的性质。",
+          note:"记住「模仿整数」：能加、能减、能乘，加法和乘法之间有分配律。但环不保证能「除」——那是域才有的本事。"},
+         {en:"A field is a ring in which division by any nonzero element is possible; the rational, real, and complex numbers are all fields.",
+          zh:"域是这样一种环：可以除以任何非零元素。有理数、实数、复数都是域。",
+          note:"域 = 环 + 「除法自由」。整数差一步（没有倒数）所以只是环；有理数把倒数补齐，就成了域。"},
+       ]},
+       extra:[{t:"Harvard 抽象代数（含环论）",u:"https://www.youtube.com/playlist?list=PLA64A1F32A5067C2E",ty:"🎥课程"}]},
+    ]},
+  geometry:{name:"几何 / 拓扑",icon:"◯",done:true,
+    course:{name:"拓扑学 Topology",by:"Marius Furter（系统课）",vid:"vv3JNSPKeEU",pl:"PLd8NbPjkXPliJunBhtDNMuFsnZPeHpm-0",n:"系列讲座",
+      why:"从拓扑空间、开集闭集讲起的系统拓扑课，板书清晰、节奏适中。配合上面的形象化模块（橡皮泥几何）一起看，抽象定义会落地很多。"},
+    moreUrl:"https://github.com/rossant/awesome-math#geometry-and-topology",
+    more:[
+      {t:"Hatcher《代数拓扑》(免费书)",u:"https://pi.math.cornell.edu/~hatcher/AT/ATpage.html",d:"全球通用的免费标准教材"},
+      {t:"MIT 18.901 拓扑导论",u:"https://ocw.mit.edu/courses/18-901-introduction-to-topology-fall-2004/",d:"点集拓扑入门公开课"},
+    ],
+    modules:[
+      {id:"topo",name:"拓扑：连续变形",video:"AmgkSdhK4K8",
+       lead:"拓扑学被戏称「橡皮泥几何」——它不在乎大小角度，只在乎拉伸弯曲下保持不变的本质性质。",
+       blocks:[
+         {h:"拓扑研究什么",en:"Topology",p:"研究在「<span class='hl'>连续变形</span>」（任意拉伸、弯曲，但不撕裂、不粘合）下保持不变的性质。长度、角度都可以变，但「有几个洞」不会变。"},
+         {h:"橡皮泥几何",en:"Rubber-sheet",p:"经典玩笑：拓扑学家分不清咖啡杯和甜甜圈——因为<span class='hl'>都只有一个洞</span>，可以互相捏出来。对拓扑来说它俩「一样」。"},
+         {h:"开集与邻域",en:"Open sets",p:"拓扑不用「距离」定义空间，而用<span class='hl'>哪些点算彼此「靠近」</span>（开集）。这让它能处理远比普通几何更一般的空间。"},
+         {h:"拓扑不变量",en:"Invariants",p:"像「洞的个数」这种<span class='hl'>变形中不改变</span>的量，叫拓扑不变量。它们是区分不同形状的有力工具。"},
+       ],viz:TOPO_SVG,vizcap:"能连续变形互得 ⇒ 拓扑上视为同一",
+       reading:{src:"标准定义（基于 Wikipedia「Topology」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Topology",items:[
+         {en:"Topology is the branch of mathematics concerned with the properties of a geometric object that are preserved under continuous deformations, such as stretching, twisting, crumpling, and bending, but not tearing or gluing.",
+          zh:"拓扑学是研究几何对象在「连续变形」（拉伸、扭转、揉皱、弯曲，但不撕裂、不粘合）下仍保持不变之性质的数学分支。",
+          note:"划重点的是那串「允许做什么、不允许做什么」：能弯能拉，但一旦撕开或粘合，就改变了拓扑。允许的操作决定了什么算「同一个形状」。"},
+         {en:"A common example is that a coffee cup and a doughnut (torus) are topologically equivalent, since each has a single hole.",
+          zh:"一个常见例子：咖啡杯和甜甜圈（环面）在拓扑上是等价的，因为它们各自都只有一个洞。",
+          note:"杯子的「洞」在把手上。把杯身压扁、料子挪到把手周围，就能连续地变成甜甜圈——全程没撕没粘，所以拓扑相同。"},
+       ]},
+       extra:[]},
+      {id:"homeo",name:"同胚与不变量",video:"",
+       lead:"「拓扑上相同」要如何严格判定？靠同胚来定义「相等」，靠不变量来区分「不等」。",
+       blocks:[
+         {h:"同胚",en:"Homeomorphism",p:"两个空间之间存在<span class='hl'>双向都连续的一一对应</span>，就称它们「同胚」——这就是拓扑里的「相等」。"},
+         {h:"为什么要不变量",en:"Why invariants",p:"要证明两个空间<span class='hl'>同胚</span>，得真造出一个变形，往往很难；但要证明它们<span class='hl'>不同胚</span>，只需找一个不变量不一样就够了，省力得多。"},
+         {h:"欧拉示性数",en:"Euler char.",p:"<span class='formula'>V − E + F</span>（顶点−棱+面）。球面永远得 2，环面得 0——<span class='hl'>不随怎么剖分而变</span>，是经典的拓扑不变量。"},
+         {h:"亏格",en:"Genus",p:"直观说就是曲面上<span class='hl'>「洞」的个数</span>。球面亏格 0，甜甜圈亏格 1，双环面亏格 2。"},
+       ],
+       reading:{src:"标准定义（基于 Wikipedia「Homeomorphism」「Euler characteristic」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Homeomorphism",items:[
+         {en:"Two topological spaces are homeomorphic if there exists a continuous bijection between them whose inverse is also continuous. Homeomorphic spaces are regarded as the same in topology.",
+          zh:"如果两个拓扑空间之间存在一个「双向都连续的一一对应」（双射，且其逆也连续），就称它们同胚。同胚的空间在拓扑里被视为同一个。",
+          note:"为什么要求「逆也连续」？这保证变形是真正可逆的——来回都不撕不粘。满足这点，两个空间就被认为是同一个拓扑对象。"},
+         {en:"The Euler characteristic V − E + F is a topological invariant: any surface homeomorphic to a sphere has Euler characteristic 2, while a torus has Euler characteristic 0.",
+          zh:"欧拉示性数 V − E + F 是一个拓扑不变量：任何与球面同胚的曲面，欧拉示性数都是 2，而环面是 0。",
+          note:"因为球面是 2、环面是 0，二者不相等，就立刻证明了「球面和环面不同胚」——这正是用不变量「区分形状」的威力。"},
+       ]},
+       extra:[]},
+      {id:"diffgeo",name:"微分几何：曲率",video:"",
+       lead:"把微积分用到几何上，研究曲线和曲面到底「弯得多厉害」——这是广义相对论的数学语言。",
+       blocks:[
+         {h:"微分几何",en:"Diff. geometry",p:"用<span class='hl'>微积分</span>的工具研究曲线与曲面的局部性质，核心问题之一就是「弯曲」。"},
+         {h:"曲率",en:"Curvature",p:"衡量一条曲线偏离「直线」、一个曲面偏离「平面」的<span class='hl'>程度</span>。直线曲率为 0，圆越小曲率越大。"},
+         {h:"正 / 零 / 负曲率",en:"Sign",p:"球面是<span class='hl'>正曲率</span>（向同侧弯）、平面是<span class='hl'>零曲率</span>、马鞍面是<span class='hl'>负曲率</span>（两个方向反着弯）。"},
+         {h:"用在哪",en:"Uses",p:"爱因斯坦的广义相对论用<span class='hl'>弯曲的时空</span>来描述引力——质量让时空弯曲，曲率就是这套理论的核心量。"},
+       ],viz:CURV_SVG,vizcap:"正曲率·球面 / 零曲率·平面 / 负曲率·鞍面",
+       reading:{src:"标准定义（基于 Wikipedia「Curvature」「Differential geometry」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Curvature",items:[
+         {en:"Curvature is the amount by which a curve deviates from being a straight line, or a surface deviates from being a plane.",
+          zh:"曲率，就是一条曲线偏离「直线」、或一个曲面偏离「平面」的程度。",
+          note:"一句话抓住本质：曲率量的是「弯」。直线、平面完全不弯，曲率为 0；越弯，曲率（绝对值）越大。"},
+         {en:"Differential geometry uses the techniques of differential and integral calculus to study problems in geometry, in particular the curvature of curves and surfaces.",
+          zh:"微分几何运用微分与积分（微积分）的技巧来研究几何问题，尤其是曲线与曲面的曲率。",
+          note:"这说明了它和前面微积分模块的关系：微分几何就是「把微积分搬到弯曲的对象上」，所以学好微积分是它的前提。"},
+       ]},
+       extra:[]},
+    ]},
+  probability:{name:"概率 / 统计",icon:"📊",done:true,
+    course:{name:"Statistics 110 概率论",by:"Joe Blitzstein · Harvard University",vid:"KbB0FjPg0mw",pl:"PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo",n:"约 34 讲",
+      why:"哈佛概率论王牌课。Blitzstein 用故事和例子把每个概念讲透，被公认为最好的概率入门课之一。上面的贝叶斯/分布/大数模块都能在这门课里找到系统展开。"},
+    moreUrl:"https://github.com/rossant/awesome-math#probability-and-statistics",
+    more:[
+      {t:"Seeing Theory（可视化）",u:"https://seeing-theory.brown.edu/",d:"交互式概率统计可视化网站"},
+      {t:"StatQuest",u:"https://www.youtube.com/c/joshstarmer",d:"把统计讲得又清楚又欢乐"},
+      {t:"Khan Academy 统计与概率",u:"https://www.khanacademy.org/math/statistics-probability",d:"系统的免费入门课"},
+    ],
+    modules:[
+      {id:"bayes",name:"条件概率与贝叶斯",video:"HZGCoVF3YvM",
+       lead:"概率的精髓不是「算出一个数」，而是「拿到新证据后如何更新判断」——这正是贝叶斯定理。",
+       blocks:[
+         {h:"概率",en:"Probability",p:"用一个 <span class='formula'>0~1</span> 之间的数,衡量某件事发生的可能性。0 是不可能,1 是必然。"},
+         {h:"条件概率",en:"Conditional",p:"已知 B 已经发生时,A 发生的概率,记作 <span class='formula'>P(A|B)</span>。新信息会改变概率——这是贝叶斯的基础。"},
+         {h:"贝叶斯定理",en:"Bayes",p:"<span class='formula'>P(A|B)=P(B|A)·P(A)/P(B)</span>。它告诉你<span class='hl'>如何用新证据 B 来更新对 A 的信念</span>。"},
+         {h:"反直觉的例子",en:"Base rate",p:"罕见病检测呈阳性,真患病概率可能<span class='hl'>仍然很低</span>——因为「基础患病率」太低。忽略基础率是最常见的概率错觉。"},
+       ],viz:PROB_SVG,vizcap:"概率树:沿分支相乘,累计路径概率",
+       reading:{src:"标准定义（基于 Wikipedia「Bayes' theorem」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Bayes%27_theorem",items:[
+         {en:"Bayes' theorem describes the probability of an event, based on prior knowledge of conditions that might be related to the event: P(A|B) = P(B|A) P(A) / P(B).",
+          zh:"贝叶斯定理描述一个事件的概率,而这个概率建立在「与该事件相关的条件的先验知识」之上:P(A|B) = P(B|A)·P(A)/P(B)。",
+          note:"读公式时想成更新:P(A) 是看到证据前的「先验信念」,P(A|B) 是看到证据 B 后的「后验信念」。定理就是连接两者的桥。"},
+         {en:"It allows one to update the probability estimate for a hypothesis as more evidence or information becomes available.",
+          zh:"它让你能在「有更多证据或信息」时,更新对某个假设的概率估计。",
+          note:"这就是贝叶斯思维的核心:信念不是一锤定音,而是随证据不断修正。罕见病例子里,正是「基础率」这个先验把后验拉低了。"},
+       ]},
+       extra:[]},
+      {id:"dist",name:"概率分布",video:"8idr1WZ1A7Q",
+       lead:"随机变量把「随机结果」变成数,而分布告诉你每个数有多大概率——这是统计的基本对象。",
+       blocks:[
+         {h:"随机变量",en:"Random variable",p:"把随机结果<span class='hl'>对应到数字</span>。比如掷两枚骰子的点数和,就是一个取值 2~12 的随机变量。"},
+         {h:"分布",en:"Distribution",p:"描述随机变量<span class='hl'>每个取值各有多大概率</span>。画出来就是「哪些结果常见、哪些罕见」的全貌。"},
+         {h:"二项分布",en:"Binomial",p:"n 次<span class='hl'>独立</span>试验中「成功」次数的分布(如抛 10 次硬币得几次正面)。是最基础的离散分布之一。"},
+         {h:"正态分布",en:"Normal",p:"自然界最常见的<span class='hl'>钟形</span>分布:身高、测量误差都近似服从它。下一节的中心极限定理会解释它为何无处不在。"},
+       ],viz:DIST_SVG,vizcap:"正态分布:钟形,中间高、两边对称变低",
+       reading:{src:"标准定义（基于 Wikipedia「Probability distribution」「Normal distribution」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Probability_distribution",items:[
+         {en:"A probability distribution is a mathematical function that gives the probabilities of occurrence of possible outcomes for an experiment.",
+          zh:"概率分布是一个数学函数,它给出某个试验中各种可能结果发生的概率。",
+          note:"把它想成一张「概率分配表」:把总量 1 的概率,按规则分给每个可能结果。所有结果的概率加起来正好是 1。"},
+         {en:"The normal (Gaussian) distribution is a continuous probability distribution whose graph is a symmetric bell-shaped curve; many natural phenomena approximately follow it.",
+          zh:"正态(高斯)分布是一种连续概率分布,其图像是一条对称的钟形曲线;许多自然现象都近似服从它。",
+          note:"「对称钟形」+「自然界常见」是两个要记住的标签。它为什么这么常见,答案就在中心极限定理。"},
+       ]},
+       extra:[]},
+      {id:"exp",name:"期望与方差",video:"",
+       lead:"两个最重要的概括量:期望告诉你「平均落在哪」,方差告诉你「波动有多大」。",
+       blocks:[
+         {h:"期望",en:"Expected value",p:"大量重复后的<span class='hl'>平均结果</span>,也是分布的「平衡点」。掷骰子的期望是 3.5——虽然永远掷不出 3.5。"},
+         {h:"怎么算",en:"Compute",p:"把<span class='hl'>每个取值乘以它的概率,再全部加起来</span>。即「概率加权平均」。"},
+         {h:"方差",en:"Variance",p:"衡量结果<span class='hl'>偏离期望的分散程度</span>。方差大 = 忽高忽低;方差小 = 稳定集中在期望附近。"},
+         {h:"标准差",en:"Std. dev.",p:"方差<span class='hl'>开根号</span>,和原数据同单位,更直观。「平均偏离期望多远」基本就看它。"},
+       ],viz:EXP_SVG,vizcap:"期望 = 分布的平衡点;方差 = 分散程度",
+       reading:{src:"标准定义（基于 Wikipedia「Expected value」「Variance」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Expected_value",items:[
+         {en:"The expected value of a random variable is the probability-weighted average of all its possible values; it represents the long-run average of repetitions of the experiment.",
+          zh:"随机变量的期望,是它所有可能取值的「概率加权平均」;它代表大量重复试验后的长期平均值。",
+          note:"两层意思:计算上是「值×概率」求和;意义上是「重复很多次后的平均」。所以期望可以是一个实际取不到的值(如骰子的 3.5)。"},
+         {en:"The variance measures how far a set of numbers is spread out from their average value; its square root is the standard deviation.",
+          zh:"方差衡量一组数偏离其平均值的分散程度;方差的平方根就是标准差。",
+          note:"方差因为先平方,单位变成了「原单位的平方」,不直观;开根号得到标准差后,就回到原单位,可以直接说「平均波动多少」。"},
+       ]},
+       extra:[]},
+      {id:"clt",name:"中心极限定理",video:"zeJD6dqJ5lo",
+       lead:"统计学最深刻、最实用的结论之一:为什么钟形曲线在世界上无处不在。",
+       blocks:[
+         {h:"定理内容",en:"CLT",p:"大量<span class='hl'>独立</span>随机变量的和(或平均),其分布会趋近<span class='hl'>正态分布</span>——而且<span class='hl'>不管</span>原始变量服从什么分布。"},
+         {h:"为什么重要",en:"Why",p:"它解释了正态分布为何<span class='hl'>无处不在</span>:任何由许多小的独立随机因素叠加出来的量,整体都接近钟形。"},
+         {h:"应用",en:"Uses",p:"民意调查的抽样误差、实验测量的误差分析、工厂的质量控制——<span class='hl'>都靠它</span>把复杂随机性近似成可计算的正态。"},
+         {h:"直觉",en:"Intuition",p:"许多互相独立的小随机扰动叠在一起,正负互相抵消、极端情况被稀释,整体就被「抹」成了中间高两边低的钟形。"},
+       ],viz:CLT_SVG,vizcap:"无论原分布多怪,求和/平均后趋于正态",
+       reading:{src:"标准定义（基于 Wikipedia「Central limit theorem」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Central_limit_theorem",items:[
+         {en:"The central limit theorem states that, under appropriate conditions, the distribution of the sum (or average) of a large number of independent random variables approaches a normal distribution, regardless of the underlying distribution.",
+          zh:"中心极限定理指出:在适当条件下,大量独立随机变量之和(或平均)的分布会趋近于正态分布——而与这些变量本身的分布无关。",
+          note:"最反直觉、也最强大的就是「与原分布无关」:哪怕每个变量都歪七扭八,只要够多、够独立,加起来就变钟形。这是正态分布统治世界的原因。"},
+         {en:"This explains the ubiquity of the normal distribution: it is the limiting distribution of aggregated independent effects.",
+          zh:"这解释了正态分布为何如此普遍:它是「许多独立效应累加」的极限分布。",
+          note:"呼应上一节的疑问——身高、误差为什么都是钟形?因为它们都是大量独立小因素叠加的结果,中心极限定理保证了结果近似正态。"},
+       ]},
+       extra:[]},
+    ]},
+  foundations:{name:"基础 / 证明",icon:"⊢",done:true,
+    course:{name:"MIT 6.042J 数学思维（逻辑·证明·集合）",by:"Tom Leighton · MIT OpenCourseWare",vid:"L3LMbpZIKhQ",pl:"PLB7540DEDD482705B",n:"约 25 讲",
+      why:"MIT 的『数学思维』课，专门训练逻辑、各种证明方法和集合论基础——正好补上从『看懂』到『会自己动手证明』这关键一环。"},
+    moreUrl:"https://github.com/rossant/awesome-math#foundations-of-mathematics",
+    more:[
+      {t:"Book of Proof（免费书）",u:"https://www.people.vcu.edu/~rhammack/BookOfProof/",d:"自学证明的最佳入门书"},
+      {t:"《How to Prove It》",u:"https://github.com/rossant/awesome-math#foundations-of-mathematics",d:"另一本广受推荐的证明入门书"},
+    ],
+    modules:[
+      {id:"logic",name:"逻辑与真值",video:"",
+       lead:"数学的语言是逻辑。先把「命题、联结词、真值」搞清楚,后面所有证明才有共同的地基。",
+       blocks:[
+         {h:"命题",en:"Proposition",p:"一个<span class='hl'>非真即假</span>的陈述句。「2 是偶数」是命题(真);「x+1」不是命题(无所谓真假)。"},
+         {h:"逻辑联结词",en:"Connectives",p:"用来组合命题:<span class='formula'>与 ∧</span>、<span class='formula'>或 ∨</span>、<span class='formula'>非 ¬</span>、<span class='formula'>蕴含 →</span>。它们把简单命题搭成复杂命题。"},
+         {h:"真值表",en:"Truth table",p:"<span class='hl'>穷举所有真假组合</span>,机械地算出复合命题的真假。比如 P∧Q 只有 P、Q 都真时才真。"},
+         {h:"量词",en:"Quantifiers",p:"<span class='formula'>∀</span>(对所有)和 <span class='formula'>∃</span>(存在至少一个)。几乎每条数学定理都靠它们精确表达「普遍成立」或「存在」。"},
+       ],viz:LOGIC_SVG,vizcap:"真值表:P∧Q 仅当 P、Q 都为真时才真",
+       reading:{src:"标准定义（基于 Wikipedia「Propositional logic」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Propositional_calculus",items:[
+         {en:"Propositional logic deals with propositions (which can be true or false) and the logical connectives — such as AND, OR, NOT, and IMPLIES — that combine them into compound propositions.",
+          zh:"命题逻辑研究「命题」(可真可假的陈述)以及把它们组合成复合命题的「逻辑联结词」——例如 与、或、非、蕴含。",
+          note:"两个零件:命题(原子,只论真假)和联结词(把原子拼成分子)。整个逻辑体系就建立在这两样东西上。"},
+         {en:"A truth table is a mathematical table that shows the truth value of a compound proposition for every possible combination of truth values of its constituent propositions.",
+          zh:"真值表是一张数学表格,它列出:对于组成它的各个命题的「每一种真假组合」,复合命题分别取什么真值。",
+          note:"真值表的好处是「机械、无歧义」:不用动脑猜,把所有情况列全,复合命题的真假一目了然。这是判断逻辑等价、推理是否有效的基础工具。"},
+       ]},
+       extra:[]},
+      {id:"proof",name:"证明方法",video:"",
+       lead:"证明是数学的命脉。掌握几种标准套路,就能读懂、也能自己写出严格的数学论证。",
+       blocks:[
+         {h:"什么是证明",en:"Proof",p:"从<span class='hl'>公理和已知事实</span>出发,每一步都有逻辑依据,最终推出结论。它让数学结论「无可辩驳」。"},
+         {h:"直接证明",en:"Direct",p:"要证 <span class='formula'>P → Q</span>,就<span class='hl'>假设 P 成立</span>,然后一步步合乎逻辑地推出 Q。最常用的套路。"},
+         {h:"反证法",en:"Contradiction",p:"<span class='hl'>假设结论为假</span>,推导下去若得到矛盾,说明假设错了,结论必真。「√2 是无理数」就是这样证的。"},
+         {h:"数学归纳法",en:"Induction",p:"证「对所有自然数成立」:先证<span class='hl'>基础情形</span>(n=1),再证<span class='hl'>由 n 成立可推出 n+1 成立</span>。像多米诺骨牌,推倒第一张、保证每张推下一张,就全倒。"},
+       ],viz:PROOF_SVG,vizcap:"证明 = 从前提出发,每步有据,推到结论",
+       reading:{src:"标准定义（基于 Wikipedia「Mathematical proof」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Mathematical_proof",items:[
+         {en:"A mathematical proof is a deductive argument for a mathematical statement, showing that the stated assumptions logically guarantee the conclusion.",
+          zh:"数学证明是针对某个数学命题的「演绎论证」,它表明:所陈述的前提在逻辑上保证了结论成立。",
+          note:"关键词是「演绎」和「保证」:不是举几个例子说「看起来对」,而是从前提出发,逻辑上必然得到结论——一个反例都不可能存在。"},
+         {en:"Common proof techniques include direct proof, proof by mathematical induction, proof by contradiction, and proof by construction.",
+          zh:"常见的证明技巧包括:直接证明、数学归纳法、反证法,以及构造性证明。",
+          note:"这几种是工具箱里的「标准工具」。拿到一道证明题,先想「该用哪种套路」往往就成功了一半——比如涉及「所有自然数」常用归纳法。"},
+       ]},
+       extra:[]},
+      {id:"set",name:"集合论",video:"",
+       lead:"集合是现代数学的通用语言——几乎所有对象(数、函数、空间)都能用集合来构建和表达。",
+       blocks:[
+         {h:"集合",en:"Set",p:"一堆<span class='hl'>不同对象的整体</span>,本身也被当作一个对象。比如 {1,2,3}、所有偶数的集合。"},
+         {h:"集合运算",en:"Operations",p:"<span class='formula'>交 ∩</span>(都属于)、<span class='formula'>并 ∪</span>(至少属于一个)、<span class='formula'>补</span>(不属于)、<span class='formula'>子集 ⊆</span>(包含关系)。"},
+         {h:"函数即对应",en:"Function",p:"函数可以严格地定义为<span class='hl'>集合之间的对应关系</span>——每个输入恰好对应一个输出。整个分析、代数都建立在此之上。"},
+         {h:"无穷的大小",en:"Infinity",p:"集合论能<span class='hl'>严格比较「无穷」的大小</span>:整数和有理数一样多(可数),但实数严格更多(不可数)——这是康托尔的惊人发现。"},
+       ],viz:SET_SVG,vizcap:"集合:交、并、补 —— 数学的通用语言",
+       reading:{src:"标准定义（基于 Wikipedia「Set (mathematics)」，CC BY-SA）",url:"https://en.wikipedia.org/wiki/Set_(mathematics)",items:[
+         {en:"In mathematics, a set is a collection of distinct objects, considered as an object in its own right; set theory is the foundation on which nearly all of modern mathematics is built.",
+          zh:"在数学中,集合是「一些彼此不同的对象的整体」,而这个整体本身又被看作一个对象;集合论是现代数学几乎全部内容赖以建立的基础。",
+          note:"两个要点:「彼此不同」(集合里没有重复元素)、「整体也是一个对象」(集合可以再装进别的集合)。正是这种简洁,让它能当万物的地基。"},
+         {en:"Basic operations on sets include union (elements in either set), intersection (elements in both), and complement (elements not in the set).",
+          zh:"集合的基本运算包括:并(在任一集合中的元素)、交(同时在两个集合中的元素)、补(不在该集合中的元素)。",
+          note:"对照右边的维恩图记最清楚:两圆重叠处是交,两圆合起来是并,圈外是补。这三种运算是集合论一切推理的起点。"},
+       ]},
+       extra:[]},
+    ]},
+};
+
+/* =================== 状态 =================== */
+const LS={
+  done:JSON.parse(localStorage.getItem("ms_done")||"{}"),
+  notes:JSON.parse(localStorage.getItem("ms_notes")||"{}"),
+  chats:JSON.parse(localStorage.getItem("ms_chats")||"{}"),
+  save(){localStorage.setItem("ms_done",JSON.stringify(this.done));
+         localStorage.setItem("ms_notes",JSON.stringify(this.notes));
+         localStorage.setItem("ms_chats",JSON.stringify(this.chats));}
+};
+let topic="linalg",mod=0;
+function ctxKey(){const t=DATA[topic];return t.modules?topic+"|"+t.modules[mod].id:topic;}
+
+/* =================== 渲染 =================== */
+function renderNav(){
+  const nav=document.getElementById("nav");nav.innerHTML="";
+  for(const[k,v]of Object.entries(DATA)){
+    const d=document.createElement("div");
+    d.className="navitem"+(k===topic?" active":"");
+    const cnt=v.modules?v.modules.length:(v.links?v.links.length:0);
+    d.innerHTML=`${v.icon} ${v.name}${v.done?'<span class="badge">已做透</span>':''}<span class="cnt">${cnt}</span>`;
+    d.onclick=()=>{topic=k;mod=0;render();};
+    nav.appendChild(d);
+  }
+}
+function courseBar(t){
+  if(!t.course)return"";
+  const c=t.course;
+  return `<details class="morebar coursebar"><summary>🎓 系统课程：${c.name} <small>整门大学课 · ${c.n}</small><span class="ar">›</span></summary>
+    <div class="morebody">
+      <p class="cwhy">${c.why}</p>
+      <div class="videowrap"><iframe src="https://www.youtube.com/embed/${c.vid}?list=${c.pl}" allowfullscreen loading="lazy"></iframe></div>
+      <div class="vmeta">🎥 ${c.by} · <a href="https://www.youtube.com/playlist?list=${c.pl}" target="_blank">在 YouTube 看整门课（可开中文字幕）↗</a></div>
+      <p class="ctip">💡 这是几小时的英文大课。边看边用右侧「📋 复制问题」把卡住的点丢给 AI，用下面的笔记区记中文要点——和上面的图解模块互补：先看图建直觉，再跟课夯实。</p>
+    </div></details>`;
+}
+function moreBar(t){
+  const extra=(t.more||[]).map(r=>`<div class="res"><a href="${r.u}" target="_blank">${r.t}</a><span class="ty">${r.d}</span></div>`).join("");
+  return `<details class="morebar"><summary>📚 更多「${t.name}」资源 <small>精选之外的扩展</small><span class="ar">›</span></summary>
+    <div class="morebody"><div class="reslist">${extra||'<div style="color:var(--muted);font-size:12.5px">暂未挑选额外精选，先去原仓库看全部 👇</div>'}</div>
+    <a class="morerepo" href="${t.moreUrl}" target="_blank">→ 在 Awesome Math 原仓库查看该领域<b>全部资源</b>（全量）↗</a></div></details>`;
+}
+function render(){
+  renderNav();
+  const t=DATA[topic];
+  const tabs=document.getElementById("modtabs"),content=document.getElementById("content");
+  if(t.modules){
+    document.getElementById("crumb").innerHTML=`${t.icon} <b>${t.name}</b> › ${t.modules[mod].name}`;
+    tabs.style.display="flex";tabs.innerHTML="";
+    t.modules.forEach((m,i)=>{
+      const done=LS.done[topic+"|"+m.id];
+      const e=document.createElement("div");
+      e.className="modtab"+(i===mod?" on":"")+(done?" mdone":"");
+      e.innerHTML=`<span class="dot"></span>${i+1}. ${m.name}`;
+      e.onclick=()=>{mod=i;render();};
+      tabs.appendChild(e);
+    });
+    const m=t.modules[mod],dk=topic+"|"+m.id,isDone=LS.done[dk];
+    content.innerHTML=`
+      <h1>${m.name}</h1>
+      <p class="lead">${m.lead}</p>
+      ${m.video?`<div class="videowrap"><iframe src="https://www.youtube.com/embed/${m.video}" allowfullscreen loading="lazy"></iframe></div>
+      <div class="vmeta">🎥 视频来自 3Blue1Brown · <a href="https://www.youtube.com/watch?v=${m.video}" target="_blank">在 YouTube 打开（可开中文字幕）</a></div>`:''}
+      ${m.viz?`<div class="vizcard"><div class="vtitle">🎨 形象化</div>${m.viz}<div class="vizcap">${m.vizcap||''}</div></div>`:''}
+      <h3 style="font-size:14px;color:var(--accent2);margin:0 0 12px">📖 逐块讲解（中文）</h3>
+      <div class="blocks">${m.blocks.map(b=>`
+        <div class="block"><h4>${b.h} <span class="en">${b.en}</span></h4><p>${b.p}</p></div>`).join("")}</div>
+      ${m.reading?`<div class="reading"><h3>📑 资料精读（原文 → 翻译 → 讲解）</h3>
+        <div class="rsrc">材料来源：${m.reading.src} · <a href="${m.reading.url}" target="_blank">查看原文 ↗</a></div>
+        ${m.reading.items.map(r=>`<div class="rb"><div class="org">${r.en}</div><div class="zh">${r.zh}</div><div class="nt">${r.note}</div></div>`).join("")}</div>`:""}
+      ${m.extra&&m.extra.length?`<div class="extra"><h3>🔗 拓展链接（点出去）</h3><div class="reslist">${
+        m.extra.map(r=>`<div class="res"><a href="${r.u}" target="_blank">${r.t}</a><span class="ty">${r.ty}</span></div>`).join("")}</div></div>`:""}
+      <div class="donebar">
+        <button class="donebtn ${isDone?'undo':''}" onclick="toggleDone('${dk}')">${isDone?'↩ 标记为未学完':'✓ 这块学完了'}</button>
+        <span style="color:var(--muted);font-size:12.5px">进度 ${t.modules.filter(x=>LS.done[topic+'|'+x.id]).length}/${t.modules.length}</span>
+      </div>
+      ${courseBar(t)}
+      ${moreBar(t)}`;
+  }else{
+    document.getElementById("crumb").innerHTML=`${t.icon} <b>${t.name}</b>`;
+    tabs.style.display="none";
+    content.innerHTML=`<h1>${t.name}</h1>
+      <div class="soon">🚧 这个领域我先放了<b>精选资源</b>。线性代数那种「嵌入视频 + 逐块中文讲解 + 形象化图示」的深度模块，等你确认样板满意后，我照着复制到这里。</div>
+      <div class="cardgrid">${t.links.map(l=>`<div class="lcard"><a href="${l.u}" target="_blank">${l.t} ↗</a><p>${l.d}</p></div>`).join("")}</div>
+      <div style="height:18px"></div>${courseBar(t)}${moreBar(t)}`;
+  }
+  // 笔记跟随当前模块
+  document.getElementById("note").value=LS.notes[ctxKey()]||"";
+}
+function toggleDone(k){LS.done[k]=!LS.done[k];LS.save();render();}
+
+/* =================== 笔记 =================== */
+let saveTimer;
+document.getElementById("note").oninput=e=>{
+  LS.notes[ctxKey()]=e.target.value;LS.save();
+  const h=document.getElementById("savehint");h.textContent="已保存 ✓";
+  clearTimeout(saveTimer);saveTimer=setTimeout(()=>h.textContent="",1000);
+};
+function insertNote(txt){const n=document.getElementById("note");n.value+=txt;n.focus();
+  LS.notes[ctxKey()]=n.value;LS.save();}
+function pasteImg(e){const f=e.target.files[0];if(!f)return;
+  if(f.size>500000){alert("图片偏大（>0.5MB），本地存储有限，建议压缩或改贴链接。");return;}
+  const r=new FileReader();r.onload=()=>{insertNote("\n[图片已存：本地]\n");
+    LS.notes[ctxKey()+"_img"]=r.result;LS.save();alert("图片已存本地。（当前版笔记区以文字为主，图片预览下一版加）");};
+  r.readAsDataURL(f);}
+
+/* =================== 问 AI（零配置：打包复制到你常用的 AI） =================== */
+function currentName(){const t=DATA[topic];return t.modules?t.modules[mod].name:t.name;}
+function moduleContext(){
+  const t=DATA[topic];if(!t.modules)return t.name;
+  const m=t.modules[mod];
+  return `领域：${t.name}\n模块：${m.name}\n要点：\n`+m.blocks.map(b=>`- ${b.h}：${b.p.replace(/<[^>]+>/g,'')}`).join("\n");
+}
+function copyQuestion(){
+  const inp=document.getElementById("chatinput");const q=inp.value.trim();
+  if(!q){inp.focus();return;}
+  const payload=`我正在自学数学，下面是我正在学的内容：\n\n${moduleContext()}\n\n我的问题：${q}\n\n请用中文、结合上面的模块内容，多用直觉和例子，简洁地解答。`;
+  const btn=document.querySelector('.copybtn');
+  const done=()=>{btn.classList.add('done');btn.textContent='✓ 已复制，去粘贴吧';
+    setTimeout(()=>{btn.classList.remove('done');btn.textContent='📋 复制问题（已附本模块内容）';},1800);};
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    navigator.clipboard.writeText(payload).then(done).catch(()=>fallbackCopy(payload,done));
+  else fallbackCopy(payload,done);
+}
+function fallbackCopy(text,cb){
+  const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');cb();}catch(e){alert('复制失败，请手动选中复制。');}
+  document.body.removeChild(ta);
+}
+
+function toggleTheme(){document.body.classList.toggle("light");
+  localStorage.setItem("ms_theme",document.body.classList.contains("light")?"light":"dark");}
+if(localStorage.getItem("ms_theme")==="light")document.body.classList.add("light");
+render();
+</script>
+</body>
+</html>
