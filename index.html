@@ -1543,7 +1543,7 @@ function runMatch(){
             <span class="res-copy" style="flex-shrink:0">复制搜索词</span>
           </div>
           <div style="display:flex;gap:6px;margin-top:7px">
-            <button id="mq-add-${r.p.s.replace(/\s/g,'')}" onclick="quickAddToMine(${JSON.stringify(r.p.s)},${JSON.stringify(r.p.c)},this)" style="flex:1;padding:6px 0;border-radius:8px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer">＋ 加入我的申请</button>
+            ${(()=>{const tracked=TrackerV2.data.entries.some(e=>e.school===r.p.s);return`<button id="mq-add-${r.p.s.replace(/\s/g,'')}" data-orig="＋ 加入我的申请" onclick="quickAddToMine(${JSON.stringify(r.p.s)},${JSON.stringify(r.p.c)},this)" style="flex:1;padding:6px 0;border-radius:8px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer${tracked?';opacity:.55':''}" ${tracked?'disabled':''}>＋${tracked?" 已在追踪中":" 加入我的申请"}</button>`;})()}
             <button onclick="toggleCompare(${JSON.stringify(r.p.s)},${JSON.stringify(r.p.c)});this.textContent=cmpList.some(x=>x.name===${JSON.stringify(r.p.s)})?'✓ 对比中':'⇌ 对比'" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">⇌ 对比</button>
           </div>
         </div>
@@ -2033,13 +2033,16 @@ function printMine(){
 function setProg(name,sel){Tracker.set(name,sel.value);sel.className="prog-select "+(PROG_CLS[sel.value]||"");}
 
 function quickAddToMine(school,country,btn){
-  /* 检查是否已有该校条目（任意项目）*/
   const exists=TrackerV2.data.entries.some(e=>e.school===school);
+  if(exists){
+    if(btn){btn.textContent="✓ 已在追踪中";btn.disabled=true;btn.style.opacity="0.55";}
+    return;
+  }
   TrackerV2.add({school,country,program:"",deadline:"",status:"pick",note:""});
   if(btn){
-    btn.textContent=exists?"✓ 已再次添加":"✓ 已加入";
-    btn.classList.add("added");
-    setTimeout(()=>{btn.textContent="＋ 加入申请";btn.classList.remove("added");},2200);
+    const orig=btn.dataset.orig||btn.textContent;
+    btn.textContent="✓ 已加入";btn.classList.add("added");
+    setTimeout(()=>{btn.textContent=orig;btn.classList.remove("added");},2000);
   }
 }
 
