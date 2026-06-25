@@ -2704,6 +2704,102 @@ const SCHOOL_DEADLINES={
   "香港中文大学":  [{prog:"CS/Finance",month:2,day:28}],
   "香港科技大学":  [{prog:"多数项目",month:3,day:15}],
   "香港城市大学":  [{prog:"多数项目",month:3,day:31}],
+  "香港理工大学":  [{prog:"多数项目",month:4,day:30}],
+  // ── 英国补充 ──
+  "格拉斯哥大学":  [{prog:"CS/Data Science（建议截止）",month:6,day:30,note:"滚动，名额有限"}],
+  "杜伦大学":      [{prog:"金融/商科项目",month:3,day:15},{prog:"数学/工程",month:4,day:30}],
+  "伯明翰大学":    [{prog:"CS/Analytics（建议截止）",month:6,day:30,note:"滚动"}],
+  "利兹大学":      [{prog:"数据/金融/商科",month:4,day:30,note:"滚动，早申优势"}],
+  "南安普顿大学":  [{prog:"AI/Data/CS（建议截止）",month:5,day:31,note:"滚动"}],
+  "谢菲尔德大学":  [{prog:"CS/Analytics（建议截止）",month:6,day:30,note:"滚动"}],
+  "诺丁汉大学":    [{prog:"CS/Data/金融（建议截止）",month:4,day:30,note:"滚动，早申优势"}],
+  "伦敦玛丽女王大学":[{prog:"CS/Analytics（建议截止）",month:6,day:30,note:"滚动"}],
+  "圣安德鲁斯大学":[{prog:"数据科学/金融",month:4,day:15}],
+  // ── 美国补充 ──
+  "加州理工学院":  [{prog:"工程方向（研究型）",month:12,day:15,note:"名额极少"}],
+  "密歇根大学安娜堡":[{prog:"CS/EECS",month:12,day:15},{prog:"Financial Engineering",month:1,day:15}],
+  "普林斯顿大学":  [{prog:"MSE工程方向",month:12,day:15}],
+  "耶鲁大学":      [{prog:"CS/Statistics",month:12,day:15}],
+  "芝加哥大学":    [{prog:"MPCS/MScA",month:1,day:15}],
+  "宾夕法尼亚大学":[{prog:"SEAS工程",month:1,day:1},{prog:"Wharton金融",month:1,day:15}],
+  "约翰霍普金斯大学":[{prog:"CS/应用数学",month:1,day:15}],
+  "加州大学洛杉矶":[{prog:"CS/数据工程",month:12,day:15}],
+  "杜克大学":      [{prog:"CS/ECE",month:12,day:15},{prog:"MQM商业分析",month:1,day:15}],
+  "德州大学奥斯汀":[{prog:"CS/Statistics",month:12,day:1}],
+  "加州大学圣地亚哥":[{prog:"CS/ECE",month:12,day:15},{prog:"Data Science (HDSI)",month:1,day:10}],
+  "华盛顿大学":    [{prog:"CS/ECE",month:12,day:15},{prog:"MSDS数据科学",month:1,day:5}],
+  "西北大学":      [{prog:"CS/AI",month:12,day:15}],
+  "布朗大学":      [{prog:"CS/Data Science",month:12,day:15}],
+  "波士顿大学":    [{prog:"CS/数据/金融",month:2,day:1}],
+  "普渡大学":      [{prog:"CS/ECE",month:12,day:15}],
+  "威斯康星大学麦迪逊":[{prog:"CS/Statistics",month:12,day:15}],
+  "加州大学戴维斯":[{prog:"CS/Statistics",month:1,day:15}],
+  "莱斯大学":      [{prog:"CS/Statistics",month:1,day:15}],
+  // ── 澳大利亚补充 ──
+  "莫纳什大学":    [{prog:"IT/Analytics（建议截止）",month:8,day:31,note:"滚动，2月入学8月前为佳"}],
+  "昆士兰大学":    [{prog:"IT/Data（建议截止）",month:9,day:30,note:"滚动"}],
+  "澳大利亚国立大学":[{prog:"Computing/Finance（建议截止）",month:9,day:30,note:"滚动"}],
+  "西澳大学":      [{prog:"CS/Data（建议截止）",month:9,day:30,note:"滚动"}],
+  "阿德莱德大学":  [{prog:"Computing/Data（建议截止）",month:9,day:30,note:"滚动"}],
+  "悉尼科技大学":  [{prog:"IT/Data Science（建议截止）",month:9,day:30,note:"滚动"}],
+  "皇家墨尔本理工":[{prog:"IT/Data（建议截止）",month:9,day:30,note:"滚动"}],
+  // ── 加拿大补充 ──
+  "阿尔伯塔大学":  [{prog:"CS/统计",month:12,day:1},{prog:"MEng工程",month:1,day:1}],
+  "滑铁卢大学":    [{prog:"MASc/MEng/MMath",month:1,day:15}],
+  // ── 瑞士 ──
+  "苏黎世联邦理工":[{prog:"多数项目（第一轮）",month:12,day:15,note:"竞争极激烈"}],
+  "洛桑联邦理工":  [{prog:"CS/Data/工程",month:12,day:15}],
+  "苏黎世大学":    [{prog:"Banking & Finance",month:3,day:31},{prog:"Computational Science",month:2,day:28}],
+  // ── 荷兰 ──
+  "代尔夫特理工大学":[{prog:"CS/工程（第一轮）",month:4,day:1,note:"部分项目1月15日更早"}],
+  "阿姆斯特丹大学":[{prog:"AI/Data/商科",month:4,day:1}],
+  "乌得勒支大学":  [{prog:"CS/Data Science",month:4,day:1}],
+  "莱顿大学":      [{prog:"CS/Data Science",month:4,day:1}],
+  // ── 日本 ──
+  "东京大学":      [{prog:"英文硕士项目（GSII/MERIT）",month:11,day:30,note:"提前联系导师"}],
+  "京都大学":      [{prog:"英文工学/信息学项目",month:10,day:31,note:"需内诺"}],
+  "东京工业大学":  [{prog:"英文CS/AI项目",month:12,day:31}],
+  "大阪大学":      [{prog:"英文工程项目",month:11,day:30}],
+  "东北大学":      [{prog:"英文工学/材料项目",month:11,day:30}],
+  // ── 韩国 ──
+  "首尔国立大学":  [{prog:"英文CS/商科项目",month:5,day:31}],
+  "延世大学":      [{prog:"英文CS/金融工程",month:4,day:30}],
+  "高丽大学":      [{prog:"英文CS/MBA",month:5,day:31}],
+  "浦项科技大学":  [{prog:"CS/AI（研究型）",month:4,day:30}],
+  // ── 德国补充 ──
+  "慕尼黑工业大学":[{prog:"Informatics/数据工程（英文）",month:5,day:31}],
+  "慕尼黑大学":    [{prog:"CS/Data Science（英文）",month:5,day:31}],
+  "海德堡大学":    [{prog:"数据/CS项目",month:5,day:15}],
+  "卡尔斯鲁厄理工":[{prog:"CS/电子工程（英文）",month:5,day:15}],
+  "亚琛工业大学":  [{prog:"CS/电子工程",month:5,day:31}],
+  "柏林自由大学":  [{prog:"CS/数学",month:5,day:15}],
+  // ── 新西兰 ──
+  "奥克兰大学":    [{prog:"IT/数据/金融（建议截止）",month:10,day:31,note:"滚动"}],
+  // ── 马来西亚 ──
+  "马来亚大学":    [{prog:"CS/Data Science",month:4,day:30}],
+  "马来西亚国民大学":[{prog:"CS/Data Science",month:5,day:31}],
+  // ── 法国 ──
+  "巴黎文理研究大学":[{prog:"AI/Machine Learning",month:3,day:31}],
+  "索邦大学":      [{prog:"CS/数学项目",month:4,day:30}],
+  "巴黎综合理工学院":[{prog:"Mathematics & AI",month:3,day:15}],
+  "巴黎-萨克雷大学":[{prog:"数学/CS/AI",month:3,day:31}],
+  // ── 瑞典 ──
+  "皇家理工学院":  [{prog:"CS/ML/Data Science",month:1,day:15}],
+  "隆德大学":      [{prog:"CS/Data/金融",month:1,day:15}],
+  "乌普萨拉大学":  [{prog:"CS/Data Science",month:1,day:15}],
+  // ── 比利时 ──
+  "鲁汶大学":      [{prog:"AI/CS/统计",month:3,day:1}],
+  // ── 丹麦 ──
+  "哥本哈根大学":  [{prog:"CS/Data/金融",month:3,day:15}],
+  "丹麦技术大学":  [{prog:"CS/Data Science",month:3,day:15}],
+  // ── 中国大陆（国际生申请参考）──
+  "清华大学":      [{prog:"国际生申请（参考）",month:3,day:31,note:"以官网公告为准"}],
+  "北京大学":      [{prog:"国际生申请（参考）",month:3,day:31,note:"以官网公告为准"}],
+  "复旦大学":      [{prog:"国际生申请（参考）",month:3,day:31,note:"以官网公告为准"}],
+  "上海交通大学":  [{prog:"国际生申请（参考）",month:3,day:31,note:"以官网公告为准"}],
+  "浙江大学":      [{prog:"国际生申请（参考）",month:3,day:31,note:"以官网公告为准"}],
+  "南京大学":      [{prog:"国际生申请（参考）",month:3,day:31,note:"以官网公告为准"}],
+  "中国科学技术大学":[{prog:"国际生申请（参考）",month:3,day:31,note:"以官网公告为准"}],
 };
 
 /* ── 中国学生录取难度 & 双非友好度（Feature 5 对比升级） ── */
