@@ -1111,7 +1111,7 @@ function openCompare(){
     ["租金水平",s=>{const cr=CAREER_RICH[s.c]||{};return cr.rent?`<span style="font-size:12px">${cr.rent}</span>`:`<span style="color:#9ca3af">—</span>`;}],
     ["城市生活评分",s=>{const cs=CAREER_SCHOOL[s.name]||{};return cs.city?`<b style="font-size:13px">${cs.city}</b><span style="font-size:11px;color:#6b7280">/5</span><div style="font-size:11px;color:#6b7280;margin-top:2px">${cs.cityNote||""}</div>`:`<span style="color:#9ca3af">—</span>`;}],
     ["中国学生录取难度",s=>{const d=SCHOOL_DIFF[s.name];if(!d)return`<span style="color:#9ca3af">参考官网</span>`;const col={极难:"#ef4444",难:"#f97316",中:"#f59e0b",易:"#10b981"}[d.diff]||"#9ca3af";return`<b style="color:${col};font-size:13px">${d.diff}</b><div style="font-size:11px;color:#6b7280;margin-top:2px">${d.note||""}</div>`;}],
-    ["是否认可双非",s=>{const d=SCHOOL_DIFF[s.name];if(!d)return`<span style="color:#9ca3af">—</span>`;const col={是:"#10b981",部分可:"#f59e0b",否:"#ef4444"}[d.shuangfei]||"#9ca3af";return`<b style="color:${col};font-size:13px">${d.shuangfei}</b>`;}],
+    ["是否认可双非",s=>{const d=SCHOOL_DIFF[s.name];if(!d)return`<span style="color:#9ca3af">—</span>`;if(s.c==="cn")return`<span style="color:#9ca3af;font-size:12px">国内院校</span>`;const col={是:"#10b981",部分可:"#f59e0b",否:"#ef4444"}[d.shuangfei]||"#9ca3af";return`<b style="color:${col};font-size:13px">${d.shuangfei}</b>`;}],
   ];
   const overlay=document.createElement("div");
   overlay.className="cmp-modal-overlay";

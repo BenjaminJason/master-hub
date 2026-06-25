@@ -96,7 +96,7 @@ python3 -m http.server 8080
 
 ## 更新计划
 
-- [ ] GPA 换算器（85分 → UK First / GPA 3.5）
+- [x] GPA 换算器（85分 → UK First / GPA 3.5）
 - [ ] 申请截止日期精准数据库（滚动 vs 固定 deadline）
 - [ ] 日本 / 荷兰 / 瑞士扩展院校
 - [ ] 录取数据众包（买家提交真实录取结果）
