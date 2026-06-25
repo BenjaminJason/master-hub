@@ -1,6 +1,6 @@
 # 🎓 全球 TOP100 硕士申请导航
 
-[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4f46e5?style=flat-square&logo=github)](https://benjaminjason.github.io/master-study-hub/master-hub.html)
+[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4f46e5?style=flat-square&logo=github)](https://benjaminjason.github.io/master-hub/master-hub.html)
 [![File Size](https://img.shields.io/badge/单文件-~600KB-10b981?style=flat-square)](#)
 [![Schools](https://img.shields.io/badge/院校-112所-f59e0b?style=flat-square)](#)
 [![Countries](https://img.shields.io/badge/覆盖-18国-6366f1?style=flat-square)](#)
@@ -8,7 +8,7 @@
 
 一个**单文件 HTML 离线工具**，覆盖全球 TOP100 硕士申请全流程。无需安装、无需注册、双击即用，所有数据存储在本地浏览器。
 
-**[➜ 在线体验](https://benjaminjason.github.io/master-study-hub/master-hub.html)**
+**[➜ 在线体验](https://benjaminjason.github.io/master-hub/master-hub.html)**
 
 ---
 
@@ -40,12 +40,12 @@
 ## 快速开始
 
 ### 方式一：在线使用（推荐）
-直接打开 → **[https://benjaminjason.github.io/master-study-hub/master-hub.html](https://benjaminjason.github.io/master-study-hub/master-hub.html)**
+直接打开 → **[https://benjaminjason.github.io/master-hub/master-hub.html](https://benjaminjason.github.io/master-hub/master-hub.html)**
 
 ### 方式二：本地离线使用
 ```bash
 # 下载单文件即可
-curl -O https://raw.githubusercontent.com/BenjaminJason/master-study-hub/main/master-hub.html
+curl -O https://raw.githubusercontent.com/BenjaminJason/master-hub/main/master-hub.html
 # 双击用浏览器打开
 open master-hub.html
 ```
