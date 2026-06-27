@@ -1,0 +1,8 @@
+Contact: mailto:senj43223@gmail.com
+Preferred-Languages: zh, en
+
+# This is a static, client-side only web application.
+# No server, no database, no user accounts, no data collection.
+# All user data (application tracking, bookmarks) is stored
+# exclusively in the visitor's own browser via localStorage.
+# No personal information is transmitted to any server.
