@@ -1,0 +1,70 @@
+name: CI — 数据验证 & 体积检查
+
+on:
+  push:
+    paths: ['data.js', 'index.html', 'sw.js']
+  pull_request:
+    paths: ['data.js', 'index.html']
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: JS 语法验证
+        run: |
+          node -e "
+          const fs=require('fs');
+          const data=fs.readFileSync('data.js','utf8');
+          const main=fs.readFileSync('index.html','utf8');
+          const m=main.match(/<script>\s*([\s\S]*?)<\/script>\s*<\/body>/);
+          if(!m){console.error('❌ 未找到 script 块');process.exit(1);}
+          try{new Function(data+'\n'+m[1]);console.log('✅ JS 语法正确');}
+          catch(e){console.error('❌ 语法错误:',e.message.slice(0,200));process.exit(1);}
+          "
+
+      - name: 数据覆盖率检查
+        run: |
+          node -e "
+          const fs=require('fs');
+          const data=fs.readFileSync('data.js','utf8');
+          try{
+            const fn=new Function(data+'; return {SCHOOLS,PROG_DETAILS,SCHOOL_DEADLINES};');
+            const {SCHOOLS,PROG_DETAILS,SCHOOL_DEADLINES}=fn();
+            const sc=(SCHOOLS||[]).length;
+            const pd=Object.keys(PROG_DETAILS||{}).length;
+            const sdl=Object.keys(SCHOOL_DEADLINES||{}).length;
+            console.log('SCHOOLS:          '+sc+' 所（期望 ≥112）');
+            console.log('PROG_DETAILS:     '+pd+' 所（期望 ≥100）');
+            console.log('SCHOOL_DEADLINES: '+sdl+' 所（期望 ≥112）');
+            let ok=true;
+            if(sc<112){console.error('❌ SCHOOLS 不足 112 所');ok=false;}
+            if(pd<100){console.error('❌ PROG_DETAILS 覆盖不足');ok=false;}
+            if(sdl<112){console.error('❌ SCHOOL_DEADLINES 不足 112 所');ok=false;}
+            if(ok)console.log('✅ 覆盖率检查通过');
+            else process.exit(1);
+          }catch(e){console.error('❌ 解析失败:',e.message);process.exit(1);}
+          "
+
+      - name: 文件体积检查
+        run: |
+          node -e "
+          const fs=require('fs');
+          const checks=[
+            {file:'data.js',   warnKB:600, errorKB:800},
+            {file:'index.html',warnKB:250, errorKB:400}
+          ];
+          let fail=false;
+          for(const c of checks){
+            const kb=Math.round(fs.statSync(c.file).size/1024);
+            if(kb>c.errorKB){console.error('❌ '+c.file+' '+kb+'KB — 超过上限 '+c.errorKB+'KB');fail=true;}
+            else if(kb>c.warnKB)console.warn('⚠️  '+c.file+' '+kb+'KB（超过警戒线 '+c.warnKB+'KB）');
+            else console.log('✅ '+c.file+' '+kb+'KB');
+          }
+          if(fail)process.exit(1);
+          "

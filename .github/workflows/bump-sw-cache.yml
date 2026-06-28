@@ -1,0 +1,36 @@
+name: 自动递增 PWA 缓存版本
+
+on:
+  push:
+    branches: [main]
+    paths: ['data.js']
+
+jobs:
+  bump:
+    # 只响应真人 push，跳过 Actions bot 的自动提交（避免循环触发）
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 递增缓存版本号
+        run: |
+          CURRENT=$(grep -o "mh-v[0-9]*" sw.js | head -1 | grep -o "[0-9]*")
+          NEW=$((CURRENT + 1))
+          sed -i "s/mh-v${CURRENT}/mh-v${NEW}/g" sw.js
+          echo "PWA cache: mh-v${CURRENT} → mh-v${NEW}"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sw.js
+          if git diff --staged --quiet; then
+            echo "无变更，跳过"
+          else
+            git commit -m "chore: PWA 缓存 +1（data.js 已更新）"
+            git push
+          fi

@@ -1,0 +1,77 @@
+name: 截止日年度核查提醒
+
+on:
+  schedule:
+    - cron: '0 0 1 8 *'   # 每年 8 月 1 日 00:00 UTC 自动触发
+  workflow_dispatch:        # 也可手动触发测试
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 扫描即将到来的截止日
+        run: |
+          node -e "
+          const fs=require('fs');
+          const data=fs.readFileSync('data.js','utf8');
+          const fn=new Function(data+'; return {SCHOOL_DEADLINES,SCHOOLS};');
+          const {SCHOOL_DEADLINES,SCHOOLS}=fn();
+
+          const now=new Date();
+          const upcoming=[];
+
+          for(const [school,dls] of Object.entries(SCHOOL_DEADLINES)){
+            const s=SCHOOLS.find(x=>x.name===school);
+            const ctry=s?s.c:'';
+            for(const dl of dls){
+              let date=new Date(now.getFullYear(),dl.month-1,dl.day);
+              if(date<now) date.setFullYear(date.getFullYear()+1);
+              const days=Math.round((date-now)/(1000*60*60*24));
+              if(days<=180){
+                upcoming.push({school,ctry,prog:dl.prog||'全项目',month:dl.month,day:dl.day,days});
+              }
+            }
+          }
+          upcoming.sort((a,b)=>a.days-b.days);
+
+          const year=now.getFullYear();
+          let body='## 📅 '+year+'–'+(year+1)+' 申请季截止日核查清单\n\n';
+          body+='以下 **'+upcoming.length+' 条**截止日将在未来 6 个月内到达，请逐一到官网核对是否与 data.js 中记录一致。\n\n';
+          body+='| 院校 | 国家 | 项目 | 截止日 | 距今 |\n';
+          body+='|------|------|------|--------|------|\n';
+          for(const u of upcoming){
+            body+='| '+u.school+' | '+u.ctry.toUpperCase()+' | '+u.prog+' | '+u.month+'/'+u.day+' | '+u.days+'天 |\n';
+          }
+          body+='\n### 核查完成后\n';
+          body+='- 如有变动：更新 `data.js` 中的 SCHOOL_DEADLINES，关闭此 Issue\n';
+          body+='- 如无变动：直接关闭此 Issue\n\n';
+          body+='*由 GitHub Actions 自动生成 · '+now.toISOString().slice(0,10)+'*\n';
+
+          fs.writeFileSync('/tmp/issue-body.md',body);
+          console.log('共 '+upcoming.length+' 条截止日需要核查');
+          " 2>&1
+
+      - name: 创建 GitHub Issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          YEAR=$(date +%Y)
+          # 如果今年已有同名 Issue，跳过（避免重复）
+          EXISTING=$(gh issue list --state open --search "${YEAR}–$((YEAR+1)) 申请季截止日" --json number --jq '.[0].number' 2>/dev/null || echo "")
+          if [ -n "$EXISTING" ]; then
+            echo "今年的 Issue #${EXISTING} 已存在，跳过创建"
+          else
+            gh issue create \
+              --title "📅 ${YEAR}–$((YEAR+1)) 申请季截止日核查" \
+              --body-file /tmp/issue-body.md
+            echo "✅ Issue 已创建"
+          fi

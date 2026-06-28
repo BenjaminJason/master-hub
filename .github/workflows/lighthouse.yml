@@ -1,0 +1,60 @@
+name: Lighthouse 性能报告
+
+on:
+  push:
+    branches: [main]
+    paths: ['index.html', 'data.js']
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安装 lighthouse 和 serve
+        run: npm install -g lighthouse serve
+
+      - name: 启动本地服务器
+        run: serve . -l 3000 &
+
+      - name: 等待服务器就绪
+        run: |
+          timeout 30 bash -c 'until curl -s http://localhost:3000 > /dev/null; do sleep 1; done'
+          echo "服务器已就绪"
+
+      - name: 运行 Lighthouse
+        run: |
+          lighthouse http://localhost:3000 \
+            --output=json \
+            --output-path=lh-report.json \
+            --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --quiet
+
+      - name: 输出分数摘要
+        run: |
+          node -e "
+          const r=require('./lh-report.json');
+          const c=r.categories;
+          const map={'performance':'性能','accessibility':'可访问性','best-practices':'最佳实践','seo':'SEO'};
+          console.log('\n📊 Lighthouse 报告 — '+new Date().toISOString().slice(0,10));
+          console.log('URL: http://localhost:3000\n');
+          for(const[k,label]of Object.entries(map)){
+            const score=c[k]?Math.round(c[k].score*100):0;
+            const icon=score>=90?'✅':score>=70?'⚠️ ':'❌';
+            console.log('  '+icon+' '+label.padEnd(8)+': '+score);
+          }
+          console.log('');
+          "
+
+      - name: 上传报告（可在 Actions 页面下载）
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-report-${{ github.sha }}
+          path: lh-report.json
+          retention-days: 30

@@ -39,6 +39,13 @@ jobs:
       - name: Run QS update script
         run: node scripts/update-qs.js "${{ steps.csv.outputs.path }}"
 
+      - name: 递增 PWA 缓存版本
+        run: |
+          CURRENT=$(grep -o "mh-v[0-9]*" sw.js | head -1 | grep -o "[0-9]*")
+          NEW=$((CURRENT + 1))
+          sed -i "s/mh-v${CURRENT}/mh-v${NEW}/g" sw.js
+          echo "PWA cache: mh-v${CURRENT} → mh-v${NEW}"
+
       - name: Validate JS
         run: |
           node -e "
@@ -54,7 +61,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.js index.html
+          git add data.js index.html sw.js
           if git diff --staged --quiet; then
             echo "无变更，跳过 commit"
           else
