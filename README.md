@@ -97,11 +97,37 @@ python3 -m http.server 8080  # 方法二（访问 http://localhost:8080）
 
 ---
 
+## QS 排名年度更新（自动化）
+
+每年 QS 发榜后（通常 6 月），一条命令即可完成更新：
+
+1. 从 [topuniversities.com](https://www.topuniversities.com/world-university-rankings) 下载最新排名 CSV
+2. 将文件重命名为 `qs-rankings.csv` 并放入 `scripts/` 目录
+3. `git add scripts/qs-rankings.csv && git commit -m "add QS 2028 csv" && git push`
+
+GitHub Actions 检测到 CSV 推送后自动执行：
+- 运行 `scripts/update-qs.js`，更新 `data.js` 中所有院校的 `qs:` 字段
+- 更新 `index.html` 中的 `DATA_VERSION`
+- JS 验证通过后自动 commit + push，GitHub Pages 随即部署
+
+也可在 Actions → 「更新 QS 排名数据」→「Run workflow」手动触发。
+
+**CSV 格式要求**（至少包含以下两列，其他列可忽略）：
+```
+rank,institution_name
+1,Massachusetts Institute of Technology (MIT)
+2,Imperial College London
+...
+```
+
+---
+
 ## 更新计划
 
 - [x] GPA 换算器（85分 → UK First / GPA 3.5）
 - [x] 申请截止日期数据库（全部 112 所院校精准/滚动截止日，180天内倒计时）
 - [x] 项目详情覆盖全部院校（105所，含GPA/雅思/截止日/SOP/推荐信）
+- [x] QS 排名自动更新（GitHub Actions，推送 CSV 即触发）
 - [ ] 录取数据众包（用户提交真实录取结果让数据更鲜活）
 - [ ] QS 2028 数据更新（预计 2027 年 6 月）
 

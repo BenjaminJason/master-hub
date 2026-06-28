@@ -1,0 +1,63 @@
+name: 更新 QS 排名数据
+
+on:
+  push:
+    paths:
+      - 'scripts/qs-rankings.csv'
+  workflow_dispatch:
+    inputs:
+      csv_path:
+        description: 'CSV 文件路径（相对仓库根目录，默认 scripts/qs-rankings.csv）'
+        required: false
+        default: 'scripts/qs-rankings.csv'
+
+jobs:
+  update-qs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check CSV exists
+        id: csv
+        run: |
+          CSV="${{ github.event.inputs.csv_path || 'scripts/qs-rankings.csv' }}"
+          if [ ! -f "$CSV" ]; then
+            echo "❌ CSV 文件 $CSV 不存在，请先把 QS CSV 上传到该路径"
+            exit 1
+          fi
+          echo "path=$CSV" >> $GITHUB_OUTPUT
+
+      - name: Run QS update script
+        run: node scripts/update-qs.js "${{ steps.csv.outputs.path }}"
+
+      - name: Validate JS
+        run: |
+          node -e "
+          const fs=require('fs');
+          const data=fs.readFileSync('data.js','utf8');
+          const main=fs.readFileSync('index.html','utf8');
+          const m=main.match(/<script>\s*([\s\S]*?)<\/script>\s*<\/body>/);
+          try{new Function(data+'\n'+m[1]);console.log('✅ JS 验证通过');}
+          catch(e){console.error('❌ JS 验证失败:',e.message);process.exit(1);}
+          "
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.js index.html
+          if git diff --staged --quiet; then
+            echo "无变更，跳过 commit"
+          else
+            git commit -m "chore: 自动更新 QS 排名数据 $(date +%Y-%m-%d)"
+            git push
+          fi
