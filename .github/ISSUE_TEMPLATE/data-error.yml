@@ -1,0 +1,60 @@
+name: 📋 数据错误报告
+description: 截止日期、GPA、雅思要求等信息有误，请在这里报告
+title: "[数据错误] "
+labels: ["数据错误"]
+body:
+  - type: input
+    id: school
+    attributes:
+      label: 院校名称
+      placeholder: 例：帝国理工学院
+    validations:
+      required: true
+
+  - type: input
+    id: program
+    attributes:
+      label: 项目名称（如知道）
+      placeholder: 例：MSc Computing
+
+  - type: checkboxes
+    id: error-type
+    attributes:
+      label: 错误类型（可多选）
+      options:
+        - label: 申请截止日期
+        - label: GPA / 均分要求
+        - label: 雅思 / 托福要求
+        - label: 项目名称或链接
+        - label: 其他
+
+  - type: input
+    id: current-data
+    attributes:
+      label: 现在显示的（错误）数据
+      placeholder: 例：截止日 12/1，均分要求 85+
+    validations:
+      required: true
+
+  - type: input
+    id: correct-data
+    attributes:
+      label: 正确数据
+      placeholder: 例：截止日应为 1/15，均分要求 80+
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: 官网来源链接
+      description: 粘贴你查到的官方申请页面 URL，方便核实
+      placeholder: https://
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 补充说明（可选）
+      placeholder: 其他想说的都可以写在这里

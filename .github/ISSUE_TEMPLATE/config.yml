@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 选校/申请问题去 Discussions 提问
+    url: https://github.com/BenjaminJason/master-hub/discussions
+    about: 一般性问题、经验分享、选校建议请到 Discussions，不要开 Issue

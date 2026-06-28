@@ -1,0 +1,31 @@
+name: 💡 功能建议
+description: 想新增功能或改进现有体验
+title: "[建议] "
+labels: ["功能建议"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你遇到了什么问题 / 什么场景让你觉得不方便？
+      placeholder: 例：我每次想对比两所学校的 GPA 要求，要来回切换，很麻烦
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 你希望怎么解决？
+      placeholder: 例：在选校匹配里加一个"对比清单"功能，可以并排看两所学校的要求
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 对你来说有多重要？
+      options:
+        - 一般，有就更好
+        - 比较重要，经常需要
+        - 非常重要，没有这个功能很影响使用
+    validations:
+      required: true
