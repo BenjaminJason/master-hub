@@ -1,0 +1,52 @@
+<svg viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="640" fill="#0f172a"/>
+  <defs>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1e293b" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#grid)"/>
+  <rect x="0" y="0" width="6" height="640" fill="url(#ag)"/>
+  <rect x="60" y="56" width="160" height="30" rx="6" fill="#1e293b"/>
+  <text x="140" y="75" font-family="PingFang SC,Helvetica Neue,sans-serif" font-size="13" fill="#6366f1" font-weight="700" text-anchor="middle">QS 2027 · 112所院校</text>
+  <text x="60" y="170" font-family="PingFang SC,Helvetica Neue,sans-serif" font-size="72" font-weight="800" fill="#f8fafc">全球 TOP100</text>
+  <text x="60" y="256" font-family="PingFang SC,Helvetica Neue,sans-serif" font-size="72" font-weight="800" fill="url(#ag)">硕士申请导航</text>
+  <text x="60" y="318" font-family="PingFang SC,Helvetica Neue,sans-serif" font-size="26" fill="#94a3b8">选校匹配 · 截止日倒计时 · 申请进度追踪 · 纯前端工具</text>
+  <rect x="60" y="352" width="480" height="2" fill="#1e293b"/>
+  <text x="60" y="400" font-family="PingFang SC,sans-serif" font-size="18" fill="#64748b">覆盖</text>
+  <text x="104" y="400" font-family="PingFang SC,sans-serif" font-size="18" fill="#f8fafc" font-weight="700">18个国家</text>
+  <text x="220" y="400" font-family="PingFang SC,sans-serif" font-size="18" fill="#64748b"> · </text>
+  <text x="245" y="400" font-family="PingFang SC,sans-serif" font-size="18" fill="#f8fafc" font-weight="700">105所院校</text>
+  <text x="355" y="400" font-family="PingFang SC,sans-serif" font-size="18" fill="#64748b">项目详情 · </text>
+  <text x="466" y="400" font-family="PingFang SC,sans-serif" font-size="18" fill="#f8fafc" font-weight="700">免费</text>
+  <text x="504" y="400" font-family="PingFang SC,sans-serif" font-size="18" fill="#64748b">无需注册</text>
+  <rect x="60" y="430" width="420" height="44" rx="10" fill="#1e293b"/>
+  <text x="80" y="458" font-family="Courier New,monospace" font-size="17" fill="#6366f1">benjaminjason.github.io/master-hub</text>
+  <rect x="760" y="60" width="220" height="110" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="780" y="100" font-family="sans-serif" font-size="28">🎯</text>
+  <text x="820" y="100" font-family="PingFang SC,sans-serif" font-size="16" font-weight="700" fill="#f8fafc">选校匹配</text>
+  <text x="780" y="124" font-family="PingFang SC,sans-serif" font-size="13" fill="#94a3b8">填均分 + 语言成绩</text>
+  <text x="780" y="142" font-family="PingFang SC,sans-serif" font-size="13" fill="#94a3b8">自动生成冲刺/匹配/保底</text>
+  <rect x="1000" y="60" width="220" height="110" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="1020" y="100" font-family="sans-serif" font-size="28">📅</text>
+  <text x="1060" y="100" font-family="PingFang SC,sans-serif" font-size="16" font-weight="700" fill="#f8fafc">截止倒计时</text>
+  <text x="1020" y="124" font-family="PingFang SC,sans-serif" font-size="13" fill="#94a3b8">112所院校精准 DDL</text>
+  <text x="1020" y="142" font-family="PingFang SC,sans-serif" font-size="13" fill="#94a3b8">180天内自动排序</text>
+  <rect x="760" y="192" width="220" height="110" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="780" y="232" font-family="sans-serif" font-size="28">📋</text>
+  <text x="820" y="232" font-family="PingFang SC,sans-serif" font-size="16" font-weight="700" fill="#f8fafc">申请追踪</text>
+  <text x="780" y="256" font-family="PingFang SC,sans-serif" font-size="13" fill="#94a3b8">进度管理 / 导出 PDF</text>
+  <text x="780" y="274" font-family="PingFang SC,sans-serif" font-size="13" fill="#94a3b8">数据存本地，不上传</text>
+  <rect x="1000" y="192" width="220" height="110" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="1020" y="232" font-family="sans-serif" font-size="28">🏫</text>
+  <text x="1060" y="232" font-family="PingFang SC,sans-serif" font-size="16" font-weight="700" fill="#f8fafc">项目详情</text>
+  <text x="1020" y="256" font-family="PingFang SC,sans-serif" font-size="13" fill="#94a3b8">GPA / 雅思 / SOP</text>
+  <text x="1020" y="274" font-family="PingFang SC,sans-serif" font-size="13" fill="#94a3b8">推荐信要求一览</text>
+  <text x="760" y="370" font-family="sans-serif" font-size="30">🇬🇧🇺🇸🇦🇺🇨🇦🇸🇬🇭🇰🇨🇭🇳🇱🇯🇵🇰🇷🇩🇪🇫🇷🇸🇪</text>
+  <rect x="0" y="590" width="1280" height="50" fill="#1e293b"/>
+  <text x="60" y="622" font-family="PingFang SC,sans-serif" font-size="15" fill="#475569">纯前端静态工具 · 无服务器 · 不收集任何用户数据 · 支持 PWA 离线安装</text>
+  <text x="1220" y="622" font-family="PingFang SC,sans-serif" font-size="15" fill="#6366f1" text-anchor="end">master-hub</text>
+</svg>

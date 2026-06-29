@@ -1,0 +1,89 @@
+name: Telegram 通知
+
+# 使用前需在 GitHub repo → Settings → Secrets and variables → Actions 添加：
+#   TELEGRAM_BOT_TOKEN : BotFather 给你的 token（格式：123456:ABC-xxx）
+#   TELEGRAM_CHAT_ID   : 你的 Telegram 用户 ID（向 @userinfobot 发消息可得）
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+  issue_comment:
+    types: [created]
+  discussion:
+    types: [created]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    # 跳过自己的操作，只通知别人的动作
+    if: github.actor != github.repository_owner && github.actor != 'github-actions[bot]'
+
+    steps:
+      - name: 新 Issue 通知
+        if: github.event_name == 'issues'
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TITLE: ${{ github.event.issue.title }}
+          USER: ${{ github.event.issue.user.login }}
+          URL: ${{ github.event.issue.html_url }}
+          LABELS: ${{ join(github.event.issue.labels.*.name, ', ') }}
+        run: |
+          MSG=$(printf '📋 新 Issue｜master-hub\n\n标题：%s\n来自：%s\n标签：%s\n\n%s' \
+            "$TITLE" "$USER" "${LABELS:-无}" "$URL")
+          jq -n --arg chat_id "$CHAT_ID" --arg text "$MSG" \
+            '{chat_id:$chat_id,text:$text}' | \
+          curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -H "Content-Type: application/json" -d @-
+
+      - name: 新 PR 通知
+        if: github.event_name == 'pull_request'
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TITLE: ${{ github.event.pull_request.title }}
+          USER: ${{ github.event.pull_request.user.login }}
+          URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          MSG=$(printf '🔀 新 PR｜master-hub\n\n标题：%s\n来自：%s\n\n%s' \
+            "$TITLE" "$USER" "$URL")
+          jq -n --arg chat_id "$CHAT_ID" --arg text "$MSG" \
+            '{chat_id:$chat_id,text:$text}' | \
+          curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -H "Content-Type: application/json" -d @-
+
+      - name: 新评论通知
+        if: github.event_name == 'issue_comment'
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          USER: ${{ github.event.comment.user.login }}
+          BODY: ${{ github.event.comment.body }}
+          URL: ${{ github.event.comment.html_url }}
+        run: |
+          SHORT=$(echo "$BODY" | head -c 80)
+          MSG=$(printf '💬 新评论｜master-hub\n\nIssue：%s\n来自：%s\n内容：%s…\n\n%s' \
+            "$ISSUE_TITLE" "$USER" "$SHORT" "$URL")
+          jq -n --arg chat_id "$CHAT_ID" --arg text "$MSG" \
+            '{chat_id:$chat_id,text:$text}' | \
+          curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -H "Content-Type: application/json" -d @-
+
+      - name: 新 Discussion 通知
+        if: github.event_name == 'discussion'
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TITLE: ${{ github.event.discussion.title }}
+          USER: ${{ github.event.discussion.user.login }}
+          URL: ${{ github.event.discussion.html_url }}
+        run: |
+          MSG=$(printf '🗣 新 Discussion｜master-hub\n\n标题：%s\n来自：%s\n\n%s' \
+            "$TITLE" "$USER" "$URL")
+          jq -n --arg chat_id "$CHAT_ID" --arg text "$MSG" \
+            '{chat_id:$chat_id,text:$text}' | \
+          curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -H "Content-Type: application/json" -d @-
